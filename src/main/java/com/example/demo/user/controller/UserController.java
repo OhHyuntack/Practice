@@ -5,6 +5,7 @@ import com.example.demo.user.domain.entity.User;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.service.UserService;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.json.simple.JSONObject;
@@ -42,13 +43,13 @@ public class UserController {
     JSONObject json = new JSONObject();
     //유효성 검사 실패시
     if (errors.hasErrors()) {
-        json.put("userDto", userDto);
-        // 유효성 통과 못한 필드와 메시지를 핸들링
-        Map<String, String> validatorResult = userService.validateHandling(errors);
-        for (String key : validatorResult.keySet()) {
-          json.put(key, validatorResult.get(key));
-        }
-        return json;
+      json.put("userDto", userDto);
+      // 유효성 통과 못한 필드와 메시지를 핸들링
+      Map<String, String> validatorResult = userService.validateHandling(errors);
+      for (String key : validatorResult.keySet()) {
+        json.put(key, validatorResult.get(key));
+      }
+      return json;
     }
 
     //비밀번호 암호화
@@ -73,32 +74,44 @@ public class UserController {
 
   @PostMapping("/user/login")
   @ResponseBody
-  public JSONObject login(User user){
+  public JSONObject login(User user, HttpSession session){
     JSONObject json = new JSONObject();
-    String msg = "";
+    String msg = "", result = "";
     String encryPassword = UserSha256.encrypt(user.getUserPW());
-    UserDto userDto = userService.getByUserId(user.getUserId());
-
-    if(userDto != null){
-      if(userDto.getUserPW().equals(encryPassword)){
-        HttpSession session = new HttpSession();
+    User userInfo = userService.findByUserId(user.getUserId());
+    if(userInfo != null){
+      if(userInfo.getUserPW().equals(encryPassword)){
+        session.setAttribute("sessionUserId", userInfo.getUserId());
+        session.setAttribute("sessionUserName", userInfo.getUserName());
+        session.setAttribute("sessionMobileNo", userInfo.getMobileNo());
+        session.setAttribute("sessionAddr", userInfo.getAddr());
+        session.setAttribute("sessionEmail", userInfo.getEmail());
+        result = "success";
+        msg = "로그인에 성공 하였습니다.";
+        json.put("msg", msg);
+        json.put("result", result);
+        return json;
       }else{
         msg = "아이디 또는 비밀번호가 다릅니다";
+        result = "fail";
       }
-      msg = "아이디 또는 비밀번호가 다릅니다";
     }else{
       msg = "가입된 아이디가 없습니다";
+      result = "fail";
     }
-
     json.put("msg", msg);
-
-
+    json.put("result", result);
     return json;
   }
 
   @GetMapping("/user/logout")
-  public void logout(){
-
+  public String logout(HttpSession session){
+    session.removeAttribute("sessionUserId");
+    session.removeAttribute("sessionUserName");
+    session.removeAttribute("sessionMobileNo");
+    session.removeAttribute("sessionAddr");
+    session.removeAttribute("sessionEmail");
+    return "index";
   }
 
 }

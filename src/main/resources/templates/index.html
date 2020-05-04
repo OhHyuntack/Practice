@@ -5,9 +5,19 @@
   <title>Title</title>
 </head>
 <body>
-<a th:href="@{/user/join}">회원가입</a>
-<a th:href="@{/user/login}">로그인</a>
-<a th:href="@{/user/logout}">로그아웃</a>
+
+<div th:if="${session.sessionUserId}">
+  <a th:href="@{/board/list}">공지 게시판</a>
+
+  <span th:text="${session.sessionUserId}"></span>
+  <a th:href="@{/user/logout}">로그아웃</a>
+</div>
+
+<div th:unless="${session.sessionUserId}">
+  <a th:href="@{/user/join}">회원가입</a>
+  <a th:href="@{/user/login}">로그인</a>
+  로그인 하시면 게시판을 볼 수 있습니다.
+</div>
 
 </body>
 </html>

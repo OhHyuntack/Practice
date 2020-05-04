@@ -9,6 +9,12 @@ spring:
     prefix: classpath:/templates/ # change default templates folder
     suffix: .html
     check-template-location: true
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+      location: C:\UPLOAD_FILES
+      max-file-size: 100MB
+      max-request-size: 100MB
 jpa:
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   open-in-view: false

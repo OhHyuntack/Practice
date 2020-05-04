@@ -6,6 +6,8 @@
   <link href="/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.js"></script>
+  <script src="/js/common.js"></script>
+
 
 </head>
 <body style="background-color : #424242;">
@@ -24,7 +26,7 @@
                       </div>
                       <div class="form-group">
                         <label for="userPW" class="text-info">Password:</label><br>
-                        <input type="text" name="userPW" id="userPW" class="form-control">
+                        <input type="text" name="userPW" id="userPW" class="form-control" autocomplete="off">
                       </div>
                       <div class="form-group">
                         <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
@@ -42,6 +44,24 @@
   </div>
 
   <script type="text/javascript">
+    $(document).ready(function() {
+      var userSaveId = getCookie("userSaveId");
+      var setCookieYN = getCookie("setCookieYN");
+      if(setCookieYN == 'Y') {
+        $("#remember-me").prop("checked", true);
+      } else {
+        $("#remember-me").prop("checked", false);
+      }
+      $("#userId").val(userSaveId);
+
+
+      $("#userPW").keydown(function(key) {
+        if (key.keyCode == 13) {
+          go_login();
+        }
+      });
+    });
+
 
     function go_login(){
       var userId = $("#userId").val();
@@ -55,18 +75,36 @@
        alert("비밀번호를 입력 하세요");
        document.frm.userPW.focus();
        return false;
+     } else {
+
+       if ($("#remember-me").is(":checked")) {
+         var userSaveId = $("#userId").val();
+         setCookie("userSaveId", userSaveId, 60);
+         setCookie("setCookieYN", "Y", 60);
+       } else {
+         deleteCookie("userSaveId");
+         deleteCookie("setCookieYN");
+       }
+
+       $.ajax({
+         url: "/user/login",
+         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+         type: "post",
+         dataType: "json",
+         data: {"userId": userId, "userPW": userPW},
+         success: function (data) {
+           console.log(data);
+           if (data.msg != "" && data.msg != null && data.msg != undefined) {
+             alert(data.msg);
+           }
+           if (data.result == "success") {
+             location.href = "/";
+           }
+         }
+       })
      }
-      $.ajax({
-        url: "/user/login",
-        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-        type : "post",
-        dataType:"json",
-        data: {"userId": userId, "userPW" : userPW },
-        success : function(data){
-            console.log(data);
-        }
-      })
     }
+
   </script>
 
 </body>

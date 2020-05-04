@@ -1,0 +1,160 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<th:block layout:fragment="content">
+
+  <article class="sub-warp">
+    <h2 class="skip">서브메뉴</h2>
+    <div class="container">
+      <div class="snb">
+        <div class="hidden">
+          <div class="warp">
+            <div class="tit">알림과소통</div>
+            <ul>
+              <li class="active"><a href="공지사항-목록.html">공지사항</a></li><!-- 현재메뉴 표시 .active -->
+              <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
+              <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
+            </ul>
+          </div>
+        </div>
+        <a href="#" class="btn-snb-fold" title="접기"></a>
+      </div>
+
+      <h2 class="skip">컨텐츠영역</h2>
+      <section class="contents" id="contents">
+        <div class="page-tit">
+          <h3>공지사항</h3>
+          <ul class="breadcrumb">
+            <li><a href="main.html"><i class="uil-home-alt"><span>홈</span></i></a></li>
+            <li>알림과소통</li>
+            <li>공지사항</li>
+          </ul>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- 서브 컨텐츠 영역 -->
+<form id="frm" name="frm" method="post" enctype="multipart/form-data" action="/board/save">
+        <table class="table board-write">
+          <caption>게시물 등록/수정</caption>
+          <colgroup>
+            <col style="width: 130px;">
+            <col style="width: 735px;">
+          </colgroup>
+          <tbody>
+          <tr>
+            <th>제목<i class="uil-check"></i></th>
+            <td><input type="text" id="title" name="title" class="form-control width-full" value="테스트"></td>
+          </tr>
+          <tr>
+            <th>성명<i class="uil-check"></i></th>
+            <td><input type="text" id="writer" name="writer" class="form-control width-md" th:value="${session.sessionUserName}"></td>
+          </tr>
+          <tr>
+            <th>부서명</th>
+            <td><input type="text" id="department" name="department" class="form-control width-md" value="부서명 테스트"></td>
+          </tr>
+          <tr>
+            <th>연락처<i class="uil-check"></i></th>
+            <td>
+              <select id="contact1" class="form-control width-xs">
+                <option>02</option>
+                <option>010</option>
+                <option>031</option>
+              </select>
+              <em class="hyphen">-</em>
+              <input type="text" id="contact2" class="form-control width-xs">
+              <em class="hyphen">-</em>
+              <input type="text" id="contact3" class="form-control width-xs">
+              <input type="hidden" id="contact" name="contact">
+            </td>
+          </tr>
+          <tr>
+            <th>내용<i class="uil-check"></i></th>
+            <td>
+              <textarea class="form-control width-full" id="content" name="content" rows="7">텍스트에디터 들어가는곳</textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>첨부파일</th>
+            <td>
+              <p class="counsel width-full">파일 첨부는 pdf, xls, xlsx, doc, docx, hwp, jpg, png, gif 만 가능합니다.</p>
+              <ol class="input-file-list" id="addFile">
+                <li id="fileArea">
+                  <input type="file" id="file1" name="file1" class="form-control width-xl">
+                  <a class="btn btn-light" id="addFileBtn"><i class="uil-plus"></i> 추가</a>
+                </li>
+              </ol>
+              <ul class="upload-file">
+                <li><a href="#" title="파일삭제"></a>첨부된 파일을 표시합니다1.pdf</li>
+                <li><a href="#" title="파일삭제"></a>첨부된 파일을 표시합니다2.pdf</li>
+              </ul>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+</form>
+        <div class="btn-group-position">
+          <div class="center">
+            <button type="button" class="btn btn-lg btn-light" onclick="location.href='공지사항-목록.html'">취소</button>
+            <button type="button" class="btn btn-lg btn-primary" th:onclick="saveBoard();">등록</button>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+      </section>
+    </div>
+  </article>
+
+  <script type="text/javascript">
+
+    $(document).ready(function(){
+      var lastfileNo = 0;
+      $("#addFileBtn").click(function(){
+        //파일 선택란을 보여준다.
+        lastfileNo = $("#addFile li:last input[type='file']:last").attr("id").replace("file", "");
+        var html = "";
+        if(lastfileNo==5){
+          //그리고 해당 아이템은 5개 이상 생성할수 없도록 제한
+          alert("5개 이상 파일 추가 하실 수 없습니다.");
+        }else{
+          lastfileNo = (parseInt(lastfileNo)+1);
+          html += "<li>";
+          html += "<input type='file' id='file"+lastfileNo+"' name='file"+lastfileNo+"' class='form-control width-xl'>";
+          html += "<a class='btn btn-light' onclick='deleteFile(this)' id='removeFileBtn()'><i class='uil-trash-alt'></i>삭제</a>";
+          html += "</li>";
+
+          $("#addFile").append(html);
+        }
+      });
+    });
+    function deleteFile(){
+      // 해당 첨부파일 삭제
+      $("#addFile li:last input[type='file']:last").parent().remove();
+    }
+    function saveBoard(){
+      /*유효성*/
+      var contact = $("#contact1").val() + $("#contact2").val() + $("#contact3").val();
+      $("#contact").val(contact);
+
+      //var params = $("#frm").serialize();
+
+      document.frm.submit();
+      /*
+      $.ajax({
+        url: "/board/save",
+        type: 'POST',
+        contentType: 'multipart/form-data;boundary=----WebKitFormBoundary0XBBar2mAFEE8zbv',
+        processData: false,
+        cache: false,
+        data: params,
+        success: function (data) {
+          console.log(data);
+
+        }
+      })*/
+
+    }
+  </script>
+
+</th:block>

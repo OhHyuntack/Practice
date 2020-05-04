@@ -23,12 +23,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
 
-    /* JSONParser, JSONObject설정 */
-    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
 
+    /*json*/
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    /*mysql database*/
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    implementation      'org.springframework.boot:spring-boot-starter-web'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

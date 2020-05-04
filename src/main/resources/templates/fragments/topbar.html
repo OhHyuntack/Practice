@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<th:block th:fragment="topbarFragment">
+
+<div class="skip">
+  <a href="#contents">본문으로 바로가기</a><a href="#navigation">메뉴로 바로가기</a>
+</div>
+<header>
+  <div class="container gnb">
+    <a href="공지사항-목록.html" class="logo"><h1 class="skip">교통안전시설 운영관리프로그램</h1></a>
+    <ul>
+      <li><strong>관리자</strong>님 로그인</li>
+      <li><a href="#" data-toggle="modal" data-target="#pw-change"><i class="uil uil-lock"></i>비밀번호변경</a></li>
+      <li><a href="로그인.html"><i class="uil-exit"></i>로그아웃</a></li>
+    </ul>
+  </div>
+
+  <h2 class="skip">메인메뉴</h2>
+  <div class="navigation" id="navigation">
+    <div class="container">
+      <div class="lnb">
+        <ul>
+          <li class="active"><!-- 현재메뉴 표시 .active -->
+            <a href="#">알림과소통</a>
+            <ul>
+              <li><a href="공지사항-목록.html">공지사항</a></li>
+              <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
+              <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#">시스템관리</a>
+            <ul>
+              <li class="dep"><a href="사용자관리-목록.html">사용자관리</a>
+                <ol>
+                  <li><a href="사용자관리-목록.html">사용자관리</a></li>
+                  <li><a href="계정신청관리-목록.html">계정신청관리</a></li>
+                </ol>
+              </li>
+              <li><a href="#" style="color: #ccc;">관리기관관리</a></li>
+              <li><a href="메뉴관리.html">메뉴관리</a></li>
+              <li><a href="#" style="color: #ccc;">권한그룹관리</a></li>
+              <li><a href="권한관리-목록.html">권한관리</a></li>
+              <li><a href="그룹코드관리-목록.html">그룹코드관리</a></li>
+              <li><a href="세부코드관리-목록.html">세부코드관리</a></li>
+              <li><a href="접근IP관리-목록.html">접근IP관리</a></li>
+              <li><a href="#" style="color: #ccc;">표지관리</a></li>
+              <li><a href="#" style="color: #ccc;">행정구역관리</a></li>
+              <li><a href="#" style="color: #ccc;">작업기관관리</a></li>
+              <li><a href="#" style="color: #ccc;">도로관리</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+</th:block>
+</html>

@@ -34,10 +34,10 @@ public class UserService {
 
   // 아이디체크
   public int idCheck(String userId) {
-    return userRepository.findByUserId(userId);
+    return userRepository.getByUserCnt(userId);
   }
 
-  public UserDto getByUserId(String userId) {
-    return userRepository.getByUserId(userId);
+  public User findByUserId(String userId) {
+    return userRepository.findByUserId(userId);
   }
 }

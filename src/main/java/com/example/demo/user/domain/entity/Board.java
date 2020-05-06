@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "board", uniqueConstraints = {@UniqueConstraint(columnNames = {"boardSeq"})})
+@Table(name = "board", uniqueConstraints = {@UniqueConstraint(columnNames = {"board_seq"})})
 public class Board extends Time implements Serializable {
   // seq
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="boardSeq")
+  @Column(name="board_seq")
   private int boardSeq;
   // 제목
   @Column(name="title", length = 200)
@@ -45,8 +45,12 @@ public class Board extends Time implements Serializable {
   @Column(name="contact", length = 30)
   private String contact;
 
+  @Column(name="board_type", length = 50)
+  private String boardType;
+
+
   @Builder
-  public Board(int boardSeq, String title, String content, int readCnt, String writer, String boardPW, String department, String contact) {
+  public Board(int boardSeq, String title, String content, int readCnt, String writer, String boardPW, String department, String contact, String boardType) {
     this.boardSeq = boardSeq;
     this.title = title;
     this.content = content;
@@ -55,5 +59,6 @@ public class Board extends Time implements Serializable {
     this.boardPW = boardPW;
     this.department = department;
     this.contact = contact;
+    this.boardType = boardType;
   }
 }

@@ -11,7 +11,7 @@ public class File implements Serializable {
   //파일 시퀀스
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="fileSeq")
+  @Column(name="file_seq")
   private int fileSeq;
   // 오리지날 파일명
   @Column(name="originalfilename", length = 200)
@@ -20,19 +20,19 @@ public class File implements Serializable {
   @Column(name="logicalfilename", length = 200)
   private String logicalfilename;
   // 게시글 시퀀스
-  @Column(name="boardSeq")
+  @Column(name="board_seq")
   private int boardSeq;
   // 파일 크기
-  @Column(name="fileSize", length = 100)
+  @Column(name="file_size", length = 100)
   private String fileSize;
   // 파일 확장자
-  @Column(name="fileExt", length = 100)
+  @Column(name="file_ext", length = 100)
   private String fileExt;
   // 사용유무
-  @Column(name="useYn", length = 3)
+  @Column(name="use_yn", length = 3)
   private String useYn;
   // 등록자 아이디
-  @Column(name="regId", length = 50)
+  @Column(name="regid", length = 50)
   private String regId;
 
 

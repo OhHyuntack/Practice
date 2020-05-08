@@ -3,13 +3,13 @@ package com.example.demo.user.controller;
 import com.example.demo.common.FileUtils;
 import com.example.demo.user.domain.entity.Board;
 import com.example.demo.user.dto.BoardDto;
+import com.example.demo.user.dto.FileDto;
 import com.example.demo.user.service.BoardService;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,9 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 @AllArgsConstructor
@@ -65,13 +62,20 @@ public class BoardController {
     //JSONObject json = new JSONObject();
     System.out.println("1");
 
+    FileDto fileDto = new FileDto();
     List<Map<String, Object>> file_list = fileUtils.parseInsertFileInfo(request, "files[]", "board", true);
-
     String boardSeq = boardService.boardSave(boardDto);
     boardDto.setBoardSeq(Integer.parseInt(boardSeq));
 
-
-    // boardService.fileSave();
+    for(int i=0; i<file_list.size();i++){
+      fileDto.setBoardSeq(Integer.parseInt(boardSeq));
+      //file.setGidx(searchVO.getGidx());
+      fileDto.setOriginalFileName((String) file_list.get(i).get("ORIGINAL_FILE_NAME"));
+      fileDto.setStoredFileName((String) file_list.get(i).get("STORED_FILE_NAME"));
+      fileDto.setFileSize(file_list.get(i).get("FILE_SIZE")+"");
+      fileDto.setFilePath((String) file_list.get(i).get("FILE_PATH"));
+      boardService.fileSave(fileDto);
+    }
 
     return "redirect:/board/list";
 

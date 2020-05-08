@@ -29,9 +29,11 @@ public class FileDto {
   // 등록자 아이디
   private String regId;
 
+  private String filePath;
+
   public File toEntity(){
     File file = File.builder()
-        .boardSeq(fileSeq)
+        .fileSeq(fileSeq)
         .originalFileName(originalFileName)
         .storedFileName(storedFileName)
         .boardSeq(boardSeq)
@@ -39,12 +41,13 @@ public class FileDto {
         .fileExt(fileExt)
         .useYn(useYn)
         .regId(regId)
+        .filePath(filePath)
         .build();
     return file;
   }
   @Builder
   public FileDto(int fileSeq, String originalFileName, String storedFileName, int boardSeq, String fileSize,
-      String fileExt, String useYn, String regId) {
+      String fileExt, String useYn, String regId, String filePath) {
     this.fileSeq = fileSeq;
     this.originalFileName = originalFileName;
     this.storedFileName = storedFileName;
@@ -53,5 +56,6 @@ public class FileDto {
     this.fileExt = fileExt;
     this.useYn = useYn;
     this.regId = regId;
+    this.filePath = filePath;
   }
 }

@@ -2,11 +2,21 @@ package com.example.demo.user.domain.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Entity
+@Table(name = "file", uniqueConstraints = {@UniqueConstraint(columnNames = {"file_seq"})})
 public class File implements Serializable {
   //파일 시퀀스
   @Id
@@ -32,12 +42,15 @@ public class File implements Serializable {
   @Column(name="use_yn", length = 3)
   private String useYn;
   // 등록자 아이디
-  @Column(name="regid", length = 50)
+  @Column(name="reg_id", length = 50)
   private String regId;
+  // 등록자 아이디
+  @Column(name="file_path", length = 50)
+  private String filePath;
 
 
   @Builder
-  public File(int fileSeq, String originalFileName, String storedFileName, int boardSeq, String fileSize, String fileExt, String useYn, String regId) {
+  public File(int fileSeq, String originalFileName, String storedFileName, int boardSeq, String fileSize, String fileExt, String useYn, String regId, String filePath) {
     this.fileSeq = fileSeq;
     this.originalFileName = originalFileName;
     this.storedFileName = storedFileName;
@@ -46,5 +59,6 @@ public class File implements Serializable {
     this.fileExt = fileExt;
     this.useYn = useYn;
     this.regId = regId;
+    this.filePath = filePath;
   }
 }

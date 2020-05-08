@@ -35,7 +35,7 @@ public class FileUtils {
 	public List<Map<String,Object>> parseInsertFileInfo(HttpServletRequest request, String paramName, String whatKind, boolean isPhoto) throws Exception{
 		
 //		String Path = configUpload.get("upload"+WordUtils.capitalize(whatKind));
-		String Path = "C:/UPLOAD_FILES";
+		String Path = "C:/UPLOAD_FILES/";
 		String Year = new java.text.SimpleDateFormat("yyyy").format(new java.util.Date());
 		String Month = new java.text.SimpleDateFormat("MM").format(new java.util.Date());
 		
@@ -78,7 +78,7 @@ public class FileUtils {
 				            listMap.put("FILE_TYPE", type);
 				            //listMap.put("FILE_PATH", whatKind+"/"+Year+"/"+Month+"/");
 				            listMap.put("FILE_PATH", Year+"/"+Month+"/");
-				            listMap.put("INSERT_YN", "Y");
+				            //listMap.put("INSERT_YN", "Y");
 				            list.add(listMap);
 				            
 				            if(isPhoto){
@@ -87,13 +87,13 @@ public class FileUtils {
 	            		}else{
 	            			listMap = new HashMap<String,Object>();
 		            		listMap.put("ORIGINAL_FILE_NAME", originalFileName);
-		            		listMap.put("INSERT_YN", "S_N");
+		            		//listMap.put("INSERT_YN", "S_N");
 		            		list.add(listMap);
 	            		}
 	            	}else{
 	            		listMap = new HashMap<String,Object>();
 	            		listMap.put("ORIGINAL_FILE_NAME", originalFileName);
-	            		listMap.put("INSERT_YN", "E_N");
+	            		//listMap.put("INSERT_YN", "E_N");
 	            		list.add(listMap);
 	            	}
 	            }

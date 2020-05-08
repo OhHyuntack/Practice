@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-  @Query(value = "SELECT MAX(boardSeq) FROM board",
+  @Query(value = "SELECT MAX(board_seq) FROM board",
       nativeQuery = true)
   String findByMaxSeq();
 }

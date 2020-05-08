@@ -14,11 +14,11 @@ public class File implements Serializable {
   @Column(name="file_seq")
   private int fileSeq;
   // 오리지날 파일명
-  @Column(name="originalfilename", length = 200)
-  private String originalfilename;
+  @Column(name="original_file_name", length = 200)
+  private String originalFileName;
   // 변경된 파일명
-  @Column(name="logicalfilename", length = 200)
-  private String logicalfilename;
+  @Column(name="stored_file_name", length = 200)
+  private String storedFileName;
   // 게시글 시퀀스
   @Column(name="board_seq")
   private int boardSeq;
@@ -37,10 +37,10 @@ public class File implements Serializable {
 
 
   @Builder
-  public File(int fileSeq, String originalfilename, String logicalfilename, int boardSeq, String fileSize, String fileExt, String useYn, String regId) {
+  public File(int fileSeq, String originalFileName, String storedFileName, int boardSeq, String fileSize, String fileExt, String useYn, String regId) {
     this.fileSeq = fileSeq;
-    this.originalfilename = originalfilename;
-    this.logicalfilename = logicalfilename;
+    this.originalFileName = originalFileName;
+    this.storedFileName = storedFileName;
     this.boardSeq = boardSeq;
     this.fileSize = fileSize;
     this.fileExt = fileExt;

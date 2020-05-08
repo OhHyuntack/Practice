@@ -15,9 +15,9 @@ public class FileDto {
 
   private int fileSeq;
   // 오리지날 파일명
-  private String originalfilename;
+  private String originalFileName;
   // 변경된 파일명
-  private String logicalfilename;
+  private String storedFileName;
   // 게시글 시퀀스
   private int boardSeq;
   // 파일 크기
@@ -32,8 +32,8 @@ public class FileDto {
   public File toEntity(){
     File file = File.builder()
         .boardSeq(fileSeq)
-        .originalfilename(originalfilename)
-        .logicalfilename(logicalfilename)
+        .originalFileName(originalFileName)
+        .storedFileName(storedFileName)
         .boardSeq(boardSeq)
         .fileSize(fileSize)
         .fileExt(fileExt)
@@ -43,11 +43,11 @@ public class FileDto {
     return file;
   }
   @Builder
-  public FileDto(int fileSeq, String originalfilename, String logicalfilename, int boardSeq, String fileSize,
+  public FileDto(int fileSeq, String originalFileName, String storedFileName, int boardSeq, String fileSize,
       String fileExt, String useYn, String regId) {
     this.fileSeq = fileSeq;
-    this.originalfilename = originalfilename;
-    this.logicalfilename = logicalfilename;
+    this.originalFileName = originalFileName;
+    this.storedFileName = storedFileName;
     this.boardSeq = boardSeq;
     this.fileSize = fileSize;
     this.fileExt = fileExt;

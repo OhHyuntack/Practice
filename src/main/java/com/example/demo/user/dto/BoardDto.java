@@ -1,6 +1,8 @@
 package com.example.demo.user.dto;
 
 import com.example.demo.user.domain.entity.Board;
+import com.example.demo.user.domain.entity.File;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +31,8 @@ public class BoardDto {
   // 게시글 부서
   private String contact;
 
+  private List<File> fileList;
+
   public Board toEntity(){
     Board board = Board.builder()
         .boardSeq(boardSeq)
@@ -39,12 +43,13 @@ public class BoardDto {
         .writer(writer)
         .department(department)
         .contact(contact)
+        .fileList(fileList)
         .build();
     return board;
   }
   @Builder
   public BoardDto(int boardSeq, String boardPW, String title, String content, int readCnt,
-      String writer, String department, String contact) {
+      String writer, String department, String contact, List<File> fileList) {
     this.boardSeq = boardSeq;
     this.boardPW = boardPW;
     this.title = title;
@@ -53,5 +58,6 @@ public class BoardDto {
     this.writer = writer;
     this.department = department;
     this.contact = contact;
+    this.fileList = fileList;
   }
 }

@@ -5,6 +5,7 @@ import com.example.demo.user.domain.repository.BoardRepository;
 import com.example.demo.user.domain.repository.FileRepository;
 import com.example.demo.user.dto.BoardDto;
 import com.example.demo.user.dto.FileDto;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,5 +40,17 @@ public class BoardService {
 
   public void fileSave(FileDto fileDto) {
     fileRepository.save(fileDto.toEntity());
+  }
+
+  public Board findByBoardSeq(int boardSeq) {
+    return boardRepository.findByBoardSeq(boardSeq);
+  }
+
+  public Board findPrevBoardSeq(int boardSeq){
+    return boardRepository.findPrevBoardSeq(boardSeq);
+  }
+
+  public Board findNextBoardSeq(int boardSeq){
+    return boardRepository.findNextBoardSeq(boardSeq);
   }
 }

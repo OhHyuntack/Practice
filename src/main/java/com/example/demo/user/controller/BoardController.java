@@ -7,9 +7,11 @@ import com.example.demo.user.dto.FileDto;
 import com.example.demo.user.service.BoardService;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
@@ -78,9 +81,43 @@ public class BoardController {
     }
 
     return "redirect:/board/list";
-
   }
 
+  @GetMapping("/board/detail")
+  public String detail(@RequestParam String boardSeq, Model model){
 
+   Board detailBoard = boardService.findByBoardSeq(Integer.parseInt(boardSeq));
+
+   Board prevBoard = boardService.findPrevBoardSeq(Integer.parseInt(boardSeq));
+
+   Board nextBoard = boardService.findNextBoardSeq(Integer.parseInt(boardSeq));
+
+
+    model.addAttribute("detailBoard", detailBoard);
+    model.addAttribute("prevBoard", prevBoard);
+    model.addAttribute("nextBoard", nextBoard);
+
+   return "board/detail";
+  }
+
+  @PostMapping("/board/boardEdit")
+  public String boardEdit(@RequestParam String boardSeq, Model model){
+
+    Board detailBoard = boardService.findByBoardSeq(Integer.parseInt(boardSeq));
+    model.addAttribute("detailBoard", detailBoard);
+    model.addAttribute("fileFlag", "edit");
+
+    return "board/write";
+  }
+
+  @PostMapping("/board/editProc")
+  public JSONObject editProc(BoardDto boardDto, HttpServletRequest request)throws Exception {
+    JSONObject json = new JSONObject();
+
+    //List<Map<String, Object>> file_list = fileUtils.parseInsertFileInfo(request, "files[]", "board", true);
+
+
+    return json;
+  }
 
 }

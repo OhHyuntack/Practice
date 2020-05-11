@@ -1,37 +1,45 @@
 package com.example.demo.user.domain.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 @Getter
 @Entity
 @Table(name = "file", uniqueConstraints = {@UniqueConstraint(columnNames = {"file_seq"})})
+@NoArgsConstructor
+@Builder
 public class File implements Serializable {
   //파일 시퀀스
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="file_seq")
   private int fileSeq;
+
   // 오리지날 파일명
   @Column(name="original_file_name", length = 200)
   private String originalFileName;
   // 변경된 파일명
   @Column(name="stored_file_name", length = 200)
   private String storedFileName;
+
   // 게시글 시퀀스
   @Column(name="board_seq")
   private int boardSeq;
+
   // 파일 크기
   @Column(name="file_size", length = 100)
   private String fileSize;

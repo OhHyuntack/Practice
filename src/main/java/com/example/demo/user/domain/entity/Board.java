@@ -1,11 +1,20 @@
 package com.example.demo.user.domain.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.AccessLevel;
@@ -23,6 +32,11 @@ public class Board extends Time implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="board_seq")
   private int boardSeq;
+
+  @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinColumn(name="board_seq")
+  private List<File> fileList;
+
   // 제목
   @Column(name="title", length = 200)
   private String title;
@@ -50,7 +64,7 @@ public class Board extends Time implements Serializable {
 
 
   @Builder
-  public Board(int boardSeq, String title, String content, int readCnt, String writer, String boardPW, String department, String contact, String boardType) {
+  public Board(int boardSeq, String title, String content, int readCnt, String writer, String boardPW, String department, String contact, String boardType, List<File> fileList) {
     this.boardSeq = boardSeq;
     this.title = title;
     this.content = content;
@@ -60,5 +74,6 @@ public class Board extends Time implements Serializable {
     this.department = department;
     this.contact = contact;
     this.boardType = boardType;
+    this.fileList = fileList;
   }
 }

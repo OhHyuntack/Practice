@@ -23,14 +23,12 @@ public class BoardService {
 
   // 글등록
   public String boardSave(BoardDto boardDto){
-
     boardRepository.save(boardDto.toEntity());
     String boardSeq = boardRepository.findByMaxSeq();
-
     return boardSeq;
   }
-
-
+  
+  //리스트 목록 보기
   public Page<Board> findBoardList(Pageable pageable) {
     pageable = PageRequest.of(
         pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
@@ -38,19 +36,23 @@ public class BoardService {
     return boardRepository.findAll(pageable);
   }
 
-  public void fileSave(FileDto fileDto) {
-    fileRepository.save(fileDto.toEntity());
-  }
+  //파일 저장
+  public void fileSave(FileDto fileDto) { fileRepository.save(fileDto.toEntity()); }
 
-  public Board findByBoardSeq(int boardSeq) {
-    return boardRepository.findByBoardSeq(boardSeq);
-  }
+  //상세보기
+  public Board findByBoardSeq(int boardSeq) { return boardRepository.findByBoardSeq(boardSeq); }
 
+  //이전글
   public Board findPrevBoardSeq(int boardSeq){
     return boardRepository.findPrevBoardSeq(boardSeq);
   }
 
+  //다음글
   public Board findNextBoardSeq(int boardSeq){
     return boardRepository.findNextBoardSeq(boardSeq);
   }
+
+  //다운로드 삭제
+  public void deleteFile(int fileSeq){ fileRepository.deleteByFileSeq(fileSeq); }
+
 }

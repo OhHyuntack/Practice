@@ -42,6 +42,7 @@
             <col style="width: 735px;">
           </colgroup>
           <tbody>
+          <div th:if="${detailBoard != null}">
           <tr>
             <th>제목<i class="uil-check"></i></th>
             <td><input type="text" id="title" name="title" class="form-control width-full" th:value="${detailBoard.getTitle()}"></td>
@@ -78,61 +79,84 @@
             <th>내용<i class="uil-check"></i></th>
             <td>
               <textarea class="form-control width-full" th:text="${detailBoard.getContent()}" id="content" name="content" rows="7" th:value="${detailBoard.getContent()}">
-
               </textarea>
             </td>
           </tr>
+
           <tr>
             <th>첨부파일</th>
             <td>
               <p class="counsel width-full">파일 첨부는 pdf, xls, xlsx, doc, docx, hwp, jpg, png, gif 만 가능합니다.</p>
               <ol class="input-file-list" id="addFile">
-                <!--li id="fileArea">
-                  <input type="file" id="file1" name="file1" class="form-control width-xl">
-                  <a class="btn btn-light" id="addFileBtn"><i class="uil-plus"></i> 추가</a>
-                </li-->
-
-              <li id="files">
+              <li>
                 <input type="file" name="files[]" kor-label-for-log="첨부파일" class="form-control width-xl">
                 <a href="javascript:;" onClick="javascript:add_element_file('files[]');" class='btn_navy'>파일추가</a>
               </li>
               </ol>
               <div th:if="${detailBoard.getFileList() != null}">
                 <ul class="upload-file" th:each="file : ${detailBoard.getFileList()}">
-
-                  <!--<li id="file_${detailBoard.getFileList().size()}" style="display:block; padding:5px 0;">
-                    ${result.original_file_name }
-                    <a href="javascript:;" onClick="javascript:deleteFile('${result.idx}')" class="btn_red">파일삭제
-                    </a>
-                  </li>-->
-
-                  <li ><a href="#" title="파일삭제">파일삭제</a> <span th:text="  ${file.getOriginalFileName()}"></span></li>
+                  <li th:id="${file.getFileSeq()}" >
+                    <input type="file" name="files[]" kor-label-for-log="첨부파일" class="form-control width-xl" style="display:none">
+                    <a href="javascript:;" th:onclick="deleteFile(' [[${file.getFileSeq()}]] ')" title="파일삭제">파일삭제</a>
+                    <span th:text="  ${file.getOriginalFileName()}"></span>
+                  </li>
                 </ul>
               </div>
-              <input type="text" id="fileSize" th:value="${detailBoard.getFileList().size()}">
-
             </td>
           </tr>
+          </div>
 
-          <!--tr>
-            <th rowspan="2">
-              첨부파일<br/>
-              <a href="javascript:;" onClick="javascript:add_element_file('files','att_files[]');" class='btn_navy'>파일추가</a>
-            </th>
-            <td class="left">
-              <ul>
-                <c:if test="${registerFlag == 'edit'}">
-                  <c:forEach items="${fileInfo }" var="result" varStatus="status">
-                    <li id="file_${result.idx }" style="display:block; padding:5px 0;"><img src="/resource/admin/img/file.gif" /> ${result.original_file_name }<a href="javascript:;" onClick="javascript:deleteFile('${result.idx}')" class="btn_red">파일삭제</a></li>
-                  </c:forEach>
-                </c:if>
-                <li id="files">
-                  <div style="margin:5px 0;"><input type="file" id="file_1" name="att_files[]" kor-label-for-log="첨부파일"></div>
-                </li>
-              </ul>
-            </td>
-          </tr-->
+          <div th:if="${detailBoard == null}">
+            <tr>
+              <th>제목<i class="uil-check"></i></th>
+              <td><input type="text" id="title" name="title" class="form-control width-full"></td>
+            </tr>
+            <tr>
+              <th>성명<i class="uil-check"></i></th>
+              <td>
+                <input type="text" id="writer" name="writer" class="form-control width-md" th:value="${session.sessionUserName}">
+              </td>
+            </tr>
+            <tr>
+              <th>부서명</th>
+              <td><input type="text" id="department" name="department" class="form-control width-md" ></td>
+            </tr>
+            <tr>
+              <th>연락처<i class="uil-check"></i></th>
+              <td>
+                <select id="contact1" class="form-control width-xs">
+                  <option>02</option>
+                  <option>010</option>
+                  <option>031</option>
+                </select>
+                <em class="hyphen">-</em>
+                <input type="text" id="contact2" class="form-control width-xs">
+                <em class="hyphen">-</em>
+                <input type="text" id="contact3" class="form-control width-xs">
+                <input type="hidden" id="contact" name="contact">
+              </td>
+            </tr>
+            <tr>
+              <th>내용<i class="uil-check"></i></th>
+              <td>
+              <textarea class="form-control width-full" name="content" rows="7" >
+              </textarea>
+              </td>
+            </tr>
 
+            <tr>
+              <th>첨부파일</th>
+              <td>
+                <p class="counsel width-full">파일 첨부는 pdf, xls, xlsx, doc, docx, hwp, jpg, png, gif 만 가능합니다.</p>
+                <ol class="input-file-list" id="addFile">
+                  <li>
+                    <input type="file" name="files[]" kor-label-for-log="첨부파일" class="form-control width-xl">
+                    <a href="javascript:;" onClick="javascript:add_element_file('files[]');" class='btn_navy'>파일추가</a>
+                  </li>
+                </ol>
+              </td>
+            </tr>
+          </div>
           </tbody>
         </table>
 </form>
@@ -148,7 +172,6 @@
           </div>
         </div>
 
-        <!-- ============================================================== -->
       </section>
     </div>
   </article>
@@ -158,35 +181,7 @@
       $(document).on("click", ".removeFileBtn", function () {
         $(this).closest("li").remove();
       });
-
-      fileSize
     });
-   /* $(document).ready(function(){
-      var lastfileNo = 0;
-      $("#addFileBtn").click(function(){
-        //파일 선택란을 보여준다.
-        lastfileNo = $("#addFile li:last input[type='file']:last").attr("id").replace("file", "");
-        var html = "";
-        if(lastfileNo==5){
-          //그리고 해당 아이템은 5개 이상 생성할수 없도록 제한
-          alert("5개 이상 파일 추가 하실 수 없습니다.");
-        }else{
-          lastfileNo = (parseInt(lastfileNo)+1);
-          html += "<li>";
-          html += "<input type='file' id='file"+lastfileNo+"' name='file"+lastfileNo+"' class='form-control width-xl'>";
-          html += "<a class='btn btn-light' onclick='deleteFile(this)' id='removeFileBtn()'><i class='uil-trash-alt'></i>삭제</a>";
-          html += "</li>";
-
-          $("#addFile").append(html);
-        }
-      });
-    });*/
-
-    function deleteFile(){
-      // 해당 첨부파일 삭제
-      $("#addFile li:last input[type='file']:last").parent().remove();
-      fCnt--;
-    }
 
     function add_element_file(nv){
         if($(document).find('input[name="files[]"]').length >= 5){
@@ -197,6 +192,10 @@
             '<input type="file" class="form-control width-xl" name="' + nv + '" kor-label-for-log="첨부파일" >' +
             '<a class="btn btn-light removeFileBtn"><i class="uil-trash-alt"></i>삭제</a>' +
             '</li>');
+    }
+    function deleteFile(){
+      // 해당 첨부파일 삭제
+      $("#addFile li:last input[type='file']:last").parent().remove();
     }
 
     function saveBoard(){
@@ -224,8 +223,26 @@
       }
     }
 
-
-
+    function deleteFile(fileSeq){
+      var select = "#"+fileSeq;
+      select = select.replace(/ /g, '');
+       if(confirm("지금 즉시 삭제처리되며, 삭제된 첨부파일은 복구가 불가능합니다.\n\n해당 첨부파일을 지금 즉시 삭제하시겠습니까?")){
+         $.ajax({
+           url : '/board/deleteFile',
+           dataType : 'json',
+           type : "post",
+           data : {fileSeq : fileSeq},
+           success : function(data){
+             if(data["result"]=="1") {
+               alert("선택한 첨부파일의 삭제가 완료되었습니다");
+               $(select).remove();
+             }else{
+               alert("선택한 첨부파일의 삭제가 실패하였습니다.");
+             }
+           }
+         });
+       }
+    }
 
   </script>
 

@@ -7,7 +7,6 @@ import com.example.demo.user.dto.FileDto;
 import com.example.demo.user.service.BoardService;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -20,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @AllArgsConstructor
@@ -38,31 +38,11 @@ public class BoardController {
     return "board/list";
   }
 
-
   @GetMapping("/board/write")
-  public String write(){
-
-    return "board/write";
-  }
-
-  /*@PostMapping("/board/save")
-  public String boardSave(BoardDto boardDto, @RequestParam(value="file1", required = false) MultipartFile file1,
-      @RequestParam (value="file2", required = false) MultipartFile file2,
-      @RequestParam (value="file3", required = false) MultipartFile file3,
-      @RequestParam (value="file4", required = false) MultipartFile file4,
-      @RequestParam (value="file5", required = false) MultipartFile file5) {
-    JSONObject json = new JSONObject();
-
-    String boardSeq = boardService.boardSave(boardDto);
-    boardDto.setBoardSeq(Integer.parseInt(boardSeq));
-
-   // boardService.fileSave();
-    return "redirect:/board/list";
-  }*/
+  public String write(){ return "board/write"; }
 
   @PostMapping("/board/save")
   public String boardSave(BoardDto boardDto, HttpServletRequest request) throws Exception {
-    //JSONObject json = new JSONObject();
     System.out.println("1");
 
     FileDto fileDto = new FileDto();
@@ -87,11 +67,8 @@ public class BoardController {
   public String detail(@RequestParam String boardSeq, Model model){
 
    Board detailBoard = boardService.findByBoardSeq(Integer.parseInt(boardSeq));
-
    Board prevBoard = boardService.findPrevBoardSeq(Integer.parseInt(boardSeq));
-
    Board nextBoard = boardService.findNextBoardSeq(Integer.parseInt(boardSeq));
-
 
     model.addAttribute("detailBoard", detailBoard);
     model.addAttribute("prevBoard", prevBoard);
@@ -111,6 +88,7 @@ public class BoardController {
   }
 
   @PostMapping("/board/editProc")
+  @ResponseBody
   public JSONObject editProc(BoardDto boardDto, HttpServletRequest request)throws Exception {
     JSONObject json = new JSONObject();
 
@@ -118,6 +96,16 @@ public class BoardController {
 
 
     return json;
+  }
+
+  @PostMapping("/board/deleteFile")
+  @ResponseBody
+  public String deleteFile(@RequestParam String fileSeq){
+    System.out.println("11");
+    int fileidx = Integer.parseInt(fileSeq);
+    boardService.deleteFile(fileidx);
+    String result="{\"result\":\"1\"}";
+    return result;
   }
 
 }

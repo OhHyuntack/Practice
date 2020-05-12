@@ -100,10 +100,8 @@ public class BoardController {
 
   @PostMapping("/board/deleteFile")
   @ResponseBody
-  public String deleteFile(@RequestParam String fileSeq){
-    System.out.println("11");
-    int fileidx = Integer.parseInt(fileSeq);
-    boardService.deleteFile(fileidx);
+  public String deleteFile(@RequestParam int fileSeq){
+    boardService.deleteFile(fileSeq);
     String result="{\"result\":\"1\"}";
     return result;
   }

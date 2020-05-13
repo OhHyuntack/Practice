@@ -1,11 +1,8 @@
 package com.example.demo.user.domain.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +32,7 @@ public class Board extends Time implements Serializable {
 
   @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name="board_seq")
-  private List<File> fileList;
+  private List<FileInfo> fileInfoList;
 
   // 제목
   @Column(name="title", length = 200)
@@ -62,9 +59,14 @@ public class Board extends Time implements Serializable {
   @Column(name="board_type", length = 50)
   private String boardType;
 
+  @Column(name="is_del", length = 2)
+  private String isDel;
+
+  @Column(name="del_date")
+  private LocalDateTime delDate;
 
   @Builder
-  public Board(int boardSeq, String title, String content, int readCnt, String writer, String boardPW, String department, String contact, String boardType, List<File> fileList) {
+  public Board(int boardSeq, String title, String content, int readCnt, String writer, String boardPW, String department, String contact, String boardType, List<FileInfo> fileInfoList, String isDel,LocalDateTime delDate) {
     this.boardSeq = boardSeq;
     this.title = title;
     this.content = content;
@@ -74,6 +76,8 @@ public class Board extends Time implements Serializable {
     this.department = department;
     this.contact = contact;
     this.boardType = boardType;
-    this.fileList = fileList;
+    this.fileInfoList = fileInfoList;
+    this.isDel = isDel;
+    this.delDate = delDate;
   }
 }

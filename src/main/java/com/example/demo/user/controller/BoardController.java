@@ -2,6 +2,7 @@ package com.example.demo.user.controller;
 
 import com.example.demo.common.FileUtils;
 import com.example.demo.user.domain.entity.Board;
+import com.example.demo.user.domain.entity.FileInfo;
 import com.example.demo.user.dto.BoardDto;
 import com.example.demo.user.dto.FileDto;
 import com.example.demo.user.service.BoardService;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
@@ -29,7 +31,8 @@ public class BoardController {
 
   @Resource(name="fileUtils")
   private FileUtils fileUtils;
-
+  
+  //게시글 목록 보기
   @GetMapping("/board/list")
   public String list(@PageableDefault Pageable pageable, Model model){
     Page<Board> boardList = boardService.findBoardList(pageable);
@@ -37,13 +40,17 @@ public class BoardController {
 
     return "board/list";
   }
-
+  
+  //글쓰기 화면 이동
   @GetMapping("/board/write")
   public String write(){ return "board/write"; }
-
+  
+  //글 등록
   @PostMapping("/board/save")
   public String boardSave(BoardDto boardDto, HttpServletRequest request) throws Exception {
-    System.out.println("1");
+
+    //게시판 종류에 따른 분기처리 진행예정
+    //게시판 로그 기록 처리 예정
 
     FileDto fileDto = new FileDto();
     List<Map<String, Object>> file_list = fileUtils.parseInsertFileInfo(request, "files[]", "board", true);
@@ -63,6 +70,7 @@ public class BoardController {
     return "redirect:/board/list";
   }
 
+  //상세보기 화면 이동
   @GetMapping("/board/detail")
   public String detail(@RequestParam String boardSeq, Model model){
 
@@ -76,7 +84,8 @@ public class BoardController {
 
    return "board/detail";
   }
-
+  
+  //글 수정 화면 이동
   @PostMapping("/board/boardEdit")
   public String boardEdit(@RequestParam String boardSeq, Model model){
 
@@ -86,24 +95,61 @@ public class BoardController {
 
     return "board/write";
   }
-
+  
+  //글 수정
   @PostMapping("/board/editProc")
   @ResponseBody
   public JSONObject editProc(BoardDto boardDto, HttpServletRequest request)throws Exception {
     JSONObject json = new JSONObject();
+    
+    //게시판 종류에 따른 분기처리 진행예정
+    //게시판 로그 기록 처리 예정
 
-    //List<Map<String, Object>> file_list = fileUtils.parseInsertFileInfo(request, "files[]", "board", true);
+    FileDto fileDto = new FileDto();
 
+    boardService.boardUpdate(boardDto);
+
+    List<Map<String, Object>> file_list = fileUtils.parseInsertFileInfo(request, "files[]", "board", true);
+
+    for(int i=0; i<file_list.size();i++){
+      fileDto.setBoardSeq(boardDto.getBoardSeq());
+      fileDto.setOriginalFileName((String) file_list.get(i).get("ORIGINAL_FILE_NAME"));
+      fileDto.setStoredFileName((String) file_list.get(i).get("STORED_FILE_NAME"));
+      fileDto.setFileSize(file_list.get(i).get("FILE_SIZE")+"");
+      fileDto.setFilePath((String) file_list.get(i).get("FILE_PATH"));
+      boardService.fileSave(fileDto);
+    }
+
+    json.put("success", "true");
 
     return json;
   }
-
+  
+  //다운로드 삭제
   @PostMapping("/board/deleteFile")
   @ResponseBody
   public String deleteFile(@RequestParam int fileSeq){
     boardService.deleteFile(fileSeq);
     String result="{\"result\":\"1\"}";
     return result;
+  }
+
+  //게시글 삭제
+  @PostMapping("/board/deleteBoard")
+  @ResponseBody
+  public String deleteBoard(@RequestParam int boardSeq){
+
+    boardService.deleteBoard(boardSeq);
+    String result="{\"result\":\"1\"}";
+    return result;
+  }
+
+  //게시글 다운로드
+  @GetMapping("/board/download")
+  public void boardDownload(@RequestParam int fileSeq, HttpServletRequest request, Model model, HttpServletResponse response) throws Exception {
+    FileInfo fileInfo = boardService.selectFile(fileSeq);
+
+    fileUtils.DownloadFile("board", fileInfo, response, request);
   }
 
 }

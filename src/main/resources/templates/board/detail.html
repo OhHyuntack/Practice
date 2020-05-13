@@ -43,7 +43,8 @@
           </colgroup>
           <tbody>
           <tr>
-            <td colspan="4" class="subject">2019년 교통안전시설물 규제심의현황</td>
+            <td colspan="4" class="subject"  th:text="${detailBoard.getTitle()}">
+            </td>
           </tr>
           <tr>
             <th>등록자</th>
@@ -65,9 +66,9 @@
           <tr>
             <th>첨부파일</th>
             <td colspan="3">
-              <ul class="file" th:each="file : ${detailBoard.getFileList()}">
+              <ul class="file" th:each="file : ${detailBoard.getFileInfoList()}">
                 <li>
-                  <a href="#"><span th:text="${file.getOriginalFileName()}"></span></a>
+                  <a th:onclick="filedownload(' [[${file.getFileSeq()}]] ')"><span th:text="${file.getOriginalFileName()}"></span></a>
                 </li>
               </ul>
             </td>
@@ -109,7 +110,7 @@
 
         <div class="btn-group-position">
           <div class="right">
-            <button type="button" class="btn btn-lg btn-dark" onclick="location.href='공지사항-목록.html'">삭제</button>
+            <button type="button" class="btn btn-lg btn-dark" onclick="location.href='javascript:go_delete();'">삭제</button>
             <button type="button" class="btn btn-lg btn-primary" onclick="location.href='javascript:go_edit();'">수정</button>
             <button type="button" class="btn btn-lg btn-light" onclick="location.href='/board/list'">목록</button>
           </div>
@@ -172,6 +173,7 @@
   </article>
   <form id="frm" name="frm">
     <input type="hidden" name="boardSeq" id="boardSeq" th:value="${detailBoard.getBoardSeq()}">
+    <input type="hidden" name="fileSeq" id="fileSeq" th:value="${detailBoard.getBoardSeq()}">
   </form>
 
   <script type="text/javascript">
@@ -180,6 +182,34 @@
         document.frm.action = "/board/boardEdit";
         document.frm.submit();
       }
+
+      function go_delete(){
+        if( confirm("삭제한 데이터는 복구할 수 없습니다.\n\n해당 데이터를 삭제하시겠습니까?") ) {
+          var boardSeq = $("#boardSeq").val();
+          $.ajax({
+            url : '/board/deleteBoard',
+            dataType : 'json',
+            type : "post",
+            data : {boardSeq : boardSeq},
+            success : function(data){
+              if(data["result"]=="1") {
+                alert("삭제가 완료되었습니다");
+                location.href = "/board/list";
+              }else{
+                alert("삭제가 실패하였습니다.");
+              }
+            }
+          });
+        }
+      }
+
+      function filedownload(fileSeq){
+        document.frm.method = "GET";
+        document.frm.fileSeq.value = fileSeq;
+        document.frm.action = "/board/download";
+        document.frm.submit();
+      }
+
   </script>
 
 </th:block>

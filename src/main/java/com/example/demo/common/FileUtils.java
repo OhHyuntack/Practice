@@ -1,5 +1,6 @@
 package com.example.demo.common;
 
+import com.example.demo.user.domain.entity.FileInfo;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -141,21 +142,21 @@ public class FileUtils {
 	    ImageIO.write(scaledL, type, new File(newPath));
 	}
 	
-  /*  public boolean DownloadFile(String whatKind, Object file, HttpServletResponse response, HttpServletRequest request) {
+  public boolean DownloadFile(String whatKind, Object file, HttpServletResponse response, HttpServletRequest request) {
     	
-    	FileDefaultVO fileInfo = (FileDefaultVO) file;
-    	String Path = configUpload.get("upload"+WordUtils.capitalize(whatKind));
+    	FileInfo fileInfo = (FileInfo) file;
+			String Path = "C:/UPLOAD_FILES/";
     	System.out.println("Path:"+Path);
     	
-    	String ori_name = fileInfo.getOriginal_file_name();
-    	String sto_name_arr[] = fileInfo.getStored_file_name().split("\\.");
-    	String sto_name = fileInfo.getStored_file_name();
+    	String ori_name = fileInfo.getOriginalFileName();
+    	String sto_name_arr[] = fileInfo.getStoredFileName().split("\\.");
+    	String sto_name = fileInfo.getStoredFileName();
     	if(ori_name.indexOf("."+sto_name_arr[sto_name_arr.length-1]) < 0 ){
     		ori_name = ori_name+"."+sto_name_arr[sto_name_arr.length-1];
     	}
     	System.out.println("ori:"+ori_name);
     	System.out.println("sto:"+sto_name);
-    	File downloadFile = new File(Path+whatKind+"/"+fileInfo.getFile_path()+"/"+sto_name);
+    	File downloadFile = new File(Path+whatKind+"/"+fileInfo.getFilePath()+"/"+sto_name);
     	FileInputStream inputStream;
 		try {
 			inputStream = new FileInputStream(downloadFile);
@@ -206,7 +207,7 @@ public class FileUtils {
 			e.printStackTrace();
 			return false;
 		}
-    }*/
+    }
     
  // 브라우저 구분 메소드
     private String getBrowser(HttpServletRequest request) {

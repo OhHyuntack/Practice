@@ -1,6 +1,7 @@
 package com.example.demo.user.service;
 
 import com.example.demo.user.domain.entity.Board;
+import com.example.demo.user.domain.entity.FileInfo;
 import com.example.demo.user.domain.repository.BoardRepository;
 import com.example.demo.user.domain.repository.FileRepository;
 import com.example.demo.user.dto.BoardDto;
@@ -27,13 +28,14 @@ public class BoardService {
     String boardSeq = boardRepository.findByMaxSeq();
     return boardSeq;
   }
-  
+
   //리스트 목록 보기
   public Page<Board> findBoardList(Pageable pageable) {
+    String del = String.valueOf('N');
     pageable = PageRequest.of(
         pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
         pageable.getPageSize(), Sort.by("boardSeq").descending());
-    return boardRepository.findAll(pageable);
+    return boardRepository.findAllByIsDel(pageable, del);
   }
 
   //파일 저장
@@ -56,4 +58,14 @@ public class BoardService {
   @Transactional
   public void deleteFile(int fileSeq){ fileRepository.deleteByFileSeq(fileSeq); }
 
+  //게시글 삭제
+  @Transactional
+  public void deleteBoard(int boardSeq) { boardRepository.deleteUpdate(boardSeq); }
+
+  //게시글 수정
+  public void boardUpdate(BoardDto boardDto) { boardRepository.boardUpdate(boardDto); }
+
+  public FileInfo selectFile(int fileSeq) {
+    return fileRepository.findByFileSeq(fileSeq);
+  }
 }

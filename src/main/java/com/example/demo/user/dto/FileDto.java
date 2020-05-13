@@ -1,7 +1,6 @@
 package com.example.demo.user.dto;
 
-import com.example.demo.user.domain.entity.Board;
-import com.example.demo.user.domain.entity.File;
+import com.example.demo.user.domain.entity.FileInfo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,8 +31,8 @@ public class FileDto {
 
   private String filePath;
 
-  public File toEntity(){
-    File file = File.builder()
+  public FileInfo toEntity(){
+    FileInfo fileInfo = FileInfo.builder()
         .fileSeq(fileSeq)
         .originalFileName(originalFileName)
         .storedFileName(storedFileName)
@@ -44,7 +43,7 @@ public class FileDto {
         .regId(regId)
         .filePath(filePath)
         .build();
-    return file;
+    return fileInfo;
   }
   @Builder
   public FileDto(int fileSeq, String originalFileName, String storedFileName, int boardSeq, String fileSize,

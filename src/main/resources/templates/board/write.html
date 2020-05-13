@@ -34,7 +34,7 @@
 
         <!-- ============================================================== -->
         <!-- 서브 컨텐츠 영역 -->
-<form id="frm" name="frm" method="post" enctype="multipart/form-data" action="/board/save">
+<form id="frm" name="frm" method="post" enctype="multipart/form-data">
         <table class="table board-write">
           <caption>게시물 등록/수정</caption>
           <colgroup>
@@ -43,7 +43,8 @@
           </colgroup>
           <tbody>
           <div th:if="${detailBoard != null}">
-          <tr>
+            <input type="hidden" name="boardSeq" th:value="${detailBoard.getBoardSeq()}">
+            <tr>
             <th>제목<i class="uil-check"></i></th>
             <td><input type="text" id="title" name="title" class="form-control width-full" th:value="${detailBoard.getTitle()}"></td>
           </tr>
@@ -93,8 +94,8 @@
                 <a href="javascript:;" onClick="javascript:add_element_file('files[]');" class='btn_navy'>파일추가</a>
               </li>
               </ol>
-              <div th:if="${detailBoard.getFileList() != null}">
-                <ul class="upload-file" th:each="file : ${detailBoard.getFileList()}">
+              <div th:if="${detailBoard.getFileInfoList() != null}">
+                <ul class="upload-file" th:each="file : ${detailBoard.getFileInfoList()}">
                   <li th:id="${file.getFileSeq()}" >
                     <input type="file" name="files[]" kor-label-for-log="첨부파일" class="form-control width-xl" style="display:none">
                     <a href="javascript:;" th:onclick="deleteFile(' [[${file.getFileSeq()}]] ')" title="파일삭제">파일삭제</a>
@@ -207,16 +208,26 @@
 
     function editBoard(){
       if(confirm("수정을 완료하시겠습니까?")) {
-        var params = $("#frm").serialize();
+        var contact = $("#contact1").val() + $("#contact2").val() + $("#contact3").val();
+        $("#contact").val(contact);
+
+        var form = $('#frm')[0];
+        var formData = new FormData(form);
 
         $.ajax({
-          url: "/board/editProc",
-          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
           type: "post",
-          dataType: "json",
-          data: params,
+          enctype: 'multipart/form-data',
+          url: "/board/editProc",
+          data: formData,
+          processData: false,
+          contentType: false,
+          cache: false,
+          timeout: 600000,
           success: function (data) {
-            console.log(data);
+            if(data.success != null){
+              alert("수정되었습니다.");
+              location.href = "/board/list";
+            }
           }
         })
 

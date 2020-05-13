@@ -1,15 +1,11 @@
 package com.example.demo.user.domain.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Builder;
@@ -19,10 +15,10 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "file", uniqueConstraints = {@UniqueConstraint(columnNames = {"file_seq"})})
+@Table(name = "fileinfo", uniqueConstraints = {@UniqueConstraint(columnNames = {"file_seq"})})
 @NoArgsConstructor
 @Builder
-public class File implements Serializable {
+public class FileInfo implements Serializable {
   //파일 시퀀스
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +54,7 @@ public class File implements Serializable {
 
 
   @Builder
-  public File(int fileSeq, String originalFileName, String storedFileName, int boardSeq, String fileSize, String fileExt, String useYn, String regId, String filePath) {
+  public FileInfo(int fileSeq, String originalFileName, String storedFileName, int boardSeq, String fileSize, String fileExt, String useYn, String regId, String filePath) {
     this.fileSeq = fileSeq;
     this.originalFileName = originalFileName;
     this.storedFileName = storedFileName;

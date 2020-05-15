@@ -1,17 +1,21 @@
 package com.example.demo.user.service;
 
+import com.example.demo.common.BoardSpecification;
 import com.example.demo.user.domain.entity.Board;
 import com.example.demo.user.domain.entity.FileInfo;
 import com.example.demo.user.domain.repository.BoardRepository;
 import com.example.demo.user.domain.repository.FileRepository;
 import com.example.demo.user.dto.BoardDto;
 import com.example.demo.user.dto.FileDto;
+import java.util.List;
+import java.util.Map;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -30,12 +34,18 @@ public class BoardService {
   }
 
   //리스트 목록 보기
-  public Page<Board> findBoardList(Pageable pageable) {
+  public Page<Board> findBoardList(Pageable pageable, Map<String, String> searchMap) {
+
     String del = String.valueOf('N');
     pageable = PageRequest.of(
         pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
         pageable.getPageSize(), Sort.by("boardSeq").descending());
-    return boardRepository.findAllByIsDel(pageable, del);
+
+    if(searchMap.size() == 0){
+      return boardRepository.findAll(pageable);
+    }else{
+      return boardRepository.findAll(BoardSpecification.searchBoard(searchMap), pageable);
+    }
   }
 
   //파일 저장
@@ -50,9 +60,7 @@ public class BoardService {
   }
 
   //다음글
-  public Board findNextBoardSeq(int boardSeq){
-    return boardRepository.findNextBoardSeq(boardSeq);
-  }
+  public Board findNextBoardSeq(int boardSeq){ return boardRepository.findNextBoardSeq(boardSeq); }
 
   //다운로드 삭제
   @Transactional

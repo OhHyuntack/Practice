@@ -18,12 +18,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name = "board", uniqueConstraints = {@UniqueConstraint(columnNames = {"board_seq"})})
-public class Board extends Time implements Serializable {
+public class Board implements Serializable {
   // seq
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,8 +67,15 @@ public class Board extends Time implements Serializable {
   @Column(name="del_date")
   private LocalDateTime delDate;
 
+  @Column(name="created_date")
+  private LocalDateTime createdDate;
+
+  @Column(name="modified_date")
+  private LocalDateTime modifiedDate;
+
   @Builder
-  public Board(int boardSeq, String title, String content, int readCnt, String writer, String boardPW, String department, String contact, String boardType, List<FileInfo> fileInfoList, String isDel,LocalDateTime delDate) {
+  public Board(int boardSeq, String title, String content, int readCnt, String writer, String boardPW, String department, String contact, String boardType, List<FileInfo> fileInfoList, String isDel,LocalDateTime delDate,
+      LocalDateTime createdDate, LocalDateTime modifiedDate) {
     this.boardSeq = boardSeq;
     this.title = title;
     this.content = content;
@@ -79,5 +88,8 @@ public class Board extends Time implements Serializable {
     this.fileInfoList = fileInfoList;
     this.isDel = isDel;
     this.delDate = delDate;
+    this.modifiedDate = modifiedDate;
+    this.createdDate = createdDate;
   }
+
 }

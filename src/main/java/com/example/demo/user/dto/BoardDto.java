@@ -35,7 +35,14 @@ public class BoardDto {
   private List<FileInfo> fileInfoList;
 
   private String isDel;
+
   private LocalDateTime delDate;
+
+  private LocalDateTime createdDate;
+
+  private LocalDateTime modifiedDate;
+
+  private int rowNum;
 
   public Board toEntity(){
     Board board = Board.builder()
@@ -50,12 +57,15 @@ public class BoardDto {
         .fileInfoList(fileInfoList)
         .isDel(isDel)
         .delDate(delDate)
+        .modifiedDate(modifiedDate)
+        .createdDate(createdDate)
         .build();
     return board;
   }
   @Builder
   public BoardDto(int boardSeq, String boardPW, String title, String content, int readCnt,
-      String writer, String department, String contact, List<FileInfo> fileInfoList, String isDel, LocalDateTime delDate) {
+      String writer, String department, String contact, List<FileInfo> fileInfoList, String isDel, LocalDateTime delDate
+      , LocalDateTime createdDate, LocalDateTime modifiedDate) {
     this.boardSeq = boardSeq;
     this.boardPW = boardPW;
     this.title = title;
@@ -67,5 +77,7 @@ public class BoardDto {
     this.fileInfoList = fileInfoList;
     this.isDel = isDel;
     this.delDate = delDate;
+    this.createdDate = createdDate;
+    this.modifiedDate = modifiedDate;
   }
 }

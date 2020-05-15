@@ -1,11 +1,14 @@
 package com.example.demo.user.controller;
 
+import com.example.demo.common.CommonUtils;
 import com.example.demo.common.FileUtils;
 import com.example.demo.user.domain.entity.Board;
 import com.example.demo.user.domain.entity.FileInfo;
 import com.example.demo.user.dto.BoardDto;
 import com.example.demo.user.dto.FileDto;
 import com.example.demo.user.service.BoardService;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -34,8 +37,51 @@ public class BoardController {
   
   //게시글 목록 보기
   @GetMapping("/board/list")
-  public String list(@PageableDefault Pageable pageable, Model model){
-    Page<Board> boardList = boardService.findBoardList(pageable);
+  public String list(@PageableDefault Pageable pageable, Model model
+      , @RequestParam(value="searchType", required=false) String searchType
+      , @RequestParam(value="searchKeyword", required=false) String searchKeyword){
+
+    Map<String, String> searchMap = new HashMap<String, String>();
+
+    if(searchType != null && searchKeyword != null){
+     searchMap.put(searchType, searchKeyword);
+    }
+
+    Page<Board> boardList = boardService.findBoardList(pageable, searchMap);
+    List<BoardDto> board = new ArrayList<BoardDto>();
+
+    for (Board list : boardList.getContent()) {
+      BoardDto boardDto = new BoardDto();
+      boardDto.setBoardSeq(list.getBoardSeq());
+      boardDto.setBoardPW(list.getBoardPW());
+      boardDto.setContact(list.getContact());
+      boardDto.setContent(list.getContent());
+      boardDto.setCreatedDate(list.getCreatedDate());
+      boardDto.setDelDate(list.getDelDate());
+      boardDto.setDepartment(list.getDepartment());
+      boardDto.setFileInfoList(list.getFileInfoList());
+      boardDto.setIsDel(list.getIsDel());
+      boardDto.setModifiedDate(list.getModifiedDate());
+      boardDto.setReadCnt(list.getReadCnt());
+      boardDto.setTitle(list.getTitle());
+      boardDto.setWriter(list.getWriter());
+      board.add(boardDto);
+    }
+
+    int pageNum = pageable.getPageNumber();
+    if(pageNum == 0){
+      pageNum = 1;
+    }
+    int totalCnt = (int) boardList.getTotalElements();
+    int getSize = board.size();
+    int dataNum = CommonUtils.getDataNum(10 , pageNum, totalCnt);
+
+    for(int i = 0; i < getSize; i++) {
+      board.get(i).setRowNum(dataNum);
+      dataNum--;
+    }
+
+    model.addAttribute("board", board);
     model.addAttribute("boardList", boardList);
 
     return "board/list";

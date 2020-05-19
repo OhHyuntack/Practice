@@ -23,23 +23,23 @@ public class UserController {
   private UserService userService;
 
   @GetMapping("/")
-  public String index(){
+  public String index() {
     return "index";
   }
 
   @GetMapping("/user/join")
-  public String join(){
+  public String join() {
     return "member/join";
   }
 
   @GetMapping("/user/login")
-  public String login(){
+  public String login() {
     return "member/login";
   }
 
   @PostMapping("/user/insertMember")
   @ResponseBody
-  public JSONObject insertMember(@Valid UserDto userDto, Errors errors, Model model){
+  public JSONObject insertMember(@Valid UserDto userDto, Errors errors, Model model) {
     JSONObject json = new JSONObject();
     //유효성 검사 실패시
     if (errors.hasErrors()) {
@@ -63,7 +63,7 @@ public class UserController {
 
   @PostMapping("/user/idCheck")
   @ResponseBody
-  public JSONObject idCheck(User user){
+  public JSONObject idCheck(User user) {
     String userId = user.getUserId();
     JSONObject json = new JSONObject();
     int chkValue = 0;
@@ -72,15 +72,20 @@ public class UserController {
     return json;
   }
 
+  /**
+   * @param user
+   * @param session
+   * @return
+   */
   @PostMapping("/user/login")
   @ResponseBody
-  public JSONObject login(User user, HttpSession session){
+  public JSONObject login(User user, HttpSession session) {
     JSONObject json = new JSONObject();
     String msg = "", result = "";
     String encryPassword = UserSha256.encrypt(user.getUserPW());
     User userInfo = userService.findByUserId(user.getUserId());
-    if(userInfo != null){
-      if(userInfo.getUserPW().equals(encryPassword)){
+    if (userInfo != null) {
+      if (userInfo.getUserPW().equals(encryPassword)) {
         session.setAttribute("sessionUserId", userInfo.getUserId());
         session.setAttribute("sessionUserName", userInfo.getUserName());
         session.setAttribute("sessionMobileNo", userInfo.getMobileNo());
@@ -91,11 +96,11 @@ public class UserController {
         json.put("msg", msg);
         json.put("result", result);
         return json;
-      }else{
+      } else {
         msg = "아이디 또는 비밀번호가 다릅니다";
         result = "fail";
       }
-    }else{
+    } else {
       msg = "가입된 아이디가 없습니다";
       result = "fail";
     }
@@ -105,7 +110,7 @@ public class UserController {
   }
 
   @GetMapping("/user/logout")
-  public String logout(HttpSession session){
+  public String logout(HttpSession session) {
     session.removeAttribute("sessionUserId");
     session.removeAttribute("sessionUserName");
     session.removeAttribute("sessionMobileNo");

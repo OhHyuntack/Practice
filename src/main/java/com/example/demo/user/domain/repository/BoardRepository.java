@@ -51,4 +51,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>,
 
 
   Page<Board> findAll(Specification<Board> searchBoard, Pageable pageable);
+
+
 }

@@ -32,19 +32,19 @@ public class BoardController {
 
   private BoardService boardService;
 
-  @Resource(name="fileUtils")
+  @Resource(name = "fileUtils")
   private FileUtils fileUtils;
-  
+
   //게시글 목록 보기
   @GetMapping("/board/list")
   public String list(@PageableDefault Pageable pageable, Model model
-      , @RequestParam(value="searchType", required=false) String searchType
-      , @RequestParam(value="searchKeyword", required=false) String searchKeyword){
+      , @RequestParam(value = "searchType", required = false) String searchType
+      , @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 
     Map<String, String> searchMap = new HashMap<String, String>();
 
-    if(searchType != null && searchKeyword != null){
-     searchMap.put(searchType, searchKeyword);
+    if (searchType != null && searchKeyword != null) {
+      searchMap.put(searchType, searchKeyword);
     }
 
     Page<Board> boardList = boardService.findBoardList(pageable, searchMap);
@@ -69,14 +69,14 @@ public class BoardController {
     }
 
     int pageNum = pageable.getPageNumber();
-    if(pageNum == 0){
+    if (pageNum == 0) {
       pageNum = 1;
     }
     int totalCnt = (int) boardList.getTotalElements();
     int getSize = board.size();
-    int dataNum = CommonUtils.getDataNum(10 , pageNum, totalCnt);
+    int dataNum = CommonUtils.getDataNum(10, pageNum, totalCnt);
 
-    for(int i = 0; i < getSize; i++) {
+    for (int i = 0; i < getSize; i++) {
       board.get(i).setRowNum(dataNum);
       dataNum--;
     }
@@ -86,11 +86,13 @@ public class BoardController {
 
     return "board/list";
   }
-  
+
   //글쓰기 화면 이동
   @GetMapping("/board/write")
-  public String write(){ return "board/write"; }
-  
+  public String write() {
+    return "board/write";
+  }
+
   //글 등록
   @PostMapping("/board/save")
   public String boardSave(BoardDto boardDto, HttpServletRequest request) throws Exception {
@@ -99,16 +101,17 @@ public class BoardController {
     //게시판 로그 기록 처리 예정
 
     FileDto fileDto = new FileDto();
-    List<Map<String, Object>> file_list = fileUtils.parseInsertFileInfo(request, "files[]", "board", true);
+    List<Map<String, Object>> file_list = fileUtils
+        .parseInsertFileInfo(request, "files[]", "board", true);
     String boardSeq = boardService.boardSave(boardDto);
     boardDto.setBoardSeq(Integer.parseInt(boardSeq));
 
-    for(int i=0; i<file_list.size();i++){
+    for (int i = 0; i < file_list.size(); i++) {
       fileDto.setBoardSeq(Integer.parseInt(boardSeq));
       //file.setGidx(searchVO.getGidx());
       fileDto.setOriginalFileName((String) file_list.get(i).get("ORIGINAL_FILE_NAME"));
       fileDto.setStoredFileName((String) file_list.get(i).get("STORED_FILE_NAME"));
-      fileDto.setFileSize(file_list.get(i).get("FILE_SIZE")+"");
+      fileDto.setFileSize(file_list.get(i).get("FILE_SIZE") + "");
       fileDto.setFilePath((String) file_list.get(i).get("FILE_PATH"));
       boardService.fileSave(fileDto);
     }
@@ -118,22 +121,22 @@ public class BoardController {
 
   //상세보기 화면 이동
   @GetMapping("/board/detail")
-  public String detail(@RequestParam String boardSeq, Model model){
+  public String detail(@RequestParam String boardSeq, Model model) {
 
-   Board detailBoard = boardService.findByBoardSeq(Integer.parseInt(boardSeq));
-   Board prevBoard = boardService.findPrevBoardSeq(Integer.parseInt(boardSeq));
-   Board nextBoard = boardService.findNextBoardSeq(Integer.parseInt(boardSeq));
+    Board detailBoard = boardService.findByBoardSeq(Integer.parseInt(boardSeq));
+    Board prevBoard = boardService.findPrevBoardSeq(Integer.parseInt(boardSeq));
+    Board nextBoard = boardService.findNextBoardSeq(Integer.parseInt(boardSeq));
 
     model.addAttribute("detailBoard", detailBoard);
     model.addAttribute("prevBoard", prevBoard);
     model.addAttribute("nextBoard", nextBoard);
 
-   return "board/detail";
+    return "board/detail";
   }
-  
+
   //글 수정 화면 이동
   @PostMapping("/board/boardEdit")
-  public String boardEdit(@RequestParam String boardSeq, Model model){
+  public String boardEdit(@RequestParam String boardSeq, Model model) {
 
     Board detailBoard = boardService.findByBoardSeq(Integer.parseInt(boardSeq));
     model.addAttribute("detailBoard", detailBoard);
@@ -141,13 +144,13 @@ public class BoardController {
 
     return "board/write";
   }
-  
+
   //글 수정
   @PostMapping("/board/editProc")
   @ResponseBody
-  public JSONObject editProc(BoardDto boardDto, HttpServletRequest request)throws Exception {
+  public JSONObject editProc(BoardDto boardDto, HttpServletRequest request) throws Exception {
     JSONObject json = new JSONObject();
-    
+
     //게시판 종류에 따른 분기처리 진행예정
     //게시판 로그 기록 처리 예정
 
@@ -155,13 +158,14 @@ public class BoardController {
 
     boardService.boardUpdate(boardDto);
 
-    List<Map<String, Object>> file_list = fileUtils.parseInsertFileInfo(request, "files[]", "board", true);
+    List<Map<String, Object>> file_list = fileUtils
+        .parseInsertFileInfo(request, "files[]", "board", true);
 
-    for(int i=0; i<file_list.size();i++){
+    for (int i = 0; i < file_list.size(); i++) {
       fileDto.setBoardSeq(boardDto.getBoardSeq());
       fileDto.setOriginalFileName((String) file_list.get(i).get("ORIGINAL_FILE_NAME"));
       fileDto.setStoredFileName((String) file_list.get(i).get("STORED_FILE_NAME"));
-      fileDto.setFileSize(file_list.get(i).get("FILE_SIZE")+"");
+      fileDto.setFileSize(file_list.get(i).get("FILE_SIZE") + "");
       fileDto.setFilePath((String) file_list.get(i).get("FILE_PATH"));
       boardService.fileSave(fileDto);
     }
@@ -170,29 +174,30 @@ public class BoardController {
 
     return json;
   }
-  
+
   //다운로드 삭제
   @PostMapping("/board/deleteFile")
   @ResponseBody
-  public String deleteFile(@RequestParam int fileSeq){
+  public String deleteFile(@RequestParam int fileSeq) {
     boardService.deleteFile(fileSeq);
-    String result="{\"result\":\"1\"}";
+    String result = "{\"result\":\"1\"}";
     return result;
   }
 
   //게시글 삭제
   @PostMapping("/board/deleteBoard")
   @ResponseBody
-  public String deleteBoard(@RequestParam int boardSeq){
+  public String deleteBoard(@RequestParam int boardSeq) {
 
     boardService.deleteBoard(boardSeq);
-    String result="{\"result\":\"1\"}";
+    String result = "{\"result\":\"1\"}";
     return result;
   }
 
   //게시글 다운로드
   @GetMapping("/board/download")
-  public void boardDownload(@RequestParam int fileSeq, HttpServletRequest request, Model model, HttpServletResponse response) throws Exception {
+  public void boardDownload(@RequestParam int fileSeq, HttpServletRequest request, Model model,
+      HttpServletResponse response) throws Exception {
     FileInfo fileInfo = boardService.selectFile(fileSeq);
 
     fileUtils.DownloadFile("board", fileInfo, response, request);

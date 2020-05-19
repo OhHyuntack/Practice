@@ -4,210 +4,222 @@
 
 <th:block layout:fragment="content">
 
-    <h2 class="skip">서브메뉴</h2>
-    <div class="container">
-      <div class="snb">
-        <div class="hidden">
-          <div class="warp">
-            <div class="tit">알림과소통</div>
-            <ul>
-              <li class="active"><a href="공지사항-목록.html">공지사항</a></li><!-- 현재메뉴 표시 .active -->
-              <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
-              <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
-            </ul>
-          </div>
-        </div>
-        <a href="#" class="btn-snb-fold" title="접기"></a>
-      </div>
-
-      <h2 class="skip">컨텐츠영역</h2>
-      <section class="contents" id="contents">
-        <div class="page-tit">
-          <h3>공지사항</h3>
-          <ul class="breadcrumb">
-            <li><a href="main.html"><i class="uil-home-alt"><span>홈</span></i></a></li>
-            <li>알림과소통</li>
-            <li>공지사항</li>
+  <h2 class="skip">서브메뉴</h2>
+  <div class="container">
+    <div class="snb">
+      <div class="hidden">
+        <div class="warp">
+          <div class="tit">알림과소통</div>
+          <ul>
+            <li class="active"><a href="공지사항-목록.html">공지사항</a></li><!-- 현재메뉴 표시 .active -->
+            <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
+            <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
           </ul>
         </div>
+      </div>
+      <a href="#" class="btn-snb-fold" title="접기"></a>
+    </div>
 
-        <!-- ============================================================== -->
-        <!-- 서브 컨텐츠 영역 -->
-        <table class="table board-view">
-          <caption>게시물 읽기</caption>
-          <colgroup>
-            <col style="width: 130px;">
-            <col style="width: 300px;">
-            <col style="width: 130px;">
-            <col style="width: 300px;">
-          </colgroup>
-          <tbody>
-          <tr>
-            <td colspan="4" class="subject"  th:text="${detailBoard.getTitle()}">
-            </td>
-          </tr>
-          <tr>
-            <th>등록자</th>
-            <td th:text="${detailBoard.getWriter()}"> <span class="text-muted">  </span></td>
-            <th>등록일</th>
-            <!--td th:text="${detailBoard.get().getCreatedDate} ?
-                    ${#temporals.format(detailBoard.get().getCreatedDate,'yyyy-MM-dd HH:mm')} : ${detailBoard.get().getCreatedDate}"></td-->
-          </tr>
-          <tr>
-            <th>연락처</th>
-            <td th:text="${detailBoard.getContact()}"></td>
-            <th>조회수</th>
-            <td th:text="${detailBoard.getReadCnt()}"></td>
-          </tr>
-          <tr>
-            <td colspan="4" class="content" th:text="${detailBoard.getContent()}">
-            </td>
-          </tr>
-          <tr>
-            <th>첨부파일</th>
-            <td colspan="3">
-              <ul class="file" th:each="file : ${detailBoard.getFileInfoList()}">
-                <li>
-                  <a th:onclick="filedownload(' [[${file.getFileSeq()}]] ')"><span th:text="${file.getOriginalFileName()}"></span></a>
-                </li>
-              </ul>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+    <h2 class="skip">컨텐츠영역</h2>
+    <section class="contents" id="contents">
+      <div class="page-tit">
+        <h3>공지사항</h3>
+        <ul class="breadcrumb">
+          <li><a href="main.html"><i class="uil-home-alt"><span>홈</span></i></a></li>
+          <li>알림과소통</li>
+          <li>공지사항</li>
+        </ul>
+      </div>
 
-        <table class="table board-post">
-          <caption></caption>
-          <colgroup>
-            <col style="width: 130px;">
-            <col style="width: 735px;">
-          </colgroup>
-          <tbody>
-            <tr>
-              <th>이전글</th>
-              <td th:if="${prevBoard != null}">
-                <a th:href="@{/board/detail(boardSeq = ${prevBoard.getBoardSeq()})}">
-                  <span th:text="${prevBoard.getTitle()}"></span>
-                </a>
-              </td>
-              <td th:if="${prevBoard == null}">
-                  이전글이 없습니다.
-              </td>
-            </tr>
-          <tr>
-            <th>다음글</th>
-            <td th:if="${nextBoard != null}">
-              <a th:href="@{/board/detail(boardSeq = ${nextBoard.getBoardSeq()})}">
-                <span th:text="${nextBoard.getTitle()}"></span>
-              </a>
-            </td>
-            <td th:if="${nextBoard == null}">
-                다음글이 없습니다.
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <!-- ============================================================== -->
+      <!-- 서브 컨텐츠 영역 -->
+      <table class="table board-view">
+        <caption>게시물 읽기</caption>
+        <colgroup>
+          <col style="width: 130px;">
+          <col style="width: 300px;">
+          <col style="width: 130px;">
+          <col style="width: 300px;">
+        </colgroup>
+        <tbody>
+        <tr>
+          <td colspan="4" class="subject" th:text="${detailBoard.getTitle()}">
+          </td>
+        </tr>
+        <tr>
+          <th>등록자</th>
+          <td th:text="${detailBoard.getWriter()}"><span class="text-muted">  </span></td>
+          <th>등록일</th>
+          <!--td th:text="${detailBoard.get().getCreatedDate} ?
+                  ${#temporals.format(detailBoard.get().getCreatedDate,'yyyy-MM-dd HH:mm')} : ${detailBoard.get().getCreatedDate}"></td-->
+        </tr>
+        <tr>
+          <th>연락처</th>
+          <td th:text="${detailBoard.getContact()}"></td>
+          <th>조회수</th>
+          <td th:text="${detailBoard.getReadCnt()}"></td>
+        </tr>
+        <tr>
+          <td colspan="4" class="content" th:text="${detailBoard.getContent()}">
+          </td>
+        </tr>
+        <tr>
+          <th>첨부파일</th>
+          <td colspan="3">
+            <ul class="file" th:each="file : ${detailBoard.getFileInfoList()}">
+              <li>
+                <a th:onclick="filedownload(' [[${file.getFileSeq()}]] ')"><span
+                    th:text="${file.getOriginalFileName()}"></span></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        </tbody>
+      </table>
 
-        <div class="btn-group-position">
-          <div class="right">
-            <button type="button" class="btn btn-lg btn-dark" onclick="location.href='javascript:go_delete();'">삭제</button>
-            <button type="button" class="btn btn-lg btn-primary" onclick="location.href='javascript:go_edit();'">수정</button>
-            <button type="button" class="btn btn-lg btn-light" onclick="location.href='/board/list'">목록</button>
-          </div>
+      <table class="table board-post">
+        <caption></caption>
+        <colgroup>
+          <col style="width: 130px;">
+          <col style="width: 735px;">
+        </colgroup>
+        <tbody>
+        <tr>
+          <th>이전글</th>
+          <td th:if="${prevBoard != null}">
+            <a th:href="@{/board/detail(boardSeq = ${prevBoard.getBoardSeq()})}">
+              <span th:text="${prevBoard.getTitle()}"></span>
+            </a>
+          </td>
+          <td th:if="${prevBoard == null}">
+            이전글이 없습니다.
+          </td>
+        </tr>
+        <tr>
+          <th>다음글</th>
+          <td th:if="${nextBoard != null}">
+            <a th:href="@{/board/detail(boardSeq = ${nextBoard.getBoardSeq()})}">
+              <span th:text="${nextBoard.getTitle()}"></span>
+            </a>
+          </td>
+          <td th:if="${nextBoard == null}">
+            다음글이 없습니다.
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="btn-group-position">
+        <div class="right">
+          <button type="button" class="btn btn-lg btn-dark"
+                  onclick="location.href='javascript:go_delete();'">삭제
+          </button>
+          <button type="button" class="btn btn-lg btn-primary"
+                  onclick="location.href='javascript:go_edit();'">수정
+          </button>
+          <button type="button" class="btn btn-lg btn-light" onclick="location.href='/board/list'">
+            목록
+          </button>
         </div>
+      </div>
 
-        <!-- modal : 비밀번호 변경 -->
-        <div class="modal fade" id="pw-change" tabindex="-1" role="dialog" data-backdrop="static">
-          <div class="modal-dialog modal-dialog-centered modal-md">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">비밀번호 변경</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
-              </div>
-              <div class="modal-body">
-                <strong class="card-title font-size-15">주기적인 비밀번호 변경을 통해 개인정보를 안전하게 보호하세요.</strong>
-                <table class="table table-detail mt-3">
-                  <caption></caption>
-                  <colgroup>
-                    <col style="width: 120px;">
-                    <col style="width: 345px;">
-                  </colgroup>
-                  <tbody>
-                  <tr>
-                    <th>현재 비밀번호</th>
-                    <td><input type="password" class="form-control width-md"></td>
-                  </tr>
-                  <tr>
-                    <th>새 비밀번호</th>
-                    <td>
-                      <div class="form-group has-success">
-                        <input type="password" value="correct value" class="form-control width-md is-valid" id="inputInvalid1">
-                        <div class="valid-feedback">매우 안전한 비밀번호입니다.</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>새 비밀번호 확인</th>
-                    <td>
-                      <div class="form-group has-danger">
-                        <input type="password" value="wrong value" class="form-control width-md is-invalid" id="inputInvalid2">
-                        <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
-                      </div>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-                <p class="guide-ment">비밀번호는 영문, 숫자, 특수문자를 포함하여 <em>8자리 이상</em> 입력하셔야 합니다.</p>
-                <div class="btn-group-position">
-                  <div class="center">
-                    <button type="button" class="btn btn-lg btn-primary" data-dismiss="modal" aria-label="Close">저장</button>
-                  </div>
+      <!-- modal : 비밀번호 변경 -->
+      <div class="modal fade" id="pw-change" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">비밀번호 변경</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <strong class="card-title font-size-15">주기적인 비밀번호 변경을 통해 개인정보를 안전하게 보호하세요.</strong>
+              <table class="table table-detail mt-3">
+                <caption></caption>
+                <colgroup>
+                  <col style="width: 120px;">
+                  <col style="width: 345px;">
+                </colgroup>
+                <tbody>
+                <tr>
+                  <th>현재 비밀번호</th>
+                  <td><input type="password" class="form-control width-md"></td>
+                </tr>
+                <tr>
+                  <th>새 비밀번호</th>
+                  <td>
+                    <div class="form-group has-success">
+                      <input type="password" value="correct value"
+                             class="form-control width-md is-valid" id="inputInvalid1">
+                      <div class="valid-feedback">매우 안전한 비밀번호입니다.</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>새 비밀번호 확인</th>
+                  <td>
+                    <div class="form-group has-danger">
+                      <input type="password" value="wrong value"
+                             class="form-control width-md is-invalid" id="inputInvalid2">
+                      <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <p class="guide-ment">비밀번호는 영문, 숫자, 특수문자를 포함하여 <em>8자리 이상</em> 입력하셔야 합니다.</p>
+              <div class="btn-group-position">
+                <div class="center">
+                  <button type="button" class="btn btn-lg btn-primary" data-dismiss="modal"
+                          aria-label="Close">저장
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div><!-- // modal : 비밀번호 변경 -->
-        <!-- ============================================================== -->
-      </section>
-    </div>
+        </div>
+      </div><!-- // modal : 비밀번호 변경 -->
+      <!-- ============================================================== -->
+    </section>
+  </div>
   <form id="frm" name="frm">
     <input type="hidden" name="boardSeq" id="boardSeq" th:value="${detailBoard.getBoardSeq()}">
     <input type="hidden" name="fileSeq" id="fileSeq" th:value="${detailBoard.getBoardSeq()}">
   </form>
 
   <script type="text/javascript">
-      function go_edit(){
-        document.frm.method = "post";
-        document.frm.action = "/board/boardEdit";
-        document.frm.submit();
-      }
+    function go_edit() {
+      document.frm.method = "post";
+      document.frm.action = "/board/boardEdit";
+      document.frm.submit();
+    }
 
-      function go_delete(){
-        if( confirm("삭제한 데이터는 복구할 수 없습니다.\n\n해당 데이터를 삭제하시겠습니까?") ) {
-          var boardSeq = $("#boardSeq").val();
-          $.ajax({
-            url : '/board/deleteBoard',
-            dataType : 'json',
-            type : "post",
-            data : {boardSeq : boardSeq},
-            success : function(data){
-              if(data["result"]=="1") {
-                alert("삭제가 완료되었습니다");
-                location.href = "/board/list";
-              }else{
-                alert("삭제가 실패하였습니다.");
-              }
+    function go_delete() {
+      if (confirm("삭제한 데이터는 복구할 수 없습니다.\n\n해당 데이터를 삭제하시겠습니까?")) {
+        var boardSeq = $("#boardSeq").val();
+        $.ajax({
+          url: '/board/deleteBoard',
+          dataType: 'json',
+          type: "post",
+          data: {boardSeq: boardSeq},
+          success: function (data) {
+            if (data["result"] == "1") {
+              alert("삭제가 완료되었습니다");
+              location.href = "/board/list";
+            } else {
+              alert("삭제가 실패하였습니다.");
             }
-          });
-        }
+          }
+        });
       }
+    }
 
-      function filedownload(fileSeq){
-        document.frm.method = "GET";
-        document.frm.fileSeq.value = fileSeq;
-        document.frm.action = "/board/download";
-        document.frm.submit();
-      }
+    function filedownload(fileSeq) {
+      document.frm.method = "GET";
+      document.frm.fileSeq.value = fileSeq;
+      document.frm.action = "/board/download";
+      document.frm.submit();
+    }
 
   </script>
 

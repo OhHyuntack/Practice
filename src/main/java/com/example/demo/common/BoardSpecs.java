@@ -18,6 +18,7 @@ public class BoardSpecs {
       }
     };
   }
+
   public static Specification<Board> contentLike(final String keyword) {
     return new Specification<Board>() {
       @Override

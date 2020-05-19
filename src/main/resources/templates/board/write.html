@@ -4,36 +4,36 @@
 
 <th:block layout:fragment="content">
 
-    <h2 class="skip">서브메뉴</h2>
-    <div class="container">
-      <div class="snb">
-        <div class="hidden">
-          <div class="warp">
-            <div class="tit">알림과소통</div>
-            <ul>
-              <li class="active"><a href="공지사항-목록.html">공지사항</a></li><!-- 현재메뉴 표시 .active -->
-              <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
-              <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
-            </ul>
-          </div>
-        </div>
-        <a href="#" class="btn-snb-fold" title="접기"></a>
-      </div>
-
-      <h2 class="skip">컨텐츠영역</h2>
-      <section class="contents" id="contents">
-        <div class="page-tit">
-          <h3>공지사항</h3>
-          <ul class="breadcrumb">
-            <li><a href="main.html"><i class="uil-home-alt"><span>홈</span></i></a></li>
-            <li>알림과소통</li>
-            <li>공지사항</li>
+  <h2 class="skip">서브메뉴</h2>
+  <div class="container">
+    <div class="snb">
+      <div class="hidden">
+        <div class="warp">
+          <div class="tit">알림과소통</div>
+          <ul>
+            <li class="active"><a href="공지사항-목록.html">공지사항</a></li><!-- 현재메뉴 표시 .active -->
+            <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
+            <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
           </ul>
         </div>
+      </div>
+      <a href="#" class="btn-snb-fold" title="접기"></a>
+    </div>
 
-        <!-- ============================================================== -->
-        <!-- 서브 컨텐츠 영역 -->
-<form id="frm" name="frm" method="post" enctype="multipart/form-data">
+    <h2 class="skip">컨텐츠영역</h2>
+    <section class="contents" id="contents">
+      <div class="page-tit">
+        <h3>공지사항</h3>
+        <ul class="breadcrumb">
+          <li><a href="main.html"><i class="uil-home-alt"><span>홈</span></i></a></li>
+          <li>알림과소통</li>
+          <li>공지사항</li>
+        </ul>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- 서브 컨텐츠 영역 -->
+      <form id="frm" name="frm" method="post" enctype="multipart/form-data">
         <table class="table board-write">
           <caption>게시물 등록/수정</caption>
           <colgroup>
@@ -44,82 +44,25 @@
           <div th:if="${detailBoard != null}">
             <input type="hidden" name="boardSeq" th:value="${detailBoard.getBoardSeq()}">
             <tr>
-            <th>제목<i class="uil-check"></i></th>
-            <td><input type="text" id="title" name="title" class="form-control width-full" th:value="${detailBoard.getTitle()}"></td>
-          </tr>
-          <tr>
-            <th>성명<i class="uil-check"></i></th>
-            <td th:if="${detailBoard.getTitle() == null}">
-              <input type="text" id="writer" name="writer" class="form-control width-md" th:value="${session.sessionUserName}">
-            </td>
-            <td th:if="${detailBoard.getTitle() != null}">
-              <input type="text" id="writer" name="writer" class="form-control width-md" th:value="${detailBoard.getTitle()}">
-            </td>
-          </tr>
-          <tr>
-            <th>부서명</th>
-            <td><input type="text" id="department" name="department" class="form-control width-md" th:value="${detailBoard.getDepartment()}"></td>
-          </tr>
-          <tr>
-            <th>연락처<i class="uil-check"></i></th>
-            <td>
-              <select id="contact1" class="form-control width-xs">
-                <option>02</option>
-                <option>010</option>
-                <option>031</option>
-              </select>
-              <em class="hyphen">-</em>
-              <input type="text" id="contact2" class="form-control width-xs">
-              <em class="hyphen">-</em>
-              <input type="text" id="contact3" class="form-control width-xs">
-              <input type="hidden" id="contact" name="contact">
-            </td>
-          </tr>
-          <tr>
-            <th>내용<i class="uil-check"></i></th>
-            <td>
-              <textarea class="form-control width-full" th:text="${detailBoard.getContent()}" id="content" name="content" rows="7" th:value="${detailBoard.getContent()}">
-              </textarea>
-            </td>
-          </tr>
-
-          <tr>
-            <th>첨부파일</th>
-            <td>
-              <p class="counsel width-full">파일 첨부는 pdf, xls, xlsx, doc, docx, hwp, jpg, png, gif 만 가능합니다.</p>
-              <ol class="input-file-list" id="addFile">
-              <li>
-                <input type="file" name="files[]" kor-label-for-log="첨부파일" class="form-control width-xl">
-                <a href="javascript:;" onClick="javascript:add_element_file('files[]');" class='btn_navy'>파일추가</a>
-              </li>
-              </ol>
-              <div th:if="${detailBoard.getFileInfoList() != null}">
-                <ul class="upload-file" th:each="file : ${detailBoard.getFileInfoList()}">
-                  <li th:id="${file.getFileSeq()}" >
-                    <input type="file" name="files[]" kor-label-for-log="첨부파일" class="form-control width-xl" style="display:none">
-                    <a href="javascript:;" th:onclick="deleteFile(' [[${file.getFileSeq()}]] ')" title="파일삭제">파일삭제</a>
-                    <span th:text="  ${file.getOriginalFileName()}"></span>
-                  </li>
-                </ul>
-              </div>
-            </td>
-          </tr>
-          </div>
-
-          <div th:if="${detailBoard == null}">
-            <tr>
               <th>제목<i class="uil-check"></i></th>
-              <td><input type="text" id="title" name="title" class="form-control width-full"></td>
+              <td><input type="text" id="title" name="title" class="form-control width-full"
+                         th:value="${detailBoard.getTitle()}"></td>
             </tr>
             <tr>
               <th>성명<i class="uil-check"></i></th>
-              <td>
-                <input type="text" id="writer" name="writer" class="form-control width-md" th:value="${session.sessionUserName}">
+              <td th:if="${detailBoard.getTitle() == null}">
+                <input type="text" id="writer" name="writer" class="form-control width-md"
+                       th:value="${session.sessionUserName}">
+              </td>
+              <td th:if="${detailBoard.getTitle() != null}">
+                <input type="text" id="writer" name="writer" class="form-control width-md"
+                       th:value="${detailBoard.getTitle()}">
               </td>
             </tr>
             <tr>
               <th>부서명</th>
-              <td><input type="text" id="department" name="department" class="form-control width-md" ></td>
+              <td><input type="text" id="department" name="department" class="form-control width-md"
+                         th:value="${detailBoard.getDepartment()}"></td>
             </tr>
             <tr>
               <th>연락처<i class="uil-check"></i></th>
@@ -139,7 +82,8 @@
             <tr>
               <th>내용<i class="uil-check"></i></th>
               <td>
-              <textarea class="form-control width-full" name="content" rows="7" >
+              <textarea class="form-control width-full" th:text="${detailBoard.getContent()}"
+                        id="content" name="content" rows="7" th:value="${detailBoard.getContent()}">
               </textarea>
               </td>
             </tr>
@@ -147,11 +91,82 @@
             <tr>
               <th>첨부파일</th>
               <td>
-                <p class="counsel width-full">파일 첨부는 pdf, xls, xlsx, doc, docx, hwp, jpg, png, gif 만 가능합니다.</p>
+                <p class="counsel width-full">파일 첨부는 pdf, xls, xlsx, doc, docx, hwp, jpg, png, gif 만
+                  가능합니다.</p>
                 <ol class="input-file-list" id="addFile">
                   <li>
-                    <input type="file" name="files[]" kor-label-for-log="첨부파일" class="form-control width-xl">
-                    <a href="javascript:;" onClick="javascript:add_element_file('files[]');" class='btn_navy'>파일추가</a>
+                    <input type="file" name="files[]" kor-label-for-log="첨부파일"
+                           class="form-control width-xl">
+                    <a href="javascript:;" onClick="javascript:add_element_file('files[]');"
+                       class='btn_navy'>파일추가</a>
+                  </li>
+                </ol>
+                <div th:if="${detailBoard.getFileInfoList() != null}">
+                  <ul class="upload-file" th:each="file : ${detailBoard.getFileInfoList()}">
+                    <li th:id="${file.getFileSeq()}">
+                      <input type="file" name="files[]" kor-label-for-log="첨부파일"
+                             class="form-control width-xl" style="display:none">
+                      <a href="javascript:;" th:onclick="deleteFile(' [[${file.getFileSeq()}]] ')"
+                         title="파일삭제">파일삭제</a>
+                      <span th:text="  ${file.getOriginalFileName()}"></span>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </div>
+
+          <div th:if="${detailBoard == null}">
+            <tr>
+              <th>제목<i class="uil-check"></i></th>
+              <td><input type="text" id="title" name="title" class="form-control width-full"></td>
+            </tr>
+            <tr>
+              <th>성명<i class="uil-check"></i></th>
+              <td>
+                <input type="text" id="writer" name="writer" class="form-control width-md"
+                       th:value="${session.sessionUserName}">
+              </td>
+            </tr>
+            <tr>
+              <th>부서명</th>
+              <td><input type="text" id="department" name="department"
+                         class="form-control width-md"></td>
+            </tr>
+            <tr>
+              <th>연락처<i class="uil-check"></i></th>
+              <td>
+                <select id="contact1" class="form-control width-xs">
+                  <option>02</option>
+                  <option>010</option>
+                  <option>031</option>
+                </select>
+                <em class="hyphen">-</em>
+                <input type="text" id="contact2" class="form-control width-xs">
+                <em class="hyphen">-</em>
+                <input type="text" id="contact3" class="form-control width-xs">
+                <input type="hidden" id="contact" name="contact">
+              </td>
+            </tr>
+            <tr>
+              <th>내용<i class="uil-check"></i></th>
+              <td>
+              <textarea class="form-control width-full" name="content" rows="7">
+              </textarea>
+              </td>
+            </tr>
+
+            <tr>
+              <th>첨부파일</th>
+              <td>
+                <p class="counsel width-full">파일 첨부는 pdf, xls, xlsx, doc, docx, hwp, jpg, png, gif 만
+                  가능합니다.</p>
+                <ol class="input-file-list" id="addFile">
+                  <li>
+                    <input type="file" name="files[]" kor-label-for-log="첨부파일"
+                           class="form-control width-xl">
+                    <a href="javascript:;" onClick="javascript:add_element_file('files[]');"
+                       class='btn_navy'>파일추가</a>
                   </li>
                 </ol>
               </td>
@@ -159,21 +174,25 @@
           </div>
           </tbody>
         </table>
-</form>
-        <div class="btn-group-position">
-          <div class="center">
-            <button type="button" class="btn btn-lg btn-light" onclick="location.href='/board/list'">취소</button>
-            <span th:if="${detailBoard == null}">
-              <button type="button" class="btn btn-lg btn-primary" onclick="saveBoard();">등록</button>
+      </form>
+      <div class="btn-group-position">
+        <div class="center">
+          <button type="button" class="btn btn-lg btn-light" onclick="location.href='/board/list'">
+            취소
+          </button>
+          <span th:if="${detailBoard == null}">
+              <button type="button" class="btn btn-lg btn-primary"
+                      onclick="saveBoard();">등록</button>
             </span>
-            <span th:if="${detailBoard != null}">
-              <button type="button" class="btn btn-lg btn-primary" onclick="editBoard();">수정</button>
+          <span th:if="${detailBoard != null}">
+              <button type="button" class="btn btn-lg btn-primary"
+                      onclick="editBoard();">수정</button>
             </span>
-          </div>
         </div>
+      </div>
 
-      </section>
-    </div>
+    </section>
+  </div>
 
   <script type="text/javascript">
     $(document).ready(function () {
@@ -182,30 +201,32 @@
       });
     });
 
-    function add_element_file(nv){
-        if($(document).find('input[name="files[]"]').length >= 5){
-          alert("5개 이상 파일 추가 하실 수 없습니다.");
-          return false;
-        }
-        $("#addFile").append('<li>' +
-            '<input type="file" class="form-control width-xl" name="' + nv + '" kor-label-for-log="첨부파일" >' +
-            '<a class="btn btn-light removeFileBtn"><i class="uil-trash-alt"></i>삭제</a>' +
-            '</li>');
+    function add_element_file(nv) {
+      if ($(document).find('input[name="files[]"]').length >= 5) {
+        alert("5개 이상 파일 추가 하실 수 없습니다.");
+        return false;
+      }
+      $("#addFile").append('<li>' +
+          '<input type="file" class="form-control width-xl" name="' + nv
+          + '" kor-label-for-log="첨부파일" >' +
+          '<a class="btn btn-light removeFileBtn"><i class="uil-trash-alt"></i>삭제</a>' +
+          '</li>');
     }
-    function deleteFile(){
+
+    function deleteFile() {
       // 해당 첨부파일 삭제
       $("#addFile li:last input[type='file']:last").parent().remove();
     }
 
-    function saveBoard(){
+    function saveBoard() {
       /*유효성*/
       var contact = $("#contact1").val() + $("#contact2").val() + $("#contact3").val();
       $("#contact").val(contact);
       document.frm.submit();
     }
 
-    function editBoard(){
-      if(confirm("수정을 완료하시겠습니까?")) {
+    function editBoard() {
+      if (confirm("수정을 완료하시겠습니까?")) {
         var contact = $("#contact1").val() + $("#contact2").val() + $("#contact3").val();
         $("#contact").val(contact);
 
@@ -222,7 +243,7 @@
           cache: false,
           timeout: 600000,
           success: function (data) {
-            if(data.success != null){
+            if (data.success != null) {
               alert("수정되었습니다.");
               location.href = "/board/list";
             }
@@ -232,25 +253,25 @@
       }
     }
 
-    function deleteFile(fileSeq){
-      var select = "#"+fileSeq;
+    function deleteFile(fileSeq) {
+      var select = "#" + fileSeq;
       select = select.replace(/ /g, '');
-       if(confirm("지금 즉시 삭제처리되며, 삭제된 첨부파일은 복구가 불가능합니다.\n\n해당 첨부파일을 지금 즉시 삭제하시겠습니까?")){
-         $.ajax({
-           url : '/board/deleteFile',
-           dataType : 'json',
-           type : "post",
-           data : {fileSeq : fileSeq},
-           success : function(data){
-             if(data["result"]=="1") {
-               alert("선택한 첨부파일의 삭제가 완료되었습니다");
-               $(select).remove();
-             }else{
-               alert("선택한 첨부파일의 삭제가 실패하였습니다.");
-             }
-           }
-         });
-       }
+      if (confirm("지금 즉시 삭제처리되며, 삭제된 첨부파일은 복구가 불가능합니다.\n\n해당 첨부파일을 지금 즉시 삭제하시겠습니까?")) {
+        $.ajax({
+          url: '/board/deleteFile',
+          dataType: 'json',
+          type: "post",
+          data: {fileSeq: fileSeq},
+          success: function (data) {
+            if (data["result"] == "1") {
+              alert("선택한 첨부파일의 삭제가 완료되었습니다");
+              $(select).remove();
+            } else {
+              alert("선택한 첨부파일의 삭제가 실패하였습니다.");
+            }
+          }
+        });
+      }
     }
 
   </script>

@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10' //querydsl plugin
 }
 
 group = 'com.example'
@@ -24,25 +25,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
     implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
-
     /*json*/
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
     /*mysql database*/
     runtimeOnly 'mysql:mysql-connector-java'
-
     implementation      'org.springframework.boot:spring-boot-starter-web'
-
     // https://mvnrepository.com/artifact/commons-io/commons-io
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
-
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
-    // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
     compile group: 'com.querydsl', name: 'querydsl-jpa', version: '4.2.1'
-
+    compile group: 'com.querydsl', name: 'querydsl-apt', version: '4.2.1'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -52,4 +47,22 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+def querydslSrcDir = 'src/main/generated'
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets{
+    main{
+        java{
+            srcDirs 'src/main/java', querydslSrcDir
+        }
+    }
+
 }

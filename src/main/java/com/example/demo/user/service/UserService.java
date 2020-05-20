@@ -1,10 +1,14 @@
 package com.example.demo.user.service;
 
+import com.example.demo.user.domain.entity.QUser;
 import com.example.demo.user.domain.entity.User;
 import com.example.demo.user.domain.repository.UserRepository;
 import com.example.demo.user.dto.UserDto;
+import com.querydsl.jpa.impl.JPAQuery;
 import java.util.HashMap;
 import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -15,6 +19,9 @@ import org.springframework.validation.FieldError;
 public class UserService {
 
   private UserRepository userRepository;
+
+  private final QUser quser = QUser.user;
+  private final EntityManager entityManager;
 
   // 회원가입 시, 유효성 체크
   public Map<String, String> validateHandling(Errors errors) {
@@ -39,5 +46,14 @@ public class UserService {
 
   public User findByUserId(String userId) {
     return userRepository.findByUserId(userId);
+  }
+
+  @Transactional
+  public User findById(String userId){
+    final JPAQuery<User> query = new JPAQuery<>(entityManager);
+    query.from(quser)
+        .where(quser.userId.eq(userId));
+    return query.fetchOne();
+
   }
 }

@@ -84,6 +84,9 @@ public class UserController {
     String msg = "", result = "";
     String encryPassword = UserSha256.encrypt(user.getUserPW());
     User userInfo = userService.findByUserId(user.getUserId());
+
+    User userTest = userService.findById(user.getUserId());
+
     if (userInfo != null) {
       if (userInfo.getUserPW().equals(encryPassword)) {
         session.setAttribute("sessionUserId", userInfo.getUserId());

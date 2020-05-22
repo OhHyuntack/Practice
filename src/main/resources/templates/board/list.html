@@ -34,20 +34,22 @@
       <!-- 서브 컨텐츠 영역 -->
       <form class="board-search-form" id="searchFrm" name="searchFrm">
         <select class="form-control width-sm" name="searchType" id="searchType">
-          <option value="all">전체</option>
-          <option value="title">제목</option>
-          <option value="content">내용</option>
+          <option value="all" th:selected="${searchType eq 'all'}">전체</option>
+          <option value="title" th:selected="${searchType eq 'title'}">제목</option>
+          <option value="content" th:selected="${searchType eq 'content'}">내용</option>
         </select>
-        <input type="text" id="searchKeyword" name="searchKeyword" class="form-control">
+        <input type="text" id="searchKeyword" name="searchKeyword" th:value="${searchKeyword}" class="form-control">
+        <input type="hidden" id="viewLow" name="viewLow" value="">
         <button type="button" onclick="search_go();" class="btn btn-md btn-primary">검색</button>
+
       </form>
 
       <div class="btn-group-position">
         <div class="left">
-          <select class="form-control width-md">
-            <option>10개씩 보기</option>
-            <option>20개씩 보기</option>
-            <option>30개씩 보기</option>
+          <select class="form-control width-md" id="selectLow">
+            <option value="10" th:selected="${viewLow eq '10'}">10개씩 보기</option>
+            <option value="20" th:selected="${viewLow eq '20'}">20개씩 보기</option>
+            <option value="30" th:selected="${viewLow eq '30'}">30개씩 보기</option>
           </select>
           <!-- 필요하면 넣으세요
                     <div class="count">전체 <em>26</em>건 (페이지 1/10)</div> -->
@@ -103,7 +105,7 @@
 
           <li th:each="page :${#numbers.sequence(startNumber, endNumber)}"
               th:class="(${page} == ${boardList.number}+1) ? 'active'">
-            <a th:href="@{/board/list(page=${page})}" th:text="${page}"><span
+            <a th:href="@{/board/list(page=${page},searchType=${searchType},searchKeyword=${searchKeyword},viewLow=${viewLow})}" th:text="${page}"><span
                 class="sr-only"></span></a>
           </li>
 
@@ -176,7 +178,8 @@
     </section>
   </div>
   <script type="text/javascript">
-    function search_go() {
+    function search_go(){
+      $("#viewLow").val($("#selectLow option:selected").val());
       document.searchFrm.action = "/board/list";
       document.searchFrm.submit();
     }

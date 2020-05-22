@@ -1,23 +1,25 @@
 package com.example.demo.user.service;
 
 import com.example.demo.common.BoardSpecification;
-import com.example.demo.common.BoardSpecs;
 import com.example.demo.user.domain.entity.Board;
 import com.example.demo.user.domain.entity.FileInfo;
+import com.example.demo.user.domain.entity.QBoard;
 import com.example.demo.user.domain.repository.BoardRepository;
 import com.example.demo.user.domain.repository.FileRepository;
 import com.example.demo.user.dto.BoardDto;
 import com.example.demo.user.dto.FileDto;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -28,6 +30,10 @@ public class BoardService {
 
   private FileRepository fileRepository;
 
+  @PersistenceContext
+  private EntityManager em;
+
+
   // 글등록
   public String boardSave(BoardDto boardDto) {
     boardRepository.save(boardDto.toEntity());
@@ -36,21 +42,17 @@ public class BoardService {
   }
 
   //리스트 목록 보기
-  public Page<Board> findBoardList(Pageable pageable, Map<String, String> searchMap) {
+  public Page<Board> findBoardList(Pageable pageable, Map<String, String> searchMap,int viewLow) {
 
     String del = String.valueOf('N');
     pageable = PageRequest.of(
         pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
-        pageable.getPageSize(), Sort.by("boardSeq").descending());
+        viewLow, Sort.by("boardSeq").descending());
 
     if (searchMap.size() == 0) {
       return boardRepository.findAll(pageable);
     } else {
-      if (searchMap.get("searchType").equals("all")) {
-        return boardRepository.findAll(Specification.where(BoardSpecs.titleLike(searchMap.get("searchKeyword"))).and(BoardSpecs.contentLike(searchMap.get("searchKeyword"))), pageable);
-      }else {
-        return boardRepository.findAll(BoardSpecification.searchBoard(searchMap), pageable);
-      }
+      return boardRepository.findAll(BoardSpecification.searchBoard(searchMap), pageable);
     }
   }
 
@@ -94,4 +96,29 @@ public class BoardService {
   public FileInfo selectFile(int fileSeq) {
     return fileRepository.findByFileSeq(fileSeq);
   }
+
+  //querydsl
+  public List<Board> qFindBoardList(Pageable pageable, String searchType, String searchKeyword) {
+    JPAQuery<Board> query = new JPAQuery<>(em);
+    QBoard qBoard = QBoard.board;
+    BooleanBuilder builder = new BooleanBuilder();
+
+    /*if (searchKeyword != null) {
+      if (searchType.equals("title")) {
+        builder.and(qBoard.title.eq(searchKeyword));
+      } else if (searchType.equals("content")) {
+        builder.and(qBoard.content.eq(searchKeyword));
+      } else if (searchType.equals("all")) {
+        builder.and(qBoard.title.eq(searchKeyword));
+        builder.and(qBoard.content.eq(searchKeyword));
+      }
+    }*/
+    //.where(builder)
+    query.from(QBoard.board)
+        .where(qBoard.isDel.eq("N"))
+        .orderBy(qBoard.boardSeq.desc())
+        .offset(0).limit(10);
+    return query.fetch();
+  }
+
 }

@@ -39,15 +39,22 @@ public class BoardController {
   @GetMapping("/board/list")
   public String list(@PageableDefault Pageable pageable, Model model
       , @RequestParam(value = "searchType", required = false) String searchType
-      , @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+      , @RequestParam(value = "searchKeyword", required = false) String searchKeyword
+      , @RequestParam(value = "viewLow", required = false) String viewLow) {
 
     Map<String, String> searchMap = new HashMap<String, String>();
 
     if (searchType != null && searchKeyword != null) {
       searchMap.put(searchType, searchKeyword);
     }
+    if(viewLow == null){
+      viewLow = "10";
+    }
 
-    Page<Board> boardList = boardService.findBoardList(pageable, searchMap);
+    Page<Board> boardList = boardService.findBoardList(pageable, searchMap, Integer.parseInt(viewLow));
+
+  //  List<Board> qBoardList = boardService.qFindBoardList(pageable, searchType, searchKeyword);
+
     List<BoardDto> board = new ArrayList<BoardDto>();
 
     for (Board list : boardList.getContent()) {
@@ -74,13 +81,15 @@ public class BoardController {
     }
     int totalCnt = (int) boardList.getTotalElements();
     int getSize = board.size();
-    int dataNum = CommonUtils.getDataNum(10, pageNum, totalCnt);
+    int dataNum = CommonUtils.getDataNum(Integer.parseInt(viewLow), pageNum, totalCnt);
 
     for (int i = 0; i < getSize; i++) {
       board.get(i).setRowNum(dataNum);
       dataNum--;
     }
-
+    model.addAttribute("viewLow", viewLow);
+    model.addAttribute("searchType", searchType);
+    model.addAttribute("searchKeyword", searchKeyword);
     model.addAttribute("board", board);
     model.addAttribute("boardList", boardList);
 

@@ -1,29 +1,26 @@
 package com.example.demo.common;
 
-import org.springframework.data.domain.Sort;
-
 public class PageRequest {
+  protected Long page = 1l;// 1 is the first page
+  protected Integer limit = 10;
 
-  private int page;
-  private int size;
-  private Sort.Direction direction;
-
-  public void setPage(int page) {
-    this.page = page <= 0 ? 1 : page;
+  public PageRequest(Long page, Integer limit) {
+    this.limit = limit;
+    this.page = page;
   }
 
-  public void setSize(int size) {
-    int DEFAULT_SIZE = 10;
-    int MAX_SIZE = 50;
-    this.size = size > MAX_SIZE ? DEFAULT_SIZE : size;
+  public PageRequest() {
   }
 
-  public void setDirection(Sort.Direction direction) {
-    this.direction = direction;
+  public Long getPage() {
+    return page;
   }
-  // getter
 
-  public org.springframework.data.domain.PageRequest of() {
-    return org.springframework.data.domain.PageRequest.of(page - 1, size, direction, "boardSeq");
+  public Integer getLimit() {
+    return limit;
+  }
+
+  public Long getOffset() {
+    return (page - 1l) * limit;
   }
 }

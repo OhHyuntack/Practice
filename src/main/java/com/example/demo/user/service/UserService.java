@@ -20,7 +20,6 @@ public class UserService {
 
   private UserRepository userRepository;
 
-  private final QUser quser = QUser.user;
   private final EntityManager entityManager;
 
   // 회원가입 시, 유효성 체크
@@ -48,10 +47,12 @@ public class UserService {
     return userRepository.findByUserId(userId);
   }
 
+  //querydsl 동작 유무 확인 아이디찾기
   @Transactional
   public User findById(String userId){
-    final JPAQuery<User> query = new JPAQuery<>(entityManager);
-    query.from(quser)
+    JPAQuery<User> query = new JPAQuery<>(entityManager);
+    QUser quser = QUser.user;
+    query.from(QUser.user)
         .where(quser.userId.eq(userId));
     return query.fetchOne();
 

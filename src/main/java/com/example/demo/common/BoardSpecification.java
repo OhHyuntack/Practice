@@ -20,6 +20,10 @@ public class BoardSpecification {
         value = entry.getValue();
       }
       String likeValue = "%" + value + "%";
+      /*Predicate pred = cb.and(cb.like(cb.lower(root.<String>get("tenant")), containsLikePatternForTenant),
+          cb.equal(cb.lower(root.<String>get("billingCode")), whoOwnsIt.getBillingCode()),
+          cb.greaterThanOrEqualTo(root.<Date>get("scheduleDate"), formattedFromDate),
+          cb.lessThanOrEqualTo(root.<Date>get("scheduleDate"), formattedToDate));*/
 
       switch (key) {
         case "title":
@@ -27,6 +31,10 @@ public class BoardSpecification {
           break;
         case "content":
           predicates.add(criteriaBuilder.like(root.get(key).as(String.class), likeValue));
+          break;
+        case "all":
+          predicates.add(criteriaBuilder.or(criteriaBuilder.like(root.get("content").as(String.class), likeValue),
+              criteriaBuilder.like(root.get("title").as(String.class), likeValue)));
           break;
       }
       return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

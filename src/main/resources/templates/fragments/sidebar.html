@@ -3,21 +3,17 @@
 
 <th:block th:fragment="sidebarFragment">
 
-  <article class="sub-warp">
+  <nav class="slnb">
   <h2 class="skip">서브메뉴</h2>
-    <div class="snb">
-      <div class="hidden">
-        <div class="warp">
-          <div class="tit">알림과소통</div>
-          <ul>
-            <li class="active"><a href="공지사항-목록.html">공지사항</a></li><!-- 현재메뉴 표시 .active -->
-            <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
-            <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
-          </ul>
-        </div>
-      </div>
-      <a href="#" class="btn-snb-fold" title="접기"></a>
-    </div>
+    <ul class="navDepth2">
+        <div class="tit">알림과소통</div>
+        <ul>
+          <li class="active"><a href="공지사항-목록.html">공지사항</a></li><!-- 현재메뉴 표시 .active -->
+          <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
+        </ul>
+    </ul>
+  </nav>
+
 
 </th:block>
 

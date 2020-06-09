@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="footerFragment">
-<footer>COPYRIGHT©2018 NATIONAL POLICE AGENCY</footer>
-
-  <script src="/js/vendor.min.js"></script>
-  <script src="/js/common.js"></script>
-
+  <footer class="footer">
+    <article class="container">
+      <h5 class="hidden">방문자통계</h5>
+      <dl>
+        <dt>TODAY :</dt>
+        <dd>123123</dd>
+        <dt>TOTAL :</dt>
+        <dd>1231241231231</dd>
+      </dl>
+      <div class="container footInfo">
+        <nav class="footLink" style="float:right">
+          <a href="">이용약관</a>
+          <a href=""><strong>개인정보처리방침</strong></a>
+          <a href="">전화번호</a>
+          <span style="color: #ddd;"> 주소 : 경기도 군포시 산본로 339-2</span>
+          <p class="copyright">Copyright (C) 2020 htohSoftware. All Rights Reserved</p>
+        </nav>
+      </div>
+      <a href="#" data-scroll class="btnTop">TOP</a>
+    <script src="/js/vendor.min.js"></script>
+    </article>
+  </footer>
 </th:block>
 </html>

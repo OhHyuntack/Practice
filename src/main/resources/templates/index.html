@@ -1,23 +1,81 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default-layout">
 
-<div th:if="${session.sessionUserId}">
-  <a th:href="@{/board/list}">공지 게시판</a>
+<th:block layout:fragment="content">
 
-  <span th:text="${session.sessionUserId}"></span>
-  <a th:href="@{/user/logout}">로그아웃</a>
-</div>
+  <img th:src="@{/images/190055_1280.jpg}">
 
-<div th:unless="${session.sessionUserId}">
-  <a th:href="@{/user/join}">회원가입</a>
-  <a th:href="@{/user/login}">로그인</a>
-  로그인 하시면 게시판을 볼 수 있습니다.
-</div>
+  <div class="owl-carousel">
+    <div class="item item1" style="background-color:#f5f5fd">
+      <article>
+        <img th:src="@{/images/190055_1280.jpg}">
+      </article>
+    </div>
+    <input type="button" class="hide button secondary play on" value="재생">
+    <input type="button" class="hide button secondary stop" value="정지">
 
-</body>
+    <!-- 메인 carousel 끝 -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('body').addClass('main');
+
+        if ($('.owl-carousel .item').length > 1) {
+          $('.play, .stop').removeClass('hide');
+
+          var owl = $('.owl-carousel');
+          owl.owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: true,
+            autoplay: true,
+            dots: false,
+            items: 1
+          });
+          $('.play').on('click', function () {
+            owl.trigger('play.owl.autoplay', [6000]);
+            $(".stop").removeClass("on");
+            $(this).addClass("on");
+          })
+          $('.stop').on('click', function () {
+            owl.trigger('stop.owl.autoplay');
+            $(".play").removeClass("on");
+            $(this).addClass("on");
+          })
+        }
+      });
+
+      /*function input_enter_total_search(event){
+        var keycode = event.which || event.keyCode;
+
+        if(keycode == 13) {
+          all_search();
+        }
+        //else{
+        //autoComplete();
+        //}
+      }*/
+
+
+      /*function total_search(){
+        document.searchFrm.action = "/EVER_Lecture/home_Lecture.do?PARENT_SEQ=2";
+        searchFrm.submit();
+      }
+
+
+      function all_search(){
+        document.searchFrm.action = "/etc/home_search.do";
+        document.searchFrm.submit();
+      }
+
+      function detail_search(){
+        document.searchFrm.PARENT_SEQ.value = "2";
+        document.searchFrm.action = "/EVER_Lecture/detail_Search.do";
+        document.searchFrm.submit();
+      }*/
+
+    </script>
+
+</th:block>
+
 </html>

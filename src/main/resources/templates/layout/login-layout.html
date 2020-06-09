@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>교통안전시설 운영관리프로그램</title>
+    <meta name="title" content="교통안전시설 운영관리프로그램"/>
+    <meta name="author" content="교통안전시설 운영관리프로그램"/>
+    <meta name="keywords" content="교통안전시설 운영관리프로그램"/>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+  </head>
+  <body>
+    <!-- 본문-->
+    <article class="sub-warp">
+      <th:block layout:fragment="content"></th:block>
+    </article>
+    <!-- 공통 하단-->
+    <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+  </body>
+
+</html>

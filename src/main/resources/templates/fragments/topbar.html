@@ -2,61 +2,142 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <th:block th:fragment="topbarFragment">
+  <script type="text/javascript">
+    function input_enter() {
+      var keycode = window.event.keyCode;
+      if (keycode == 13) {
+        chk_login();
+      }
+    }
 
-<div class="skip">
-  <a href="#contents">본문으로 바로가기</a><a href="#navigation">메뉴로 바로가기</a>
-</div>
-<header>
-  <div class="container gnb">
-    <a th:href="@{/}" class="logo"><h1 class="skip">교통안전시설 운영관리프로그램</h1></a>
-    <ul>
-      <li><strong>관리자</strong>님 로그인</li>
-      <li><a href="#" data-toggle="modal" data-target="#pw-change"><i class="uil uil-lock"></i>비밀번호변경</a></li>
-      <li><a href="로그인.html"><i class="uil-exit"></i>로그아웃</a></li>
-    </ul>
-  </div>
+    function go_login_redirect() {
 
-  <h2 class="skip">메인메뉴</h2>
-  <div class="navigation" id="navigation">
+      var path = location.pathname + location.search;
+      path = encodeURIComponent(path);
+
+      if (confirm("로그인이 필요한 페이지입니다.\n\n로그인 페이지로 이동하시겠습니까?")) {
+        window.location.href = "/member/login.do?rUrl=" + path;
+      }
+    }
+
+    /* 화면 크기 */
+    var nowZoom = 100;
+
+    function zoomOut() {
+      nowZoom = nowZoom - 5;
+      if (nowZoom <= 100) {
+        nowZoom = 100;
+      }
+      zooms();
+    }
+
+    function zoomIn() {
+      nowZoom = nowZoom + 5;
+      if (nowZoom >= 140) {
+        nowZoom = 120;
+      }
+      zooms();
+    }
+
+    function zooms() {
+      document.body.style.zoom = nowZoom + "%";
+      if (nowZoom == 100) {
+        alert("더 이상 축소할 수 없습니다.");
+      }
+      if (nowZoom == 120) {
+        alert("더 이상 확대할 수 없습니다.");
+      }
+    }
+  </script>
+  <header class="header">
+    <div class="navBg"></div>
     <div class="container">
-      <div class="lnb">
+      <div class="topMenuWrap">
+        <span class="link">
+            <a th:href="@{/}">메인으로</a>
+        </span>
+        <span class="topMenu">
+           <span th:unless="${session.sessionUserId}">
+               <a th:href="@{/user/join}">회원가입</a>
+               <a th:href="@{/user/login}">로그인</a>
+               <a href="/member/find_id.do">아이디비밀번호 찾기</a>
+           </span>
+           <span th:if="${session.sessionUserId}">
+             <span th:text="${session.sessionUserId}"></span>님 로그인
+             <a th:href="@{/user/logout}">로그아웃</a>
+           </span>
+            <a th:href="@{/board/list}">공지 게시판</a>
+            <span class="textZoom">
+              글씨크기
+              <button type="button" onclick="zoomIn();" class="textZoomIn">크게</button>
+              <button type="button" onclick="zoomOut();" class="textZoomOut">크게</button>
+            </span>
+        </span>
+      </div>
+
+    </div>
+
+    </article>
+
+    <div class="container" id="nav">
+      <nav class="nav">
         <ul>
-          <li class="active"><!-- 현재메뉴 표시 .active -->
-            <a href="#">알림과소통</a>
+          <li>
+            <a href="#">여행 지도</a>
             <ul>
-              <li><a href="공지사항-목록.html">공지사항</a></li>
-              <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
-              <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
+              <li><a href="#" style="">상품</a></li>
             </ul>
           </li>
-
           <li>
-            <a href="#">시스템관리</a>
+            <a href="#">추천 맛집</a>
             <ul>
-              <li class="dep"><a href="사용자관리-목록.html">사용자관리</a>
-                <ol>
-                  <li><a href="사용자관리-목록.html">사용자관리</a></li>
-                  <li><a href="계정신청관리-목록.html">계정신청관리</a></li>
-                </ol>
-              </li>
-              <li><a href="#" style="color: #ccc;">관리기관관리</a></li>
-              <li><a href="메뉴관리.html">메뉴관리</a></li>
-              <li><a href="#" style="color: #ccc;">권한그룹관리</a></li>
-              <li><a href="권한관리-목록.html">권한관리</a></li>
-              <li><a href="그룹코드관리-목록.html">그룹코드관리</a></li>
-              <li><a href="세부코드관리-목록.html">세부코드관리</a></li>
-              <li><a href="접근IP관리-목록.html">접근IP관리</a></li>
-              <li><a href="#" style="color: #ccc;">표지관리</a></li>
-              <li><a href="#" style="color: #ccc;">행정구역관리</a></li>
-              <li><a href="#" style="color: #ccc;">작업기관관리</a></li>
-              <li><a href="#" style="color: #ccc;">도로관리</a></li>
+              <li><a href="#" style="">상품</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">등산 히스토리</a>
+            <ul>
+              <li><a href="#" style="">상품</a></li>
+            </ul>
+          </li>
+          <li class="active">
+            <a href="#">등산 게시판</a>
+            <ul>
+              <li><a href="/board/list">공지사항</a></li>
+              <li><a href="/board/faqList">자주묻는질문</a></li>
+            </ul>
+          </li>
+          <li class="active">
+            <a href="#">마이페이지</a>
+            <ul>
+              <li><a href="/board/list">공지사항</a></li>
+              <li><a href="/board/faqList">자주묻는질문</a></li>
             </ul>
           </li>
         </ul>
-      </div>
+      </nav>
     </div>
-  </div>
-</header>
+  </header>
+
+  <!--script type="text/javascript">
+
+    function totalSearchGo(){
+      $("#searchText").val($("#totalSearchText").val());
+      document.searchFrm.action = "/etc/home_search.do";
+      document.searchFrm.submit();
+    }
+
+
+    var isLogin = '${userLoginInfo eq null ? "" : "1"}';
+    $(function() {
+      if (isLogin == '') {
+        $('#nav .nav > ul > li:eq(4) a, #siteMap nav > ul > li:eq(4) a').on('click', function() {
+          go_login_redirect();
+          return false;
+        });
+      }
+    });
+  </script-->
 
 </th:block>
 </html>

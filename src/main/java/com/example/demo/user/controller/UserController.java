@@ -4,6 +4,7 @@ import com.example.demo.common.UserSha256;
 import com.example.demo.user.domain.entity.User;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.service.UserService;
+import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -89,11 +90,23 @@ public class UserController {
 
     if (userInfo != null) {
       if (userInfo.getUserPW().equals(encryPassword)) {
+        // 세션정보 매핑
+        //세션 타임아웃 시간 설정 60*60 1시간 * 24 시간
+        session.setMaxInactiveInterval(60 * 60 * 24);
+        HashMap<String, String> loginInfo = new HashMap<String, String>();
+        loginInfo.put("sessionUserId", userInfo.getUserId());
+        loginInfo.put("sessionUserName", userInfo.getUserName());
+        loginInfo.put("sessionMobileNo", userInfo.getMobileNo());
+        loginInfo.put("sessionAddr", userInfo.getAddr());
+        loginInfo.put("sessionEmail", userInfo.getEmail());
+
         session.setAttribute("sessionUserId", userInfo.getUserId());
         session.setAttribute("sessionUserName", userInfo.getUserName());
         session.setAttribute("sessionMobileNo", userInfo.getMobileNo());
         session.setAttribute("sessionAddr", userInfo.getAddr());
         session.setAttribute("sessionEmail", userInfo.getEmail());
+        session.setAttribute("sessionLoginInfo", loginInfo);
+
         result = "success";
         msg = "로그인에 성공 하였습니다.";
         json.put("msg", msg);
@@ -119,6 +132,8 @@ public class UserController {
     session.removeAttribute("sessionMobileNo");
     session.removeAttribute("sessionAddr");
     session.removeAttribute("sessionEmail");
+    session.removeAttribute("sessionLoginInfo");
+
     return "index";
   }
 

@@ -44,10 +44,10 @@ public class BoardController {
 
     Map<String, String> searchMap = new HashMap<String, String>();
 
-    if (searchType != null && searchKeyword != null) {
+    if (searchType != null && searchKeyword != null && searchKeyword != "") {
       searchMap.put(searchType, searchKeyword);
     }
-    if(viewLow == null){
+    if(viewLow == null || viewLow == ""){
       viewLow = "10";
     }
 

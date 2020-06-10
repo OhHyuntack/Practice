@@ -13,12 +13,12 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery-ui-1.12.1.js"></script>
     <script src="/js/owlcarousel.js"></script>
+
     <script
         type="text/javascript"
         src="/js/default.js"></script>
-    <script
-        type="text/javascript"
-        src="/js/common.js"></script>
+
+
     <script src="/js/smoothscroll.js"></script>
     <script src="/js/design.js"></script>
 
@@ -40,21 +40,14 @@
     <link
         href="/css/develope.css"
         rel="stylesheet">
-    <link
-        href="/css/bootstrap.min.css"
-        rel="stylesheet"
-        type="text/css"/>
 
   </head>
   <body>
     <!-- 상단바-->
     <th:block th:replace="fragments/topbar :: topbarFragment"></th:block>
-
-    <section class="section">
-      <div class="container">
-        <div style="min-height:400px;">
+    <section>
+      <div class="container" style="width:1200px; min-height:400px;">
         <th:block layout:fragment="content"></th:block>
-        </div>
       </div>
     </section>
     <!-- 공통 하단-->

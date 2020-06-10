@@ -51,7 +51,7 @@
   </script>
   <header class="header">
     <div class="navBg"></div>
-    <div class="container">
+    <div class="container" style="width:1200px;">
       <div class="topMenuWrap">
         <span class="link">
             <a th:href="@{/}">메인으로</a>
@@ -67,11 +67,11 @@
              <a th:href="@{/user/logout}">로그아웃</a>
            </span>
             <a th:href="@{/board/list}">공지 게시판</a>
-            <span class="textZoom">
+            <!--span class="textZoom">
               글씨크기
               <button type="button" onclick="zoomIn();" class="textZoomIn">크게</button>
               <button type="button" onclick="zoomOut();" class="textZoomOut">크게</button>
-            </span>
+            </span-->
         </span>
       </div>
 
@@ -80,39 +80,36 @@
     </article>
 
     <div class="container" id="nav">
-      <nav class="nav">
+      <nav class="nav" style="padding-left: 17px; top:5px;">
         <ul>
-          <li>
-            <a href="#">여행 지도</a>
-            <ul>
-              <li><a href="#" style="">상품</a></li>
+          <li class="b00">
+            <a href="#">등산</a>
+            <ul class="navDepth2">
+              <li class="b10"><a href="/board/list" style="">게시판</a></li>
+              <li class="b20"><a href="#" style="">히스토리</a></li>
+              <li class="b30"><a href="#" style="">추천코스</a></li>
             </ul>
           </li>
-          <li>
-            <a href="#">추천 맛집</a>
-            <ul>
-              <li><a href="#" style="">상품</a></li>
+          <li class="c00">
+            <a href="#">여행지도</a>
+            <ul class="navDepth2">
+              <li class="c10"><a href="#" style="">지도</a></li>
             </ul>
           </li>
-          <li>
-            <a href="#">등산 히스토리</a>
-            <ul>
-              <li><a href="#" style="">상품</a></li>
+          <li class="d00">
+            <a href="#">일정</a>
+            <ul class="navDepth2">
+              <li class="d10"><a href="#" style="">일정</a></li>
             </ul>
           </li>
-          <li class="active">
-            <a href="#">등산 게시판</a>
+          <li class="e00">
+            <a href="#">관리페이지</a>
             <ul>
-              <li><a href="/board/list">공지사항</a></li>
-              <li><a href="/board/faqList">자주묻는질문</a></li>
+              <li class="e10"><a href="/board/list">정보수정</a></li>
             </ul>
           </li>
-          <li class="active">
-            <a href="#">마이페이지</a>
-            <ul>
-              <li><a href="/board/list">공지사항</a></li>
-              <li><a href="/board/faqList">자주묻는질문</a></li>
-            </ul>
+          <li class="e20">
+            <a href="#">가게부</a>
           </li>
         </ul>
       </nav>

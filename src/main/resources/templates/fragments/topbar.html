@@ -48,6 +48,7 @@
         alert("더 이상 확대할 수 없습니다.");
       }
     }
+
   </script>
   <header class="header">
     <div class="navBg"></div>
@@ -66,12 +67,12 @@
              <span th:text="${session.sessionUserId}"></span>님 로그인
              <a th:href="@{/user/logout}">로그아웃</a>
            </span>
-            <a th:href="@{/board/list}">공지 게시판</a>
-            <!--span class="textZoom">
-              글씨크기
-              <button type="button" onclick="zoomIn();" class="textZoomIn">크게</button>
-              <button type="button" onclick="zoomOut();" class="textZoomOut">크게</button>
-            </span-->
+            <!--a th:href="@{/board/list}">공지 게시판</a-->
+          <!--span class="textZoom">
+            글씨크기
+            <button type="button" onclick="zoomIn();" class="textZoomIn">크게</button>
+            <button type="button" onclick="zoomOut();" class="textZoomOut">크게</button>
+          </span-->
         </span>
       </div>
 
@@ -84,32 +85,37 @@
         <ul>
           <li class="b00">
             <a href="#">등산</a>
-            <ul class="navDepth2">
+            <ul class="navDepth2" style="overflow: inherit;">
               <li class="b10"><a href="/board/list" style="">게시판</a></li>
               <li class="b20"><a href="#" style="">히스토리</a></li>
-              <li class="b30"><a href="#" style="">추천코스</a></li>
             </ul>
           </li>
           <li class="c00">
             <a href="#">여행지도</a>
-            <ul class="navDepth2">
-              <li class="c10"><a href="#" style="">지도</a></li>
+            <ul class="navDepth2" style="overflow: inherit;">
+              <li class="c10"><a href="/map/main" style="">지도</a></li>
+              <li class="c20"><a href="#" style="">추천코스</a></li>
             </ul>
           </li>
           <li class="d00">
             <a href="#">일정</a>
-            <ul class="navDepth2">
+            <ul class="navDepth2" style="overflow: inherit;">
               <li class="d10"><a href="#" style="">일정</a></li>
             </ul>
           </li>
           <li class="e00">
             <a href="#">관리페이지</a>
-            <ul>
+            <ul class="navDepth2" style="overflow: inherit;">
               <li class="e10"><a href="/board/list">정보수정</a></li>
             </ul>
           </li>
-          <li class="e20">
+          <li class="f00">
             <a href="#">가게부</a>
+            <ul class="navDepth2" style="overflow: inherit;">
+              <li class="f10">
+                <a href="">가게부</a>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>

@@ -1,41 +1,18 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layout/subMenu-layout">
+      layout:decorator="layout/default-layout">
 
 <th:block layout:fragment="content">
 
-  <h2 class="skip">서브메뉴</h2>
-  <div class="container">
-    <div class="snb">
-      <div class="hidden">
-        <div class="warp">
-          <div class="tit">알림과소통</div>
-          <ul>
-            <li class="active"><a href="공지사항-목록.html">공지사항</a></li><!-- 현재메뉴 표시 .active -->
-            <li><a href="자주묻는질문-목록.html">자주묻는질문</a></li>
-            <li><a href="#" style="color: #ccc;">매뉴얼</a></li>
-          </ul>
-        </div>
-      </div>
-      <a href="#" class="btn-snb-fold" title="접기"></a>
-    </div>
-
-    <h2 class="skip">컨텐츠영역</h2>
-    <section class="contents" id="contents">
+    <section class="contents" id="contents" style="margin:120px 0 80px 0;">
       <div class="page-tit">
-        <h3>공지사항</h3>
         <ul class="breadcrumb">
-          <li><a href="main.html"><i class="uil-home-alt"><span>홈</span></i></a></li>
           <li>알림과소통</li>
-          <li>공지사항</li>
         </ul>
       </div>
 
-      <!-- ============================================================== -->
-      <!-- 서브 컨텐츠 영역 -->
       <form id="frm" name="frm" method="post" enctype="multipart/form-data">
         <table class="table board-write">
-          <caption>게시물 등록/수정</caption>
           <colgroup>
             <col style="width: 130px;">
             <col style="width: 735px;">
@@ -175,8 +152,8 @@
           </tbody>
         </table>
       </form>
-      <div class="btn-group-position">
-        <div class="center">
+      <div class="btn-group-position" >
+        <div class="center" style="float:right;">
           <button type="button" class="btn btn-lg btn-light" onclick="location.href='/board/list'">
             취소
           </button>

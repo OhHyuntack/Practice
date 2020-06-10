@@ -1,11 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layout/subMenu-layout">
+      layout:decorator="layout/default-layout">
 
 <th:block layout:fragment="content">
-    <h4 class="skip" style="margin:20px 0px 20px 10px;">컨텐츠영역</h4>
-    <section class="contents" id="contents">
-      <header class="searchbox" style="margin:10px;">
+  <h3 style="margin:120px 0px 20px 10px;">게시판</h3>
+  <section class="contents" id="contents">
+    <header class="searchbox" style="margin:10px;">
         <form id="searchFrm" name="searchFrm">
           <select name="searchType" id="searchType">
             <option value="all" th:selected="${searchType eq 'all'}">전체</option>
@@ -22,7 +22,6 @@
           </select>
           </form>
       </header>
-          <a class="btn btn-info" style="float:right; margin:0px 27px 10px 0px;" th:href="@{/board/write}">등록</a>
       <!--span>전체 <em>26</em>건 (페이지 1/10)</span-->
       <table class="table board-list">
         <colgroup>
@@ -83,7 +82,7 @@
           </ul>
         </div>
       </div>
-
+      <a class="btn btn-info" style="float:right; margin:0px 27px 10px 0px;" th:href="@{/board/write}">등록</a>
       <!-- ============================================================== -->
     </section>
   </div>

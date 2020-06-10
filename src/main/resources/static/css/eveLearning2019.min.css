@@ -892,7 +892,7 @@ input.button.secondary.stop {
 }
 
 .section .container {
-    background: url(../images/bgLnb.gif) repeat-y 0 0;
+    /*background: url(../images/bgLnb.gif) repeat-y 0 0;*/
     padding-bottom: 50px
 }
 
@@ -4640,6 +4640,15 @@ div.lectList.table tr td {
         position: fixed;
         left: -9999px
     }
+}
+
+.pagination {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: .3rem;
 }
 
 /*# sourceMappingURL=eveLearning2019.min.css.map */

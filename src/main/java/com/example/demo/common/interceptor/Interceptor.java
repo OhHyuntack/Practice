@@ -11,9 +11,9 @@ public class Interceptor extends HandlerInterceptorAdapter {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-
+    String rUrl = request.getRequestURI();
     System.out.println(
-        "Interceptor preHandle!!!!!========================================================="+request.getContextPath()+"/user/login.html");
+        "Interceptor preHandle!!!!!========================================================="+request.getContextPath()+"/user/login.html"+rUrl);
 
    HttpSession session = request.getSession(false);
     if(session != null) {
@@ -22,7 +22,7 @@ public class Interceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    response.sendRedirect(request.getContextPath() + "/user/login");
+    response.sendRedirect(request.getContextPath() + "/user/login?rUrl="+rUrl);
     return false;
   }
 

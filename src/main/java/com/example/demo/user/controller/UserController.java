@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -34,13 +35,18 @@ public class UserController {
   }
 
   @GetMapping("/user/login")
-  public String login() {
+  public String login(@RequestParam(value="rUrl", required=false) String rUrl, Model model) {
+
+    if(rUrl != null){
+      model.addAttribute("rUrl", rUrl);
+    }
+
     return "member/login";
   }
 
   @PostMapping("/user/insertMember")
   @ResponseBody
-  public JSONObject insertMember(@Valid UserDto userDto, Errors errors, Model model) {
+  public JSONObject insertMember(@Valid UserDto userDto, Errors errors) {
     JSONObject json = new JSONObject();
     //유효성 검사 실패시
     if (errors.hasErrors()) {
@@ -80,9 +86,9 @@ public class UserController {
    */
   @PostMapping("/user/login")
   @ResponseBody
-  public JSONObject login(User user, HttpSession session) {
+  public JSONObject login(User user, HttpSession session, @RequestParam(value = "rUrl", required=false) String rUrl) {
     JSONObject json = new JSONObject();
-    String msg = "", result = "";
+    String result = "";
     String encryPassword = UserSha256.encrypt(user.getUserPW());
     User userInfo = userService.findByUserId(user.getUserId());
 
@@ -108,20 +114,19 @@ public class UserController {
         session.setAttribute("sessionLoginInfo", loginInfo);
 
         result = "success";
-        msg = "로그인에 성공 하였습니다.";
-        json.put("msg", msg);
+        json.put("rUrl", rUrl);
         json.put("result", result);
         return json;
+
       } else {
-        msg = "아이디 또는 비밀번호가 다릅니다";
-        result = "fail";
+        result = "idFail";
       }
     } else {
-      msg = "가입된 아이디가 없습니다";
-      result = "fail";
+      result = "pwFail";
     }
-    json.put("msg", msg);
+    json.put("rUrl", rUrl);
     json.put("result", result);
+
     return json;
   }
 

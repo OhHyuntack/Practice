@@ -7,6 +7,7 @@ import com.example.demo.user.domain.entity.FileInfo;
 import com.example.demo.user.dto.BoardDto;
 import com.example.demo.user.dto.FileDto;
 import com.example.demo.user.service.BoardService;
+import com.example.demo.user.service.FileService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class BoardController {
 
   private BoardService boardService;
+
+  private FileService fileService;
 
   @Resource(name = "fileUtils")
   private FileUtils fileUtils;
@@ -122,7 +125,7 @@ public class BoardController {
       fileDto.setStoredFileName((String) file_list.get(i).get("STORED_FILE_NAME"));
       fileDto.setFileSize(file_list.get(i).get("FILE_SIZE") + "");
       fileDto.setFilePath((String) file_list.get(i).get("FILE_PATH"));
-      boardService.fileSave(fileDto);
+      fileService.fileSave(fileDto);
     }
 
     return "redirect:/board/list";
@@ -176,7 +179,7 @@ public class BoardController {
       fileDto.setStoredFileName((String) file_list.get(i).get("STORED_FILE_NAME"));
       fileDto.setFileSize(file_list.get(i).get("FILE_SIZE") + "");
       fileDto.setFilePath((String) file_list.get(i).get("FILE_PATH"));
-      boardService.fileSave(fileDto);
+      fileService.fileSave(fileDto);
     }
 
     json.put("success", "true");
@@ -188,7 +191,7 @@ public class BoardController {
   @PostMapping("/board/deleteFile")
   @ResponseBody
   public String deleteFile(@RequestParam int fileSeq) {
-    boardService.deleteFile(fileSeq);
+    fileService.deleteFile(fileSeq);
     String result = "{\"result\":\"1\"}";
     return result;
   }
@@ -207,7 +210,7 @@ public class BoardController {
   @GetMapping("/board/download")
   public void boardDownload(@RequestParam int fileSeq, HttpServletRequest request, Model model,
       HttpServletResponse response) throws Exception {
-    FileInfo fileInfo = boardService.selectFile(fileSeq);
+    FileInfo fileInfo = fileService.selectFile(fileSeq);
 
     fileUtils.DownloadFile("board", fileInfo, response, request);
   }

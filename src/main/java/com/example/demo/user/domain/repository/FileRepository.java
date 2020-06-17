@@ -8,4 +8,5 @@ public interface FileRepository extends JpaRepository<FileInfo, Long> {
   void deleteByFileSeq(int fileSeq);
 
   FileInfo findByFileSeq(int fileSeq);
+
 }

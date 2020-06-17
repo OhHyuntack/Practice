@@ -35,6 +35,7 @@
                       <div id="register-link" class="text-right">
                         <a th:href="@{/user/join}" class="text-info">회원 가입 Register here</a>
                       </div>
+                      <input type="hidden" id="rUrl" name="rUrl" th:value="${rUrl}"/>
                     </form>
                   </div>
                 </div>
@@ -86,19 +87,22 @@
          deleteCookie("setCookieYN");
        }
 
+       var rUrl = $("#rUrl").val();
+
        $.ajax({
          url: "/user/login",
          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
          type: "post",
          dataType: "json",
-         data: {"userId": userId, "userPW": userPW},
+         data: {"userId": userId, "userPW": userPW, "rUrl": rUrl},
          success: function (data) {
            console.log(data);
-           if (data.msg != "" && data.msg != null && data.msg != undefined) {
-             alert(data.msg);
-           }
            if (data.result == "success") {
-             location.href = "/";
+             if(data.rUrl != null && data.rUrl != ""){
+               location.href = data.rUrl;
+             }else {
+               location.href = "/";
+             }
            }
          }
        })

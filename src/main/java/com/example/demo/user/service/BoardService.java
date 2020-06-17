@@ -28,8 +28,6 @@ public class BoardService {
 
   private BoardRepository boardRepository;
 
-  private FileRepository fileRepository;
-
   @PersistenceContext
   private EntityManager em;
 
@@ -56,10 +54,7 @@ public class BoardService {
     }
   }
 
-  //파일 저장
-  public void fileSave(FileDto fileDto) {
-    fileRepository.save(fileDto.toEntity());
-  }
+
 
   //상세보기
   public Board findByBoardSeq(int boardSeq) {
@@ -76,12 +71,6 @@ public class BoardService {
     return boardRepository.findNextBoardSeq(boardSeq);
   }
 
-  //다운로드 삭제
-  @Transactional
-  public void deleteFile(int fileSeq) {
-    fileRepository.deleteByFileSeq(fileSeq);
-  }
-
   //게시글 삭제
   @Transactional
   public void deleteBoard(int boardSeq) {
@@ -93,9 +82,6 @@ public class BoardService {
     boardRepository.boardUpdate(boardDto);
   }
 
-  public FileInfo selectFile(int fileSeq) {
-    return fileRepository.findByFileSeq(fileSeq);
-  }
 
   //querydsl
   public List<Board> qFindBoardList(Pageable pageable, String searchType, String searchKeyword) {

@@ -3,7 +3,11 @@
       layout:decorator="layout/default-layout">
 
 <th:block layout:fragment="content">
-  <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+
+  <script src="/summernote/summernote-lite.js"></script>
+  <script src="/summernote/lang/summernote-ko-KR.js"></script>
+  <link rel="stylesheet" href="/summernote/summernote-lite.css">
+
     <section class="contents" id="contents" style="margin:120px 0 80px 0;">
       <div class="page-tit">
         <ul class="breadcrumb">
@@ -171,52 +175,47 @@
     </section>
   </div>
   <script>
-
-
-
-    CKEDITOR.replace( 'content', {//해당 이름으로 된 textarea에 에디터를 적용
-      width:'100%',
-      height:'600px',
-      allowedContent:true,
-      removeFormatAttributes:'',
-      entities: false,
-      basicEntities: false,
-      entities_greek: false,
-      entities_latin: false,
-      enterMode:'2',
-      filebrowserImageUploadUrl: '/ckeditor/ckPhotoUpload.do', //여기 경로로 파일을 전달하여 업로드 시킨다.
-      toolbar: [
-        { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'NewPage', 'Print', '-'] },
-        { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo' ] },
-        { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak' ] },
-        { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-'] },
-
-        { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
-        { name: 'others', items: [ '-' ] },
-        { name: 'about', items: [ 'About' ] },
-        '/',
-        { name: 'styles', items: [ 'Styles', 'Font', 'FontSize' ] },
-        { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] }
-      ]
+    $(document).ready(function() {
+      //여기 아래 부분
+      $('#content').summernote({
+        minHeight: 500,             // 최소 높이
+        maxHeight: null,             // 최대 높이
+        focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+        lang: "ko-KR",					// 한글 설정
+        spellCheck: false,
+        callbacks: {	//이미지 첨부하는 부분
+          onImageUpload : function(files) {
+            uploadSummernoteImageFile(files[0],this);
+          }
+        }
+      });
     });
 
-    CKEDITOR.config.contentsCss = '/resource/admin/css/import.css';
+    /**
+     * 이미지 파일 업로드
+     */
+    function uploadSummernoteImageFile(file, editor) {
+      data = new FormData();
+      data.append("file", file);
+      $.ajax({
+        data : data,
+        type : "POST",
+        url : "/photoUpload",
+        contentType : false,
+        processData : false,
+        success : function(data) {
+          console.log(data);
+          //$("#content").summernote("code", data);
+          //$(editor).summernote('insertImage', data.url);
+          setTimeout(function() {
+            let html = $("#content").html();
+            html += data;
+            $("#content").summernote("code", html);
+          }, 4000);
 
-    CKEDITOR.on('dialogDefinition', function( ev ){
-      var dialogName = ev.data.name;
-      var dialogDefinition = ev.data.definition;
-
-      switch (dialogName) {
-        case 'image': //Image Properties dialog
-          //dialogDefinition.removeContents('info');
-          dialogDefinition.removeContents('Link');
-          dialogDefinition.removeContents('advanced');
-          break;
-      }
-    });
-
+        }
+      });
+    }
   </script>
 
   <script type="text/javascript">
@@ -247,6 +246,7 @@
       /*유효성*/
       var contact = $("#contact1").val() + $("#contact2").val() + $("#contact3").val();
       $("#contact").val(contact);
+      document.frm.action = "/board/save";
       document.frm.submit();
     }
 

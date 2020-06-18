@@ -142,4 +142,16 @@ public class UserController {
     return "index";
   }
 
+  @GetMapping("/member/info")
+  public String memberInfo(){ return "member/info"; }
+
+  @GetMapping("/member/myInfo")
+  public String memberMyinfo(){return "member/myinfo";}
+
+  @GetMapping("/member/find")
+  public String memberFind(){return "member/find";}
+
+  @GetMapping("/member/network")
+  public String memberNetwork(){return "member/network";}
+
 }

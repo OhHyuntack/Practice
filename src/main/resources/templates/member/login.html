@@ -3,113 +3,143 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <link href="/bootstrap.css" rel="stylesheet" id="bootstrap-css">
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-  <script src="/js/common.js"></script>
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" th:href="@{/vendor/daterangepicker/daterangepicker.css}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+  <!--===============================================================================================-->
 
 
 </head>
-<body style="background-color : #424242;">
-  <div style="align:center;">
-          <div id="login" >
-            <h3 class="text-center text-white pt-5">Login form</h3>
-            <div class="container">
-              <div id="login-row" class="row justify-content-center align-items-center">
-                <div id="login-column" class="col-md-6">
-                  <div id="login-box" class="col-md-12" style="margin-left:280px;">
-                    <form id="frm" name="frm" class="form" action="" method="post">
-                      <h3 class="text-center text-info">로그인</h3>
-                      <div class="form-group">
-                        <label for="userID" class="text-info">UserID:</label><br>
-                        <input type="text" name="userId" id="userId" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label for="userPW" class="text-info">Password:</label><br>
-                        <input type="password" name="userPW" id="userPW" class="form-control" autocomplete="off">
-                      </div>
-                      <div class="form-group">
-                        <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                        <input type="button" name="로그인" class="btn btn-info btn-md" onclick="go_login()" value="로그인">
-                      </div>
-                      <div id="register-link" class="text-right">
-                        <a th:href="@{/user/join}" class="text-info">회원 가입 Register here</a>
-                      </div>
-                      <input type="hidden" id="rUrl" name="rUrl" th:value="${rUrl}"/>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<body style="background-color: #666666;">
+
+<input type="hidden" id="rUrl" name="rUrl" th:value="${rUrl}"/>
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <form class="login100-form validate-form" id="frm" name="frm" action="" method="post">
+					<span class="login100-form-title p-b-34">
+						Account Login
+					</span>
+
+        <div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
+          <input class="input100" type="text" name="userId" id="userId" >
+          <span class="focus-input100"></span>
+        </div>
+        <div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
+          <input class="input100" type="password" name="userPW" id="userPW" autocomplete="off">
+          <span class="focus-input100"></span>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn" onclick="go_login()" value="로그인">로그인</button>
+        </div>
+
+        <div class="contact100-form-checkbox">
+          <input class="input-checkbox100"  id="remember-me"  type="checkbox" name="remember-me">
+          <label class="label-checkbox100" for="remember-me">
+            Remember me
+          </label>
+        </div>
+
+        <div class="w-full text-center p-t-27 p-b-239">
+						<span class="txt1">
+							Forgot
+						</span>
+
+          <a href="#" class="txt2">
+            User name / password?
+          </a>
+        </div>
+
+        <div class="w-full text-center">
+          <a th:href="@{/user/join}" class="text-info">회원 가입 Register here</a>
+        </div>
+      </form>
+
+      <div class="login100-more" style="background-image: url('/images/bg-01.jpg');"></div>
+    </div>
   </div>
+</div>
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-      var userSaveId = getCookie("userSaveId");
-      var setCookieYN = getCookie("setCookieYN");
-      if(setCookieYN == 'Y') {
-        $("#remember-me").prop("checked", true);
-      } else {
-        $("#remember-me").prop("checked", false);
-      }
-      $("#userId").val(userSaveId);
+<div id="dropDownSelect1"></div>
 
 
-      $("#userPW").keydown(function(key) {
-        if (key.keyCode == 13) {
-          go_login();
-        }
-      });
-    });
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/common.js"></script>
 
-
-    function go_login(){
-      var userId = $("#userId").val();
-      var userPW = $("#userPW").val();
-     if(userId == ""){
-       alert("아이디를 입력 하세요.");
-       document.frm.userId.focus();
-       return false;
-     }
-     if(userPW == ""){
-       alert("비밀번호를 입력 하세요");
-       document.frm.userPW.focus();
-       return false;
-     } else {
-
-       if ($("#remember-me").is(":checked")) {
-         var userSaveId = $("#userId").val();
-         setCookie("userSaveId", userSaveId, 60);
-         setCookie("setCookieYN", "Y", 60);
-       } else {
-         deleteCookie("userSaveId");
-         deleteCookie("setCookieYN");
-       }
-
-       var rUrl = $("#rUrl").val();
-
-       $.ajax({
-         url: "/user/login",
-         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-         type: "post",
-         dataType: "json",
-         data: {"userId": userId, "userPW": userPW, "rUrl": rUrl},
-         success: function (data) {
-           console.log(data);
-           if (data.result == "success") {
-             if(data.rUrl != null && data.rUrl != ""){
-               location.href = data.rUrl;
-             }else {
-               location.href = "/";
-             }
-           }
-         }
-       })
-     }
+<script type="text/javascript">
+  $(document).ready(function () {
+    var userSaveId = getCookie("userSaveId");
+    var setCookieYN = getCookie("setCookieYN");
+    if (setCookieYN == 'Y') {
+      $("#remember-me").prop("checked", true);
+    } else {
+      $("#remember-me").prop("checked", false);
     }
+    $("#userId").val(userSaveId);
 
-  </script>
+    $("#userPW").keydown(function (key) {
+      if (key.keyCode == 13) {
+        go_login();
+      }
+    });
+  });
+
+  function go_login() {
+    var userId = $("#userId").val();
+    var userPW = $("#userPW").val();
+    if (userId == "") {
+      alert("아이디를 입력 하세요.");
+      document.frm.userId.focus();
+      return false;
+    }
+    if (userPW == "") {
+      alert("비밀번호를 입력 하세요");
+      document.frm.userPW.focus();
+      return false;
+    } else {
+
+      if ($("#remember-me").is(":checked")) {
+        var userSaveId = $("#userId").val();
+        setCookie("userSaveId", userSaveId, 60);
+        setCookie("setCookieYN", "Y", 60);
+      } else {
+        deleteCookie("userSaveId");
+        deleteCookie("setCookieYN");
+      }
+
+      var rUrl = $("#rUrl").val();
+
+      $.ajax({
+        url: "/user/login",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        type: "post",
+        dataType: "json",
+        data: {"userId": userId, "userPW": userPW, "rUrl": rUrl},
+        success: function (data) {
+          console.log(data);
+          if (data.result == "success") {
+            if (data.rUrl != null && data.rUrl != "") {
+              location.href = data.rUrl;
+            } else {
+              location.href = "/";
+            }
+          }
+        }
+      })
+    }
+  }
+
+</script>
 
 </body>
 </html>

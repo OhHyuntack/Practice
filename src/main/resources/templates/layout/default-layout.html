@@ -3,57 +3,34 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-    <meta
-        http-equiv="X-UA-Compatible"
-        content="ie=edge">
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery-ui-1.12.1.js"></script>
-    <script src="/js/owlcarousel.js"></script>
-
-    <script
-        type="text/javascript"
-        src="/js/default.js"></script>
-
-
-    <script src="/js/smoothscroll.js"></script>
-    <script src="/js/design.js"></script>
-
-    <link
-        rel="shortcut icon"
-        href="/images/favicon.ico"/>
-    <link
-        href="/css/jquery-ui.css"
-        rel="stylesheet">
-    <link
-        href="/css/owl.carousel.min.css"
-        rel="stylesheet">
-    <link
-        href="/css/common.css"
-        rel="stylesheet">
-    <link
-        href="/css/eveLearning2019.min.css"
-        rel="stylesheet">
-    <link
-        href="/css/develope.css"
-        rel="stylesheet">
-
-    <script src="/js/vendor.min.js"></script>
+    <title>ZeroFour by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!--link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+    <!-- Bootstrap core CSS -->
   </head>
-  <body>
-    <!-- 상단바-->
-    <th:block th:replace="fragments/topbar :: topbarFragment"></th:block>
-    <section>
-      <div class="container" style="width:1200px; min-height:400px;">
-        <th:block layout:fragment="content"></th:block>
-      </div>
-    </section>
-    <!-- 공통 하단-->
-    <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+  <body class="homepage is-preload">
+    <div id="page-wrapper">
 
+    </div>
+
+      <th:block th:replace="fragments/navigation :: navigationFragment"></th:block>
+
+      <div class="container">
+          <th:block layout:fragment="content"></th:block>
+      </div>
+
+      <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+
+    <!-- Scripts -->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+    <script th:src="@{/assets/js/browser.min.js}"></script>
+    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script th:src="@{/assets/js/util.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
 
   </body>
 </html>

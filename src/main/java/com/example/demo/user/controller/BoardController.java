@@ -215,4 +215,12 @@ public class BoardController {
     fileUtils.DownloadFile("board", fileInfo, response, request);
   }
 
+  @GetMapping("/board/photoList")
+  public String boardPhotoList(){ return "board/photoList";}
+
+
+  @GetMapping("/board/photoWrite")
+  public String boardPhotoWrite(){return "board/photoWrite";}
+
+
 }

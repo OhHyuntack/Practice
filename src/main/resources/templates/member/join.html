@@ -8,61 +8,90 @@
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}">
-  <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" th:href="@{/vendor/daterangepicker/daterangepicker.css}">
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
   <!--===============================================================================================-->
 </head>
-<body style="background-color : #424242; color:	#F0FFF0;">
-<article class="container">
-  <div class="page-header">
-    <div class="col-md-6 col-md-offset-3">
-      <h3 style="color:	#F0FFF0;">회원가입 form</h3>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-offset-3">
-    <form role="form" name="frm" id="frm">
-      <div class="form-group">
-        <label for="userId" style="color:	#F0FFF0;">아이디</label>
-        <input type="text" class="form-control" id="userId" name="userId" value="" placeholder="아이디를 입력해 주세요">
-        <input type="hidden" class="form-control" id="tempUserId" name="tempUserId" value="" placeholder="아이디를 입력해 주세요">
-        <button type="button" onclick="idCheck()"><span style="color:#808080;">중복 확인</span></button>
-      </div>
-      <div class="form-group">
-        <label for="userName" style="color:	#F0FFF0;">성명</label>
-        <input type="text" class="form-control" id="userName" name="userName" value="" placeholder="이름을 입력해 주세요">
-      </div>
-      <div class="form-group">
-        <label for="email" style="color:	#F0FFF0;">이메일 주소</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="이메일 주소를 입력해주세요">
-      </div>
-      <div class="form-group">
-        <label for="userPW" style="color:	#F0FFF0;">비밀번호</label>
-        <input type="password" class="form-control" id="userPW" name="userPW" value="" placeholder="비밀번호를 입력해주세요">
-      </div>
-      <div class="form-group">
-        <label for="passwordCheck" style="color:	#F0FFF0;">비밀번호 확인</label>
-        <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 확인을 위해 다시한번 입력 해 주세요">
-      </div>
-      <div class="form-group">
-        <label for="mobileNo" style="color:	#F0FFF0;">휴대폰 번호</label>
-        <input type="tel" class="form-control" id="mobileNo" name="mobileNo" value="" placeholder="휴대폰번호를 입력해 주세요">
-      </div>
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">Register</div>
+          <div class="card-body">
 
-      <div class="form-group text-center">
-        <button type="button" onclick="goSubmit()" id="join-submit" class="btn btn-primary">
-          회원가입<i class="fa fa-check spaceLeft"></i>
-        </button>
-        <button type="button" onclick="location.href ='/user/login'" class="btn btn-warning">
-          가입취소<i class="fa fa-times spaceLeft"></i>
-        </button>
+            <form role="form" name="frm" id="frm">
+
+              <div class="form-group">
+                <label for="userId" class="cols-sm-2 control-label">아이디</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control"id="userId" name="userId" value="" placeholder="아이디를 입력해 주세요" />
+                    <input type="hidden" class="form-control" id="tempUserId" name="tempUserId" value="" placeholder="아이디를 입력해 주세요">
+                    <button type="button" class="btn btn-lg btn-primary" onclick="idCheck()"><span style="color:white;">중복 확인</span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="userName" class="cols-sm-2 control-label">성명</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control"id="userName" name="userName" value="" placeholder="이름을 입력해 주세요" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email" class="cols-sm-2 control-label">이메일</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="이메일 주소를 입력해주세요" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="userPW" class="cols-sm-2 control-label">비밀번호</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control" id="userPW" name="userPW" value="" placeholder="비밀번호를 입력해주세요" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="passwordCheck" class="cols-sm-2 control-label">비밀번호확인</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 확인을 위해 다시한번 입력 해 주세요"/>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="mobileNo" class="cols-sm-2 control-label">휴대폰번호</label>
+                <div class="cols-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" id="mobileNo" name="mobileNo" value="" placeholder="휴대폰번호를 입력해 주세요"/>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group ">
+                <button type="button" onclick="goSubmit()" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+              </div>
+              <div class="login-register">
+                <a th:href="@{/user/login}">Login</a>
+              </div>
+            </form>
+          </div>
+
+        </div>
       </div>
-    </form>
+    </div>
   </div>
 
   <script src="/js/jquery.min.js"></script>

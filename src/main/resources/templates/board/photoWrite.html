@@ -4,5 +4,175 @@
 
 <th:block layout:fragment="content">
 
+  <!--script th:src="@{/summernote/summernote-lite.js}"></script>
+  <script th:src="@{/summernote/lang/summernote-ko-KR.js}"></script>
+  <link rel="stylesheet" th:href="@{/summernote/summernote-lite.css}"-->
+
+  <script type="text/javascript" th:src="@{/ckeditor/ckeditor.js}"></script>
+  <form id="frm" name="frm" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="boardType" value="photo">
+    <section class="contents" id="contents" style="margin:120px 0 80px 0;">
+      <div class="page-tit">
+        <ul class="breadcrumb">
+          <li>포토갤러리 > 글쓰기</li>
+        </ul>
+      </div>
+
+      <table class="table board-write">
+        <colgroup>
+          <col style="width: 130px;">
+          <col style="width: 735px;">
+        </colgroup>
+        <tbody>
+        <tr>
+          <th>제목<i class="uil-check"></i></th>
+          <td><input type="text" id="title" name="title" class="form-control width-full"></td>
+        </tr>
+        <tr>
+          <th>성명<i class="uil-check"></i></th>
+          <td>
+            <input type="text" id="writer" name="writer" class="form-control width-md"
+                   th:value="${session.sessionUserName}">
+          </td>
+        </tr>
+
+        <tr>
+          <th>내용<i class="uil-check"></i></th>
+          <td>
+              <textarea class="form-control width-full" name="content" id="content" rows="7">
+              </textarea>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </form>
+  <button type="button" class="btn btn-lg btn-primary"
+          onclick="saveBoard();">등록
+  </button>
+  <script>
+    /*$(document).ready(function() {
+       //여기 아래 부분
+       $('#content').summernote({
+         minHeight: 500,             // 최소 높이
+         maxHeight: null,             // 최대 높이
+         focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+         lang: "ko-KR",					// 한글 설정
+         spellCheck: false,
+         callbacks: {	//이미지 첨부하는 부분
+           onImageUpload : function(files) {
+             uploadSummernoteImageFile(files[0],this);
+           }
+         }
+       });
+     });
+
+     /**
+      * 이미지 파일 업로드
+      */
+    /*function uploadSummernoteImageFile(file, editor) {
+      let IMAGE_PATH = 'http://localhost:8080';
+      data = new FormData();
+      data.append("file", file);
+      $.ajax({
+        data : data,
+        type : "POST",
+        url : "/photoUpload",
+        cache : false,
+        contentType : false,
+        processData : false,
+        success : function(data) {
+          console.log(data);
+          //$("#content").summernote("code", data);
+          //$(editor).summernote('insertImage', data.url);
+         /* setTimeout(function() {
+            let html = $("#content").html();
+            html += data;
+            $("#content").summernote("code", html);
+          }, 4000);*/
+    /*    var image = IMAGE_PATH + data.url;
+
+        $(editor).summernote('editor.insertImage', image);
+
+      }
+    });
+  }*/
+    CKEDITOR.config.extraPlugins = 'imageresize';
+
+
+    CKEDITOR.replace('content', {//해당 이름으로 된 textarea에 에디터를 적용
+      width: '100%',
+      height: '600px',
+      allowedContent: true,
+      removeFormatAttributes: '',
+      entities: false,
+      basicEntities: false,
+      entities_greek: false,
+      entities_latin: false,
+      enterMode: '2',
+      filebrowserImageUploadUrl: '/ckPhotoUpload.do', //여기 경로로 파일을 전달하여 업로드 시킨다.
+      toolbar: [
+        {
+          name: 'document',
+          groups: ['mode', 'document', 'doctools'],
+          items: ['Source', '-', 'NewPage', 'Print', '-']
+        },
+        {
+          name: 'clipboard',
+          groups: ['clipboard', 'undo'],
+          items: ['Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo']
+        },
+        {
+          name: 'insert',
+          items: ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak']
+        },
+        {
+          name: 'editing',
+          groups: ['find', 'selection', 'spellchecker'],
+          items: ['Find', 'Replace', '-']
+        },
+
+        {name: 'tools', items: ['Maximize', 'ShowBlocks']},
+        {name: 'others', items: ['-']},
+        {name: 'about', items: ['About']},
+        '/',
+        {name: 'styles', items: ['Styles', 'Font', 'FontSize']},
+        {name: 'colors', items: ['TextColor', 'BGColor']},
+        {
+          name: 'basicstyles',
+          groups: ['basicstyles', 'cleanup'],
+          items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+            'RemoveFormat']
+        },
+        {
+          name: 'paragraph',
+          groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+          items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
+        }
+      ]
+    });
+
+    //CKEDITOR.config.contentsCss = '/resource/admin/css/import.css';
+
+    CKEDITOR.on('dialogDefinition', function (ev) {
+      var dialogName = ev.data.name;
+      var dialogDefinition = ev.data.definition;
+
+      switch (dialogName) {
+        case 'image': //Image Properties dialog
+          //dialogDefinition.removeContents('info');
+          dialogDefinition.removeContents('Link');
+          dialogDefinition.removeContents('advanced');
+          break;
+      }
+    });
+
+    function saveBoard() {
+      /*유효성*/
+      document.frm.action = "/board/save";
+      document.frm.submit();
+    }
+  </script>
+
 
 </th:block>

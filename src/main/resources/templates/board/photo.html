@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default-layout">
+
+<th:block layout:fragment="content">
+  <div style="margin:10px; position:relative;">
+    <section class="container box feature1">
+      <div class="row">
+
+        <div class="col-4 col-12-medium" th:each="board: ${board}">
+          <section>
+            <a href="#" class="image featured">
+              <span th:utext="${board.content}"/>
+            </a>
+            <h5 th:text="${board.title}"></h5>
+            <h6 th:text="${board.writer}"></h6>
+          </section>
+        </div>
+
+    </section>
+    <a class="btn btn-info" style="float:right; margin:0px 27px 10px 0px;" th:href="@{/board/photoWrite}">등록</a>
+  </div>
+</th:block>

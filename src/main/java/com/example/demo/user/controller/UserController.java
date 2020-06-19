@@ -146,7 +146,10 @@ public class UserController {
   public String memberInfo(){ return "member/info"; }
 
   @GetMapping("/member/myInfo")
-  public String memberMyinfo(){return "member/myinfo";}
+  public String memberMyinfo(){
+
+    return "member/myinfo";
+  }
 
   @GetMapping("/member/find")
   public String memberFind(){return "member/find";}

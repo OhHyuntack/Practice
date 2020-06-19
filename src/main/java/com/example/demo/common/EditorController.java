@@ -1,20 +1,15 @@
 package com.example.demo.common;
 
-import com.example.demo.user.domain.entity.ImageFile;
-import com.example.demo.user.dto.ImageFileDto;
 import com.example.demo.user.service.FileService;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,7 +65,7 @@ public class EditorController {
   }*/
 
 
-  @PostMapping(value="/photoUpload")
+  /*@PostMapping(value="/photoUpload")
   @ResponseBody
   public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request){
     String whatkind = "summernoteImage";
@@ -100,7 +95,41 @@ public class EditorController {
     }
 
     return result;
-  }
+  }*/
 
+  @PostMapping(value="/photoUpload")
+  @ResponseBody
+  public JSONObject uploadSummernoteImageFile (@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request){
+
+    String whatkind = "summernoteImage";
+    String fileRoot = "";
+
+    fileRoot = "C:\\Users\\htoh\\demo\\src\\main\\resources\\static\\images\\"+whatkind+"\\"; //저장될 외부 파일 경로  (개발)
+
+    String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+
+    String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+
+    File targetFile = new File(fileRoot + savedFileName);
+    String uploadPath = "";
+    JSONObject json = new JSONObject();
+
+    try {
+      InputStream fileStream = multipartFile.getInputStream();
+      org.apache.commons.io.FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+
+      //result = "<img src=\"http://localhost:8080/images/"+whatkind+"/"+ savedFileName + "\">";
+      uploadPath =  "/images/"+whatkind+"/"+ savedFileName;
+      json.put("url", uploadPath);
+
+    } catch (IOException e) {
+      org.apache.commons.io.FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+      e.printStackTrace();
+    }
+
+
+    return json;
+  }
 
 }

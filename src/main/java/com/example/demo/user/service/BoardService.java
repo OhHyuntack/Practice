@@ -40,7 +40,7 @@ public class BoardService {
   }
 
   //리스트 목록 보기
-  public Page<Board> findBoardList(Pageable pageable, Map<String, String> searchMap,int viewLow) {
+  public Page<Board> findBoardList(Pageable pageable, Map<String, String> searchMap, int viewLow) {
 
     String del = String.valueOf('N');
     pageable = PageRequest.of(

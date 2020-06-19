@@ -14,7 +14,7 @@ public class BoardSpecification {
       List<Predicate> predicates = new ArrayList();
       String key = "";
       String value = "";
-
+      String boardType = filter.get("boardType");
       for (Map.Entry<String, String> entry : filter.entrySet()) {
         key = entry.getKey();
         value = entry.getValue();
@@ -27,14 +27,21 @@ public class BoardSpecification {
 
       switch (key) {
         case "title":
-          predicates.add(criteriaBuilder.like(root.get(key).as(String.class), likeValue));
+          predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get(key).as(String.class), likeValue),
+              criteriaBuilder.equal(root.get("boardType"), boardType)));
           break;
         case "content":
-          predicates.add(criteriaBuilder.like(root.get(key).as(String.class), likeValue));
+          predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get(key).as(String.class), likeValue),
+              criteriaBuilder.equal(root.get("boardType"), boardType)));
           break;
         case "all":
-          predicates.add(criteriaBuilder.or(criteriaBuilder.like(root.get("content").as(String.class), likeValue),
-              criteriaBuilder.like(root.get("title").as(String.class), likeValue)));
+          predicates.add(criteriaBuilder
+              .or(criteriaBuilder.like(root.get("content").as(String.class), likeValue),
+                  criteriaBuilder.like(root.get("title").as(String.class), likeValue),
+                  criteriaBuilder.and(criteriaBuilder.equal(root.get("boardType").as(String.class), boardType))) );
+          break;
+        default:
+          predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("boardType").as(String.class), boardType)));
           break;
       }
       return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

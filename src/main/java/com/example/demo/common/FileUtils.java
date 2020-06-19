@@ -1,6 +1,7 @@
 package com.example.demo.common;
 
 import com.example.demo.user.domain.entity.FileInfo;
+import com.example.demo.user.domain.entity.ImageFile;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -162,6 +163,76 @@ public class FileUtils {
     System.out.println("ori:" + ori_name);
     System.out.println("sto:" + sto_name);
     File downloadFile = new File(Path + whatKind + "/" + fileInfo.getFilePath() + "/" + sto_name);
+    FileInputStream inputStream;
+    try {
+      inputStream = new FileInputStream(downloadFile);
+
+      // get MIME type of the file
+      String mimeType = request.getSession().getServletContext()
+          .getMimeType(downloadFile.getPath());
+      if (mimeType == null) {
+        // set to binary type if MIME mapping not found
+        mimeType = "application/octet-stream";
+      }
+
+      // set content attributes for the response
+      response.setContentType(mimeType);
+      response.setContentLength((int) downloadFile.length());
+      String fileName = ori_name;
+      String header = getBrowser(request);
+      if (header.contains("MSIE")) {
+        String docName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-Disposition", "attachment;filename=" + docName + ";");
+      } else if (header.contains("Firefox")) {
+        String docName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + docName + "\"");
+      } else if (header.contains("Opera")) {
+        String docName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + docName + "\"");
+      } else if (header.contains("Chrome")) {
+        String docName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + docName + "\"");
+      }
+      // get output stream of the response
+      OutputStream outStream = response.getOutputStream();
+
+      byte[] buffer = new byte[(int) downloadFile.length()];
+      int bytesRead = -1;
+
+      // write bytes read from the input stream into the output stream
+      while ((bytesRead = inputStream.read(buffer)) != -1) {
+        outStream.write(buffer, 0, bytesRead);
+      }
+
+      inputStream.close();
+      outStream.close();
+      return true;
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      return false;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+
+  public boolean imageDown(HttpServletResponse response, HttpServletRequest request) {
+
+    String Path = "C:\\Users\\htoh\\demo\\src\\main\\resources\\static\\images\\ckeditor\\";
+    System.out.println("Path:" + Path);
+
+    String ori_name = request.getParameter("original_name");
+    //String sto_name_arr[] = request.getParameter("realname");
+    String sto_name = request.getParameter("realname");
+
+    //if (ori_name.indexOf("." + sto_name_arr[sto_name_arr.length - 1]) < 0) {
+    //  ori_name = ori_name + "." + sto_name_arr[sto_name_arr.length - 1];
+    //}
+
+    System.out.println("ori:" + ori_name);
+    System.out.println("sto:" + sto_name);
+    File downloadFile = new File(Path + sto_name);
     FileInputStream inputStream;
     try {
       inputStream = new FileInputStream(downloadFile);

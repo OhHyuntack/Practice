@@ -32,6 +32,8 @@ public class BoardDto {
   // 게시글 부서
   private String contact;
 
+  private String boardType;
+
   private List<FileInfo> fileInfoList;
 
   private String isDel;
@@ -54,6 +56,7 @@ public class BoardDto {
         .writer(writer)
         .department(department)
         .contact(contact)
+        .boardType(boardType)
         .fileInfoList(fileInfoList)
         .isDel(isDel)
         .delDate(delDate)
@@ -64,7 +67,7 @@ public class BoardDto {
   }
   @Builder
   public BoardDto(int boardSeq, String boardPW, String title, String content, int readCnt,
-      String writer, String department, String contact, List<FileInfo> fileInfoList, String isDel, LocalDateTime delDate
+      String writer, String department, String contact, String boardType, List<FileInfo> fileInfoList, String isDel, LocalDateTime delDate
       , LocalDateTime createdDate, LocalDateTime modifiedDate) {
     this.boardSeq = boardSeq;
     this.boardPW = boardPW;
@@ -74,6 +77,7 @@ public class BoardDto {
     this.writer = writer;
     this.department = department;
     this.contact = contact;
+    this.boardType = boardType;
     this.fileInfoList = fileInfoList;
     this.isDel = isDel;
     this.delDate = delDate;

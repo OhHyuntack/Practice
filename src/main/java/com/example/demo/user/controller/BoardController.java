@@ -23,6 +23,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,17 +40,23 @@ public class BoardController {
   private FileUtils fileUtils;
 
   //게시글 목록 보기
-  @GetMapping("/board/list")
+  @GetMapping("/board/{boardType}")
   public String list(@PageableDefault Pageable pageable, Model model
       , @RequestParam(value = "searchType", required = false) String searchType
       , @RequestParam(value = "searchKeyword", required = false) String searchKeyword
-      , @RequestParam(value = "viewLow", required = false) String viewLow) {
+      , @RequestParam(value = "viewLow", required = false) String viewLow
+      , @PathVariable String boardType) {
 
     Map<String, String> searchMap = new HashMap<String, String>();
 
     if (searchType != null && searchKeyword != null && searchKeyword != "") {
       searchMap.put(searchType, searchKeyword);
     }
+
+    if(boardType != null){
+      searchMap.put("boardType", boardType);
+    }
+
     if(viewLow == null || viewLow == ""){
       viewLow = "10";
     }
@@ -96,7 +103,7 @@ public class BoardController {
     model.addAttribute("board", board);
     model.addAttribute("boardList", boardList);
 
-    return "board/list";
+    return "/board/"+boardType;
   }
 
   //글쓰기 화면 이동
@@ -128,7 +135,9 @@ public class BoardController {
       fileService.fileSave(fileDto);
     }
 
-    return "redirect:/board/list";
+    String rUrl = boardDto.getBoardType();
+
+    return "redirect:/board/"+rUrl;
   }
 
   //상세보기 화면 이동
@@ -216,7 +225,7 @@ public class BoardController {
   }
 
   @GetMapping("/board/photoList")
-  public String boardPhotoList(){ return "board/photoList";}
+  public String boardPhotoList(){ return "photo";}
 
 
   @GetMapping("/board/photoWrite")

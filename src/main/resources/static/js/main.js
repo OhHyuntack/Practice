@@ -171,6 +171,9 @@ var calendar = $('#calendar').fullCalendar({
         // 실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
       },
       success: function (response) {
+
+        console.log(response);
+
         var fixedDate = response.map(function (array) {
           if (array.allDay && array.start !== array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
@@ -179,6 +182,8 @@ var calendar = $('#calendar').fullCalendar({
           return array;
         })
         callback(fixedDate);
+
+
       }
     });
   },
@@ -250,7 +255,7 @@ var calendar = $('#calendar').fullCalendar({
 
     $(".fc-body").unbind('click');
     $(".fc-body").on('click', 'td', function (e) {
-
+      console.log(e);
       $("#contextMenu")
         .addClass("contextOpened")
         .css({

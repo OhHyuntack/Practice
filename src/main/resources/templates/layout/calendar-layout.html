@@ -8,30 +8,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>FullCalendar Example</title>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
-
     <link rel="stylesheet" th:href="@{/vendor/css/fullcalendar.min.css}" />
     <link rel="stylesheet" th:href="@{/vendor/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href='@{/vendor/css/select2.min.css}' />
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
     <link rel="stylesheet" th:href='@{/vendor/css/bootstrap-datetimepicker.min.css}'/>
 
-    <link rel="stylesheet" th:href="@{/https://fonts.googleapis.com/css?family=Open+Sans:400,500,600}">
-    <link rel="stylesheet" th:href="@{/https://fonts.googleapis.com/icon?family=Material+Icons}">
-
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:400,500,600}">
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/fullCalendar/css/main.css}">
   </head>
 
   <body>
 
     <th:block th:replace="fragments/navigation :: navigationFragment"></th:block>
-
     <div class="container">
       <th:block layout:fragment="content"></th:block>
     </div>
-
-    <th:block th:replace="fragments/footer :: footerFragment"></th:block>
-
 
     <script th:src="@{/vendor/js/jquery.min.js}"></script>
     <script th:src="@{/vendor/js/bootstrap.min.js}"></script>
@@ -44,6 +38,7 @@
     <script th:src="@{/js/addEvent.js}"></script>
     <script th:src="@{/js/editEvent.js}"></script>
     <script th:src="@{/js/etcSetting.js}"></script>
-  </body>
 
+    <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+  </body>
 </html>

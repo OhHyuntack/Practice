@@ -51,3 +51,24 @@ CREATE TABLE `user` (
   `created_date` date DEFAULT NULL,
   `modified_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+
+CREATE TABLE `schedule` (
+  `schedule_seq` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) DEFAULT NULL,
+  `description` varchar(900) DEFAULT NULL,
+  `user_name` varchar(50) DEFAULT NULL,
+  `user_id` varchar(50) DEFAULT NULL,
+  `start` date DEFAULT NULL,
+  `end` date DEFAULT NULL,
+  `type` varchar(10) DEFAULT NULL,
+  `text_color` varchar(10) DEFAULT NULL,
+  `regdate` timestamp NULL DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `modified_id` varchar(50) DEFAULT NULL,
+  `is_del` varchar(2) DEFAULT 'N',
+  `del_date` date DEFAULT NULL,
+  `background_color` varchar(10) DEFAULT NULL,
+  `all_day` varchar(10) DEFAULT 'false',
+  PRIMARY KEY (`schedule_seq`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4

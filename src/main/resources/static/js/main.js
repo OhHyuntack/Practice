@@ -255,7 +255,6 @@ var calendar = $('#calendar').fullCalendar({
 
     $(".fc-body").unbind('click');
     $(".fc-body").on('click', 'td', function (e) {
-      console.log(e);
       $("#contextMenu")
         .addClass("contextOpened")
         .css({

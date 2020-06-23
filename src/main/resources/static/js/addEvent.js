@@ -12,7 +12,6 @@ var editDesc = $('#edit-desc');
 var addBtnContainer = $('.modalBtnContainer-addEvent');
 var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
 
-
 /* ****************
  *  새로운 일정 생성
  * ************** */
@@ -40,13 +39,12 @@ var newEvent = function (start, end, eventType) {
     $('#save-event').on('click', function () {
 
         var eventData = {
-            _id: eventId,
+            scheduleSeq: eventId,
             title: editTitle.val(),
             start: editStart.val(),
             end: editEnd.val(),
             description: editDesc.val(),
             type: editType.val(),
-            username: '사나',
             backgroundColor: editColor.val(),
             textColor: '#ffffff',
             allDay: false
@@ -79,12 +77,26 @@ var newEvent = function (start, end, eventType) {
         editAllDay.prop('checked', false);
         eventModal.modal('hide');
 
-        //새로운 일정 저장
+        console.log(eventData.title);
+        console.log(eventData.start);
+        console.log(eventData.end);
+        console.log(eventData.description);
+
+
+        //새로운 일정 저장 //dataType:"json",
         $.ajax({
             type: "get",
-            url: "",
+            url: "/schedule/createSchedule",
             data: {
-                //.....
+                scheduleSeq: eventId,
+                title: eventData.title,
+                editStart: eventData.start,
+                editEnd: eventData.end,
+                description: eventData.description,
+                type: editType.val(),
+                backgroundColor: editColor.val(),
+                textColor: '#ffffff',
+                allDay: false
             },
             success: function (response) {
                 //DB연동시 중복이벤트 방지를 위한

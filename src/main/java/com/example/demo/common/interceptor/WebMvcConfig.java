@@ -12,6 +12,7 @@ public class WebMvcConfig  extends WebMvcConfigurerAdapter {
     registry.addInterceptor(new Interceptor())
         .addPathPatterns("/board/*")
         .addPathPatterns("/member/*")
+        .addPathPatterns("/schedule/*")
         .excludePathPatterns("/user/*")
         .excludePathPatterns("/");
   }

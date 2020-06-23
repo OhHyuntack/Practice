@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ScheduleDto {
 
-    private int schduleSeq;
+    private int scheduleSeq;
     private String title;
     private String description;
     private String userName;
@@ -30,10 +30,12 @@ public class ScheduleDto {
     private String modifiedId;
     private String backgroundColor;
     private String allDay;
+    private String editStart;
+    private String editEnd;
 
   public Schedule toEntity(){
     Schedule schdule = Schedule.builder()
-        .schduleSeq(schduleSeq)
+        .scheduleSeq(scheduleSeq)
         .title(title)
         .description(description)
         .userName(userName)
@@ -53,10 +55,10 @@ public class ScheduleDto {
     return schdule;
   }
   @Builder
-  public ScheduleDto(int schduleSeq, String title, String description, String userName, String userId,
+  public ScheduleDto(int scheduleSeq, String title, String description, String userName, String userId,
       LocalDateTime start, LocalDateTime end, String type, String textColor, LocalDateTime regDate, String isDel
       , LocalDateTime delDate, LocalDateTime modifiedDate, String modifiedId, String backgroundColor, String allDay) {
-    this.schduleSeq = schduleSeq;
+    this.scheduleSeq = scheduleSeq;
     this.title = title;
     this.description = description;
     this.userName = userName;

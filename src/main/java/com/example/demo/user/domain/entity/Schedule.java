@@ -23,7 +23,7 @@ public class Schedule {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="schedule_seq")
-  private int schduleSeq;
+  private int scheduleSeq;
 
   // 제목
   @Column(name="title", length = 200)
@@ -73,9 +73,9 @@ public class Schedule {
 
 
   @Builder
-  public Schedule(int schduleSeq, String title, String description, String userName, String userId, LocalDateTime start, LocalDateTime end, String type, String textColor, LocalDateTime regDate, String isDel, LocalDateTime delDate,
+  public Schedule(int scheduleSeq, String title, String description, String userName, String userId, LocalDateTime start, LocalDateTime end, String type, String textColor, LocalDateTime regDate, String isDel, LocalDateTime delDate,
       String modifiedId, LocalDateTime modifiedDate,String backgroundColor, String allDay) {
-    this.schduleSeq = schduleSeq;
+    this.scheduleSeq = scheduleSeq;
     this.title = title;
     this.description = description;
     this.userName = userName;

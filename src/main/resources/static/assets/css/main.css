@@ -86,10 +86,6 @@ input, select, textarea {
 		width: device-width;
 	}
 
-	body {
-		background: whitesmoke url("images/bg01.png");
-	}
-
 		body.is-preload * {
 			-moz-transition: none !important;
 			-webkit-transition: none !important;
@@ -430,7 +426,7 @@ input, select, textarea {
 				}
 
 		.row {
-			margin-top: -50px;
+			margin-top: -20px;
 			margin-left: -50px;
 		}
 

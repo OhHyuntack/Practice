@@ -59,16 +59,16 @@ CREATE TABLE `schedule` (
   `description` varchar(900) DEFAULT NULL,
   `user_name` varchar(50) DEFAULT NULL,
   `user_id` varchar(50) DEFAULT NULL,
-  `start` date DEFAULT NULL,
-  `end` date DEFAULT NULL,
+  `start` datetime DEFAULT NULL,
+  `end` datetime DEFAULT NULL,
   `type` varchar(10) DEFAULT NULL,
   `text_color` varchar(10) DEFAULT NULL,
-  `regdate` timestamp NULL DEFAULT NULL,
-  `modified_date` date DEFAULT NULL,
+  `regdate` datetime DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
   `modified_id` varchar(50) DEFAULT NULL,
   `is_del` varchar(2) DEFAULT 'N',
-  `del_date` date DEFAULT NULL,
+  `del_date` datetime DEFAULT NULL,
   `background_color` varchar(10) DEFAULT NULL,
   `all_day` varchar(10) DEFAULT 'false',
   PRIMARY KEY (`schedule_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4

@@ -1,7 +1,9 @@
 package com.example.demo.user.controller;
 
+import com.example.demo.user.domain.entity.Schedule;
 import com.example.demo.user.dto.ScheduleDto;
 import com.example.demo.user.service.ScheduleService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
@@ -32,23 +35,22 @@ public class ScheduleController {
     public Object scheduleSelect(){
     JSONParser parser = new JSONParser();
     Object obj = null;
-    try {
-      obj = parser.parse(
-          new FileReader("C:/Users/htoh/demo/src/main/resources/templates/schedule/data.json"));
 
-     /* ObjectMapper mapper = new ObjectMapper();
-      mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-      testDtoList =
-          mapper.convertValue(obj, TypeFactory
-              .defaultInstance().constructCollectionType(java.util.List.class, obj.getClass()));*/
+    /*try {*/
+      //obj = parser.parse(
+        //  new FileReader("C:/Users/htoh/demo/src/main/resources/templates/schedule/data.json"));
+
+      obj = scheduleService.findSchduleList();
+
+
       System.out.println("1");
-    } catch (FileNotFoundException e) {
+ /*  } catch (FileNotFoundException e) {
       e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (ParseException e) {
       e.printStackTrace();
-    }
+    }*/
     return obj;
   }
 

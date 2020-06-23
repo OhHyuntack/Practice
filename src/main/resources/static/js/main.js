@@ -171,7 +171,7 @@ var calendar = $('#calendar').fullCalendar({
         // 실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
       },
       success: function (response) {
-
+        console.log(callback);
         console.log(response);
 
         var fixedDate = response.map(function (array) {
@@ -181,6 +181,9 @@ var calendar = $('#calendar').fullCalendar({
           }
           return array;
         })
+
+        console.log(fixedDate);
+
         callback(fixedDate);
 
 

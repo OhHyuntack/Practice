@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>FullCalendar Example</title>
 
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/vendor/css/fullcalendar.min.css}" />
     <link rel="stylesheet" th:href="@{/vendor/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href='@{/vendor/css/select2.min.css}' />
@@ -40,5 +41,11 @@
     <script th:src="@{/js/etcSetting.js}"></script>
 
     <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+
+    <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+    <script th:src="@{/assets/js/browser.min.js}"></script>
+    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script th:src="@{/assets/js/util.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
   </body>
 </html>

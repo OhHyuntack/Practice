@@ -231,5 +231,8 @@ public class BoardController {
   @GetMapping("/board/photoWrite")
   public String boardPhotoWrite(){return "board/photoWrite";}
 
+  @GetMapping("/board/history")
+  public String boardHistory(){return "board/history";}
+
 
 }

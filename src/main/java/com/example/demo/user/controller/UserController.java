@@ -146,7 +146,11 @@ public class UserController {
   public String memberInfo(){ return "member/info"; }
 
   @GetMapping("/member/myInfo")
-  public String memberMyinfo(){
+  public String memberMyinfo(HttpSession session, Model model){
+
+    String userId = (String) session.getAttribute("sessionUserId");
+    User userInfo = userService.findByUserId(userId);
+    model.addAttribute("userInfo", userInfo);
 
     return "member/myinfo";
   }

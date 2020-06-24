@@ -4,7 +4,6 @@ package com.example.demo.user.service;
 import com.example.demo.user.domain.entity.Schedule;
 import com.example.demo.user.domain.repository.ScheduleRepository;
 import com.example.demo.user.dto.ScheduleDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
@@ -119,6 +117,12 @@ public class ScheduleService {
     selectSchedule.setModifiedId(scheduleDto.getUserId());
 
     scheduleRepository.save(selectSchedule);
+
+  }
+
+  public void deleteSchedule(ScheduleDto scheduleDto) {
+
+    scheduleRepository.removeByScheduleSeq(scheduleDto.getScheduleSeq());
 
   }
 }

@@ -119,9 +119,9 @@ $('#deleteEvent').on('click', function () {
     //삭제시
     $.ajax({
         type: "get",
-        url: "",
+        url: "/schedule/deleteSchedule",
         data: {
-            //...
+            scheduleSeq : $(this).data('id')
         },
         success: function (response) {
             alert('삭제되었습니다.');

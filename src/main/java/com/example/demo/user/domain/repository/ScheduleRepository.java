@@ -1,10 +1,10 @@
 package com.example.demo.user.domain.repository;
 
 import com.example.demo.user.domain.entity.Schedule;
-import com.example.demo.user.dto.ScheduleDto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long>{
 
@@ -12,4 +12,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long>{
   List<Schedule> findByStartBetween(String sdate, String edate);
 
   Schedule findByScheduleSeq(int scheduleSeq);
+
+  @Transactional
+  void removeByScheduleSeq(int scheduleSeq);
 }

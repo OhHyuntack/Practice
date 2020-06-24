@@ -33,24 +33,27 @@ public class ScheduleController {
   @GetMapping("/schedule/data.json")
   @ResponseBody
     public Object scheduleSelect(){
-    JSONParser parser = new JSONParser();
+    /*JSONParser parser = new JSONParser();*/
     Object obj = null;
+    /*Object objdummy = null;*/
 
-    /*try {*/
-      //obj = parser.parse(
-        //  new FileReader("C:/Users/htoh/demo/src/main/resources/templates/schedule/data.json"));
+    /*try {
+      objdummy = parser.parse(
+          new FileReader("C:/Users/htoh/demo/src/main/resources/templates/schedule/data.json"));*/
 
       obj = scheduleService.findSchduleList();
 
 
       System.out.println("1");
- /*  } catch (FileNotFoundException e) {
+   /*} catch (FileNotFoundException e) {
       e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (ParseException e) {
       e.printStackTrace();
     }*/
+
+
     return obj;
   }
 

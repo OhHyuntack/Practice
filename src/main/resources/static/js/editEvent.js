@@ -78,12 +78,28 @@ var editEvent = function (event, element, view) {
 
         $("#calendar").fullCalendar('updateEvent', event);
 
+        console.log(event._id);
+        console.log(event.allDay);
+        console.log(event.title);
+        console.log(event.start);
+        console.log(event.end);
+        console.log(event.type);
+        console.log(event.backgroundColor);
+        console.log(event.description);
+
         //일정 업데이트
         $.ajax({
             type: "get",
-            url: "",
+            url: "/schedule/editSchedule",
             data: {
-                //...
+                scheduleSeq: event._id,
+                title: event.title,
+                editStart: event.start,
+                editEnd: event.end,
+                description: event.description,
+                type: event.type,
+                backgroundColor: event.backgroundColor,
+                allDay: event.allDay
             },
             success: function (response) {
                 alert('수정되었습니다.')

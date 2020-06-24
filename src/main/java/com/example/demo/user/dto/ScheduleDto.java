@@ -32,6 +32,7 @@ public class ScheduleDto {
     private String allDay;
     private String editStart;
     private String editEnd;
+    private int _id;
 
   public Schedule toEntity(){
     Schedule schdule = Schedule.builder()

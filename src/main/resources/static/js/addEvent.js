@@ -31,7 +31,7 @@ var newEvent = function (start, end, eventType) {
     eventModal.modal('show');
 
     /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-    var eventId = 1 + Math.floor(Math.random() * 1000);
+    //var eventId = 1 + Math.floor(Math.random() * 1000);
     /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
 
     //새로운 일정 저장버튼 클릭
@@ -39,7 +39,6 @@ var newEvent = function (start, end, eventType) {
     $('#save-event').on('click', function () {
 
         var eventData = {
-            scheduleSeq: eventId,
             title: editTitle.val(),
             start: editStart.val(),
             end: editEnd.val(),
@@ -88,7 +87,6 @@ var newEvent = function (start, end, eventType) {
             type: "get",
             url: "/schedule/createSchedule",
             data: {
-                scheduleSeq: eventId,
                 title: eventData.title,
                 editStart: eventData.start,
                 editEnd: eventData.end,

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -98,5 +99,26 @@ public class ScheduleService {
     }
 
     return obj;
+  }
+
+  public void editSchedule(ScheduleDto scheduleDto) {
+
+    scheduleDto.setStart(LocalDateTime.parse(scheduleDto.getEditStart(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))); // 2010-11-25T12:30
+    scheduleDto.setEnd(LocalDateTime.parse(scheduleDto.getEditEnd(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))); // 2010-11-25T12:30
+
+    int seq = scheduleDto.getScheduleSeq();
+
+    Schedule selectSchedule = scheduleRepository.findByScheduleSeq(seq);
+
+    selectSchedule.setUserName(scheduleDto.getUserName());
+    selectSchedule.setStart(scheduleDto.getStart());
+    selectSchedule.setUserName(scheduleDto.getUserName());
+    selectSchedule.setBackgroundColor(scheduleDto.getBackgroundColor());
+    selectSchedule.setDescription(scheduleDto.getDescription());
+    selectSchedule.setModifiedDate(LocalDateTime.now());
+    selectSchedule.setModifiedId(scheduleDto.getUserId());
+
+    scheduleRepository.save(selectSchedule);
+
   }
 }

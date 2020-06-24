@@ -60,10 +60,9 @@ public class ScheduleController {
 
   @GetMapping("/schedule/createSchedule")
   @ResponseBody
-  public void createSchedule(ScheduleDto scheduleDto, HttpServletRequest request,  HttpSession session){
+  public void createSchedule(ScheduleDto scheduleDto, HttpSession session){
     HashMap<String, String> loginInfo = new HashMap<String, String>();
     loginInfo = (HashMap<String, String>)  session.getAttribute("sessionLoginInfo");
-
     String userId = "";
 
     scheduleDto.setRegDate(LocalDateTime.now());
@@ -76,10 +75,18 @@ public class ScheduleController {
 
     scheduleDto.setStart(LocalDateTime.parse(scheduleDto.getEditStart(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))); // 2010-11-25T12:30
     scheduleDto.setEnd(LocalDateTime.parse(scheduleDto.getEditEnd(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))); // 2010-11-25T12:30
-
-
     scheduleService.save(scheduleDto);
 
+  }
+
+  @GetMapping("/schedule/editSchedule")
+  @ResponseBody
+  public void editSchedule(ScheduleDto scheduleDto, HttpSession session){
+
+    scheduleDto.setUserName((String) session.getAttribute("sessionUserName"));
+    scheduleDto.setModifiedId((String) session.getAttribute("sessionUserId"));
+
+    scheduleService.editSchedule(scheduleDto);
   }
 }
 

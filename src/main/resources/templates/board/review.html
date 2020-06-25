@@ -6,7 +6,7 @@
 <style>
 </style>
 
-  <h3 style="margin:120px 0px 20px 10px;">자유게시판</h3>
+  <h3 style="margin:120px 0px 20px 10px;">구매후기</h3>
   <section class="contents" id="contents">
     <header class="searchbox" style="margin:10px;">
         <form id="searchFrm" name="searchFrm">
@@ -39,7 +39,6 @@
         <tr>
           <th>번호</th>
           <th>제목</th>
-          <th>등록기관</th>
           <th>등록자</th>
           <th>등록일자</th>
           <th>조회수</th>
@@ -52,7 +51,6 @@
           </td>
           <td><a th:href="'/board/detail?boardSeq='+${board.boardSeq}" th:text="${board.title}"></a>
           </td>
-          <td th:text="${board.department}"></td>
           <td th:text="${board.writer}"></td>
           <td th:text="${board.createdDate} ?
                         ${#temporals.format(board.createdDate,'yyyy-MM-dd HH:mm')} : ${board.createdDate}"></td>
@@ -66,25 +64,30 @@
         <div class="paging" style="font-size:2em; display: inline-block;">
           <ul class="pagination" th:with="startNumber=${T(Math).floor(boardList.number/10)}*10+1,
             endNumber=(${boardList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${boardList.totalPages}">
-            <li><a aria-label="Previous" href="/board/free?page=1">&laquo;</a></li>
+            <li><a aria-label="Previous" href="/board/review?page=1">&laquo;</a></li>
             <li th:style="${boardList.first} ? 'display:none'">
-              <a th:href="@{/board/free}">&lsaquo;</a>
+              <a th:href="@{/board/review}">&lsaquo;</a>
             </li>
 
             <li th:each="page :${#numbers.sequence(startNumber, endNumber)}"
                 th:class="(${page} == ${boardList.number}+1) ? 'active'">
-              <a th:href="@{/board/free(page=${page},searchType=${searchType},searchKeyword=${searchKeyword},viewLow=${viewLow})}" th:text="${page}"><span
+              <a th:href="@{/board/review(page=${page},searchType=${searchType},searchKeyword=${searchKeyword},viewLow=${viewLow})}" th:text="${page}"><span
                   class="sr-only"></span></a>
             </li>
 
             <li th:style="${boardList.last} ? 'display:none'">
-              <a th:href="@{/board/free(page=${boardList.number}+2)}">&rsaquo;</a>
+              <a th:href="@{/board/review(page=${boardList.number}+2)}">&rsaquo;</a>
             </li>
             <li><a aria-label="Next"
-                   th:href="@{/board/free(page=${boardList.totalPages})}">&raquo;</a></li>
+                   th:href="@{/board/review(page=${boardList.totalPages})}">&raquo;</a></li>
           </ul>
         </div>
-        <a class="btn btn-info" style="float:right; margin:0px 27px 10px 0px;" th:href="@{/board/write}">등록</a>
+        <span th:unless="${session.sessionUserId}">
+          <a class="btn btn-info" style="float:right; margin:0px 27px 10px 0px;" onclick="login_go()">등록</a>
+        </span>
+        <span th:if="${session.sessionUserId}">
+          <a class="btn btn-info" style="float:right; margin:0px 27px 10px 0px;" th:href="@{/board/write}">등록</a>
+        </span>
       </div>
 
       <!-- ============================================================== -->
@@ -93,8 +96,13 @@
   <script type="text/javascript">
     function search_go(){
       $("#viewLow").val($("#selectLow option:selected").val());
-      document.searchFrm.action = "/board/free";
+      document.searchFrm.action = "/board/review";
       document.searchFrm.submit();
     }
+    function login_go(){
+      alert('로그인 후 이용가능 합니다.');
+      location.href = "/user/login";
+    }
+
   </script>
 </th:block>

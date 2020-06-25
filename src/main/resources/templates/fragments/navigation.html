@@ -7,7 +7,7 @@
     <div class="inner">
 
       <!-- Logo -->
-      <h1><a href="index.html" id="logo">ZeroFour</a></h1>
+      <h1><a th:href="@{/}" id="logo">안티 바이러스</a></h1>
 
       <!-- Nav -->
       <nav id="nav">
@@ -18,26 +18,26 @@
           </li>
 
           <li>
-            <a href="#">게시판</a>
+            <a href="#">구매정보</a>
             <ul>
-              <li><a th:href="@{/board/history}">등산히스토리</a></li>
-              <li><a href="#">등산정보</a></li>
-              <li><a th:href="@{/board/free}">자유게시판</a></li>
+              <!--li><a th:href="@{/board/history}">등산히스토리</a></li-->
+              <li><a href="#">상품 상세 정보</a></li>
+              <li><a th:href="@{/board/review}">구매후기</a></li>
               <li><a th:href="@{/board/photo}">포토갤러리</a></li>
             </ul>
           </li>
           <li>
-            <a href="#">지도 및 일정</a>
+            <a href="#">상품</a>
             <ul>
-              <li><a th:href="@{/schedule/calendar}">일정보기</a></li>
-              <li><a href="#">가고싶은산</a></li>
-              <li><a th:href="@{/map/main}">100대 명산 위치</a></li>
-              <li><a href="#">추천 등산 코스</a></li>
+              <li><a th:href="@{/schedule/calendar}">입고일정보기</a></li>
+              <li><a href="#">마스크</a></li>
+              <!--li><a href="#">손소독제</a></li-->
+              <li><a th:href="@{/map/main}">코로나 현황</a></li>
             </ul>
           </li>
-          <li><a th:href="@{/member/info}">회원정보</a></li>
+          <!--li><a th:href="@{/member/info}">회원정보</a></li-->
           <li><a th:href="@{/member/myInfo}">내정보</a></li>
-          <li><a th:href="@{/member/network}">비상연락망</a></li>
+          <li><a th:href="@{/board/notice}">공지사항</a></li>
 
           <li>
             <span th:unless="${session.sessionUserId}">

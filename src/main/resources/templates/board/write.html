@@ -11,12 +11,12 @@
     <section class="contents" id="contents" style="margin:120px 0 80px 0;">
       <div class="page-tit">
         <ul class="breadcrumb">
-          <li>자유게시판</li>
+          <li>구매 후기 게시판</li>
         </ul>
       </div>
 
       <form id="frm" name="frm" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="boardType" value="free">
+        <input type="hidden" name="boardType" value="review">
         <table class="table board-write">
           <colgroup>
             <col style="width: 130px;">
@@ -39,26 +39,6 @@
               <td th:if="${detailBoard.getTitle() != null}">
                 <input type="text" id="writer" name="writer" class="form-control width-md"
                        th:value="${detailBoard.getTitle()}">
-              </td>
-            </tr>
-            <tr>
-              <th>부서명</th>
-              <td><input type="text" id="department" name="department" class="form-control width-md"
-                         th:value="${detailBoard.getDepartment()}"></td>
-            </tr>
-            <tr>
-              <th>연락처<i class="uil-check"></i></th>
-              <td>
-                <select id="contact1" class="form-control width-xs">
-                  <option>02</option>
-                  <option>010</option>
-                  <option>031</option>
-                </select>
-                <em class="hyphen">-</em>
-                <input type="text" id="contact2" class="form-control width-xs">
-                <em class="hyphen">-</em>
-                <input type="text" id="contact3" class="form-control width-xs">
-                <input type="hidden" id="contact" name="contact">
               </td>
             </tr>
             <tr>
@@ -111,26 +91,6 @@
               </td>
             </tr>
             <tr>
-              <th>부서명</th>
-              <td><input type="text" id="department" name="department"
-                         class="form-control width-md"></td>
-            </tr>
-            <tr>
-              <th>연락처<i class="uil-check"></i></th>
-              <td>
-                <select id="contact1" class="form-control width-xs">
-                  <option>02</option>
-                  <option>010</option>
-                  <option>031</option>
-                </select>
-                <em class="hyphen">-</em>
-                <input type="text" id="contact2" class="form-control width-xs">
-                <em class="hyphen">-</em>
-                <input type="text" id="contact3" class="form-control width-xs">
-                <input type="hidden" id="contact" name="contact">
-              </td>
-            </tr>
-            <tr>
               <th>내용<i class="uil-check"></i></th>
               <td>
               <textarea class="form-control width-full" name="content" id="content" rows="7">
@@ -159,7 +119,7 @@
       </form>
       <div class="btn-group-position" >
         <div class="center" style="float:right; margin:10px;">
-          <button type="button" class="btn btn-lg btn-light" onclick="location.href='/board/free'">
+          <button type="button" class="btn btn-lg btn-light" onclick="location.href='/board/review'">
             취소
           </button>
           <span th:if="${detailBoard == null}">
@@ -245,16 +205,12 @@
 
     function saveBoard() {
       /*유효성*/
-      var contact = $("#contact1").val() + $("#contact2").val() + $("#contact3").val();
-      $("#contact").val(contact);
       document.frm.action = "/board/save";
       document.frm.submit();
     }
 
     function editBoard() {
       if (confirm("수정을 완료하시겠습니까?")) {
-        var contact = $("#contact1").val() + $("#contact2").val() + $("#contact3").val();
-        $("#contact").val(contact);
 
         var form = $('#frm')[0];
         var formData = new FormData(form);
@@ -271,7 +227,7 @@
           success: function (data) {
             if (data.success != null) {
               alert("수정되었습니다.");
-              location.href = "/board/free";
+              location.href = "/board/review";
             }
           }
         })

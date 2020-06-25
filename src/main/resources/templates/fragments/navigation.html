@@ -8,37 +8,31 @@
 
       <!-- Logo -->
       <h1><a th:href="@{/}" id="logo">안티 바이러스</a></h1>
-
       <!-- Nav -->
       <nav id="nav">
-
         <ul>
           <li class="current_page_item">
             <a th:href="@{/}">메인으로</a>
           </li>
 
           <li>
-            <a href="#">구매정보</a>
+            <a href="#">구매후기</a>
             <ul>
-              <!--li><a th:href="@{/board/history}">등산히스토리</a></li-->
-              <li><a href="#">상품 상세 정보</a></li>
-              <li><a th:href="@{/board/review}">구매후기</a></li>
+              <li><a th:href="@{/board/review}">구매후기게시판</a></li>
               <li><a th:href="@{/board/photo}">포토갤러리</a></li>
             </ul>
           </li>
           <li>
             <a href="#">상품</a>
             <ul>
-              <li><a th:href="@{/schedule/calendar}">입고일정보기</a></li>
-              <li><a href="#">마스크</a></li>
-              <!--li><a href="#">손소독제</a></li-->
+              <li><a th:href="@{/goods/info}">상품 상세 정보</a></li>
+              <li><a th:href="@{/goods/show}">상품보기</a></li>
               <li><a th:href="@{/map/main}">코로나 현황</a></li>
+              <li><a th:href="@{/schedule/calendar}">입고일정보기</a></li>
             </ul>
           </li>
-          <!--li><a th:href="@{/member/info}">회원정보</a></li-->
-          <li><a th:href="@{/member/myInfo}">내정보</a></li>
-          <li><a th:href="@{/board/notice}">공지사항</a></li>
-
+            <li><a th:href="@{/member/myInfo}">내정보</a></li>
+            <li><a th:href="@{/board/notice}">공지사항</a></li>
           <li>
             <span th:unless="${session.sessionUserId}">
                  <a th:href="@{/user/join}">회원가입</a>
@@ -52,7 +46,6 @@
                <a th:href="@{/user/logout}">로그아웃</a>
             </span>
           </li>
-
         </ul>
       </nav>
 

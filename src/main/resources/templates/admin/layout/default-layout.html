@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <title>ZeroFour by HTML5 UP</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <!--link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"-->
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+        <script th:src="@{/assets/js/jquery.min.js}"></script>
+        <script th:src="@{/js/jquery-ui-1.12.1.js}"></script>
+
+        <!-- Bootstrap core CSS -->
+    </head>
+    <body class="homepage is-preload">
+        <div id="page-wrapper">
+
+        </div>
+
+        <th:block th:replace="admin/fragments/navigation :: navigationFragment"></th:block>
+
+        <div class="container">
+            <th:block layout:fragment="content"></th:block>
+        </div>
+
+        <!-- Scripts -->
+
+        <script th:src="@{/assets/js/browser.min.js}"></script>
+        <script th:src="@{/assets/js/breakpoints.min.js}"></script>
+        <script th:src="@{/assets/js/util.js}"></script>
+        <script th:src="@{/assets/js/main.js}"></script>
+
+    </body>
+</html>

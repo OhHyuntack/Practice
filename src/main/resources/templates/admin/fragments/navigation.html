@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<th:block th:fragment="navigationFragment">
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+            <nav id="nav">
+                <ul>
+                    <li class="current_page_item">
+                        <a onclick="go_main();">메인으로</a>
+                    </li>
+                    <li><a onclick="goods_insert();">상품등록</a></li>
+                    <li><a href="#">공지사항</a></li>
+                    <li>
+                    <span th:if="${session.sessionAdminId}">
+                       <span th:text="${session.sessionAdminId}"></span>님 로그인 되셨습니다. &nbsp&nbsp
+                       <a th:href="@{/admin/logout}">로그아웃</a>
+                    </span>
+                    </li>
+
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+    <form id="frm" name="frm" method="post"></form>
+    <script>
+        function go_main(){
+            document.frm.action = "/admin/index";
+            document.frm.submit();
+        }
+
+        function goods_insert(){
+            document.frm.action = "/admin/insertGoods";
+            document.frm.submit();
+        }
+
+    </script>
+</th:block>

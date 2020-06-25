@@ -72,3 +72,19 @@ CREATE TABLE `schedule` (
   `all_day` varchar(10) DEFAULT 'false',
   PRIMARY KEY (`schedule_seq`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4
+
+CREATE TABLE `goods` (
+  `goods_seq` int(11) NOT NULL AUTO_INCREMENT,
+  `goods_name` varchar(200) DEFAULT NULL,
+  `goods_desc` varchar(900) DEFAULT NULL,
+  `goods_qty` varchar(50) DEFAULT NULL,
+  `goods_price` varchar(50) DEFAULT NULL,
+  `goods_type` datetime DEFAULT NULL,
+  `goods_dof` datetime DEFAULT NULL,
+  `regdate` datetime DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  `modified_id` varchar(50) DEFAULT NULL,
+  `is_del` varchar(2) DEFAULT 'N',
+  `del_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`goods_seq`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4

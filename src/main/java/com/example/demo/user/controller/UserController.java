@@ -161,4 +161,7 @@ public class UserController {
   @GetMapping("/member/network")
   public String memberNetwork(){return "member/network";}
 
+  @GetMapping(value="/popup/jusoPopup")
+  public String jusoPopup() { return "popup/jusoPopup"; }
+
 }

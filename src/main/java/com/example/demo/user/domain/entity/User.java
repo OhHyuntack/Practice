@@ -22,7 +22,7 @@ public class User extends Time implements Serializable {
   @Column(name="user_id", length = 50)
   private String userId;
   // 패스워드
-  @Column(name="userPW", length = 50)
+  @Column(name="userPW", length = 200)
   private String userPW;
   // 패스워드
   @Column(name="addr", length = 100)

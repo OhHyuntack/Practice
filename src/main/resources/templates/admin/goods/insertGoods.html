@@ -3,7 +3,57 @@
       layout:decorator="admin/layout/default-layout">
 
 <th:block layout:fragment="content">
-
-    상품등록
+    <h3>상품등록</h3>
+    <table>
+        <colgroup>
+            <col width="128px">
+            <col width="">
+            <col width="128px">
+            <col width="">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th>상품이름<i class="required">*</i></th>
+            <td class="left">
+               <input type="text" />
+            </td>
+            <th>상품설명<i class="required">*</i></th>
+            <td class="left">
+                <input type="text" />
+            </td>
+        </tr>
+        <tr>
+            <th>상품수량<i class="required">*</i></th>
+            <td class="left">
+                <input type="text" />
+            </td>
+            <th>상품가격<i class="required">*</i></th>
+            <td class="left">
+                <input type="text" />
+            </td>
+        </tr>
+        <tr>
+            <th>상품제조사<i class="required">*</i></th>
+            <td class="left" >
+                <input type="text" />
+            </td>
+            <th>사용여부*</th>
+            <td class="left" >
+                <input type="radio" name="isDel" value="N" id="isDel" kor-label-for-log="사용가능" > <label for="isDel">사용</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="isDel" value="Y" id="isDel" kor-label-for-log="사용중지" > <label for="isDel">중지</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="file" name="files[]" kor-label-for-log="첨부파일"
+                       class="form-control width-xl">
+                <a href="javascript:;" onClick="javascript:add_element_file('files[]');"
+                   class='btn_navy'>파일추가</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-lg btn-primary"
+            onclick="saveBoard();">등록</button>
 
 </th:block>

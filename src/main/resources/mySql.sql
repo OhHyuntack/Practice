@@ -88,3 +88,8 @@ CREATE TABLE `goods` (
   `del_date` datetime DEFAULT NULL,
   PRIMARY KEY (`goods_seq`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4
+
+CREATE TABLE `admin` (
+  `admin_id` varchar(50) NOT NULL,
+  `adminPW` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
